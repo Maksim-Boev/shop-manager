@@ -46,3 +46,4 @@ next-env.d.ts
 
 # Claude AI instructions files
 **/CLAUDE.md
+/generated/prisma/
