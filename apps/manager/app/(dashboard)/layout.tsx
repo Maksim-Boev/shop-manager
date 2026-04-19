@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Sidebar } from '@/components/layout/sidebar'
-import { TopBar } from '@/components/layout/topbar'
+import { Sidebar, TopBar } from '@shop/components'
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [compact, setCompact] = useState(false)
