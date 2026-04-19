@@ -12,13 +12,13 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "./prismaNamespace"
+import type * as Prisma from "./prismaNamespace.ts"
 
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.4.2",
-  "engineVersion": "94a226be1cf2967af2541cca5529f0f7ba866919",
+  "clientVersion": "7.7.0",
+  "engineVersion": "75cbdc1eb7150937890ad5465d861175c6624711",
   "activeProvider": "postgresql",
   "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\n// ------ ENUM ------ //\n\nenum Role {\n  SUPER_ADMIN\n  ADMIN\n}\n",
   "runtimeDataModel": {

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
-import { cn } from "@/cn"
+import { cn } from "../cn"
 
 const Drawer = ({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root data-slot="drawer" {...props} />

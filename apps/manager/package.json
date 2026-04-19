@@ -12,6 +12,7 @@
     "@shop/components": "workspace:*",
     "@shop/db": "workspace:*",
     "@shop/ui": "workspace:*",
+    "lucide-react": "^1.8.0",
     "next": "16.2.3",
     "react": "19.2.3",
     "react-dom": "19.2.3"
