@@ -51,3 +51,6 @@ next-env.d.ts
 /apps/cashier/.next/
 /apps/manager/.next/
 /docs/superpowers/
+/apps/manager/prototype/
+/apps/cashier/prototype/
+/.superpowers/

@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@shop/components": "workspace:*",
     "@shop/db": "workspace:*",
     "@shop/ui": "workspace:*",
     "lucide-react": "^1.8.0",
