@@ -89,7 +89,9 @@ export const ModelName = {
   CustomerDiscountRule: 'CustomerDiscountRule',
   PointsTransaction: 'PointsTransaction',
   Shift: 'Shift',
-  ShiftReport: 'ShiftReport'
+  ShiftReport: 'ShiftReport',
+  Return: 'Return',
+  ReturnItem: 'ReturnItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -632,6 +634,37 @@ export const ShiftReportScalarFieldEnum = {
 } as const
 
 export type ShiftReportScalarFieldEnum = (typeof ShiftReportScalarFieldEnum)[keyof typeof ShiftReportScalarFieldEnum]
+
+
+export const ReturnScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  storeId: 'storeId',
+  orderId: 'orderId',
+  shiftId: 'shiftId',
+  state: 'state',
+  reasonCode: 'reasonCode',
+  reasonNotes: 'reasonNotes',
+  refundMethod: 'refundMethod',
+  refundAmount: 'refundAmount',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt',
+  appliedAt: 'appliedAt'
+} as const
+
+export type ReturnScalarFieldEnum = (typeof ReturnScalarFieldEnum)[keyof typeof ReturnScalarFieldEnum]
+
+
+export const ReturnItemScalarFieldEnum = {
+  id: 'id',
+  returnId: 'returnId',
+  orderItemId: 'orderItemId',
+  quantity: 'quantity',
+  unitRefundAmount: 'unitRefundAmount',
+  refundSubtotal: 'refundSubtotal'
+} as const
+
+export type ReturnItemScalarFieldEnum = (typeof ReturnItemScalarFieldEnum)[keyof typeof ReturnItemScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -212,3 +212,13 @@ export type Shift = Prisma.ShiftModel
  * 
  */
 export type ShiftReport = Prisma.ShiftReportModel
+/**
+ * Model Return
+ * 
+ */
+export type Return = Prisma.ReturnModel
+/**
+ * Model ReturnItem
+ * 
+ */
+export type ReturnItem = Prisma.ReturnItemModel

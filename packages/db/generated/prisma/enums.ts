@@ -275,3 +275,22 @@ export const ShiftReportType = {
 } as const
 
 export type ShiftReportType = (typeof ShiftReportType)[keyof typeof ShiftReportType]
+
+
+export const ReturnState = {
+  DRAFT: 'DRAFT',
+  APPLIED: 'APPLIED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ReturnState = (typeof ReturnState)[keyof typeof ReturnState]
+
+
+export const ReturnReasonCode = {
+  BRAK: 'BRAK',
+  NOT_FIT: 'NOT_FIT',
+  REFUSAL: 'REFUSAL',
+  OTHER: 'OTHER'
+} as const
+
+export type ReturnReasonCode = (typeof ReturnReasonCode)[keyof typeof ReturnReasonCode]

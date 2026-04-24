@@ -479,7 +479,7 @@ model StockMovement {
   manualAdjustment   ManualAdjustment?   @relation(fields: [manualAdjustmentId], references: [id])
   goodsReceiptItem   GoodsReceiptItem?   @relation("GoodsReceiptItemMovements", fields: [goodsReceiptItemId], references: [id])
   orderItem          OrderItem?          @relation("OrderItemMovements", fields: [orderItemId], references: [id])
-  // returnItem будет добавлен в соответствующей задаче
+  returnItem         ReturnItem?         @relation("ReturnItemMovements", fields: [returnItemId], references: [id])
 
   @@index([storeId, productId, occurredAt])
   @@index([companyId, occurredAt])
@@ -812,4 +812,53 @@ model ShiftReport {
   snapshot  Json
 
   @@index([shiftId])
+}
+
+enum ReturnState {
+  DRAFT
+  APPLIED
+  CANCELLED
+}
+
+enum ReturnReasonCode {
+  BRAK
+  NOT_FIT
+  REFUSAL
+  OTHER
+}
+
+model Return {
+  id              String           @id @default(cuid())
+  companyId       String
+  storeId         String
+  orderId         String
+  shiftId         String
+  state           ReturnState      @default(DRAFT)
+  reasonCode      ReturnReasonCode
+  reasonNotes     String?
+  refundMethod    PaymentMethod
+  refundAmount    Decimal          @db.Decimal(14, 2)
+  createdByUserId String
+  createdAt       DateTime         @default(now())
+  appliedAt       DateTime?
+
+  items ReturnItem[]
+
+  @@index([companyId, storeId, state])
+  @@index([orderId])
+}
+
+model ReturnItem {
+  id               String  @id @default(cuid())
+  returnId         String
+  return_          Return  @relation(fields: [returnId], references: [id], onDelete: Cascade)
+  orderItemId      String
+  quantity         Decimal @db.Decimal(14, 3)
+  unitRefundAmount Decimal @db.Decimal(14, 2)
+  refundSubtotal   Decimal @db.Decimal(14, 2)
+
+  movements StockMovement[] @relation("ReturnItemMovements")
+
+  @@index([returnId])
+  @@index([orderItemId])
 }
