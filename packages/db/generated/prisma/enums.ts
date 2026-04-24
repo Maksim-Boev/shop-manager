@@ -179,3 +179,44 @@ export const PaymentMethod = {
 } as const
 
 export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
+
+
+export const DiscountSourceType = {
+  PROMOTION: 'PROMOTION',
+  TIER: 'TIER',
+  CUSTOMER_RULE: 'CUSTOMER_RULE',
+  POINTS: 'POINTS'
+} as const
+
+export type DiscountSourceType = (typeof DiscountSourceType)[keyof typeof DiscountSourceType]
+
+
+export const PromotionStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type PromotionStatus = (typeof PromotionStatus)[keyof typeof PromotionStatus]
+
+
+export const PromotionActionType = {
+  PERCENT: 'PERCENT',
+  FIXED_AMOUNT: 'FIXED_AMOUNT',
+  FIXED_PRICE: 'FIXED_PRICE',
+  BOGO: 'BOGO'
+} as const
+
+export type PromotionActionType = (typeof PromotionActionType)[keyof typeof PromotionActionType]
+
+
+export const PromotionTargetType = {
+  ALL: 'ALL',
+  PRODUCT: 'PRODUCT',
+  CATEGORY: 'CATEGORY',
+  SUBCATEGORY: 'SUBCATEGORY',
+  TAG: 'TAG'
+} as const
+
+export type PromotionTargetType = (typeof PromotionTargetType)[keyof typeof PromotionTargetType]

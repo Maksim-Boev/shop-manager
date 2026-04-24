@@ -77,7 +77,11 @@ export const ModelName = {
   GoodsReceiptItem: 'GoodsReceiptItem',
   StoreOrderCounter: 'StoreOrderCounter',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  OrderItemDiscount: 'OrderItemDiscount',
+  Promotion: 'Promotion',
+  PromotionTarget: 'PromotionTarget',
+  PromotionStore: 'PromotionStore'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -449,6 +453,64 @@ export const OrderItemScalarFieldEnum = {
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const OrderItemDiscountScalarFieldEnum = {
+  id: 'id',
+  orderItemId: 'orderItemId',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  appliedPercent: 'appliedPercent',
+  appliedAmount: 'appliedAmount'
+} as const
+
+export type OrderItemDiscountScalarFieldEnum = (typeof OrderItemDiscountScalarFieldEnum)[keyof typeof OrderItemDiscountScalarFieldEnum]
+
+
+export const PromotionScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  name: 'name',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  validFrom: 'validFrom',
+  validTo: 'validTo',
+  dayOfWeekMask: 'dayOfWeekMask',
+  timeOfDayFrom: 'timeOfDayFrom',
+  timeOfDayTo: 'timeOfDayTo',
+  cartMinSubtotal: 'cartMinSubtotal',
+  cartMinQuantity: 'cartMinQuantity',
+  minApplicableTierLevel: 'minApplicableTierLevel',
+  requiresCustomer: 'requiresCustomer',
+  actionType: 'actionType',
+  actionValue: 'actionValue',
+  bogoTriggerQty: 'bogoTriggerQty',
+  bogoGetQty: 'bogoGetQty',
+  bogoGetDiscountPercent: 'bogoGetDiscountPercent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PromotionScalarFieldEnum = (typeof PromotionScalarFieldEnum)[keyof typeof PromotionScalarFieldEnum]
+
+
+export const PromotionTargetScalarFieldEnum = {
+  id: 'id',
+  promotionId: 'promotionId',
+  targetType: 'targetType',
+  targetId: 'targetId'
+} as const
+
+export type PromotionTargetScalarFieldEnum = (typeof PromotionTargetScalarFieldEnum)[keyof typeof PromotionTargetScalarFieldEnum]
+
+
+export const PromotionStoreScalarFieldEnum = {
+  promotionId: 'promotionId',
+  storeId: 'storeId'
+} as const
+
+export type PromotionStoreScalarFieldEnum = (typeof PromotionStoreScalarFieldEnum)[keyof typeof PromotionStoreScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -127,6 +127,35 @@ enum PaymentMethod {
   MANUAL
 }
 
+enum DiscountSourceType {
+  PROMOTION
+  TIER
+  CUSTOMER_RULE
+  POINTS
+}
+
+enum PromotionStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum PromotionActionType {
+  PERCENT
+  FIXED_AMOUNT
+  FIXED_PRICE
+  BOGO
+}
+
+enum PromotionTargetType {
+  ALL
+  PRODUCT
+  CATEGORY
+  SUBCATEGORY
+  TAG
+}
+
 // ============ MODELS ============
 
 model Company {
@@ -189,11 +218,12 @@ model Store {
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt
 
-  managers      ManagerStore[]
-  storeProducts StoreProduct[]
-  transfersOut  StockTransfer[] @relation("StockTransferSource")
-  transfersIn   StockTransfer[] @relation("StockTransferDestination")
-  orderCounter  StoreOrderCounter?
+  managers        ManagerStore[]
+  storeProducts   StoreProduct[]
+  transfersOut    StockTransfer[] @relation("StockTransferSource")
+  transfersIn     StockTransfer[] @relation("StockTransferDestination")
+  orderCounter    StoreOrderCounter?
+  promotionStores PromotionStore[]
 
   @@index([companyId, status])
 }
@@ -543,8 +573,79 @@ model OrderItem {
   lineTotal           Decimal     @db.Decimal(14, 2)
   sourcePromotionId   String?
 
-  movements StockMovement[] @relation("OrderItemMovements")
+  movements StockMovement[]     @relation("OrderItemMovements")
+  discounts OrderItemDiscount[]
 
   @@index([orderId])
   @@index([productId])
+}
+
+model OrderItemDiscount {
+  id             String             @id @default(cuid())
+  orderItemId    String
+  orderItem      OrderItem          @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  sourceType     DiscountSourceType
+  sourceId       String
+  appliedPercent Decimal?           @db.Decimal(10, 4)
+  appliedAmount  Decimal            @db.Decimal(14, 2)
+
+  @@index([orderItemId])
+  @@index([sourceType, sourceId])
+}
+
+model Promotion {
+  id          String          @id @default(cuid())
+  companyId   String
+  name        String
+  description String?
+  status      PromotionStatus @default(DRAFT)
+  priority    Int             @default(0)
+
+  validFrom     DateTime
+  validTo       DateTime
+  dayOfWeekMask Int[]    @default([])
+  timeOfDayFrom String? // "HH:MM"
+  timeOfDayTo   String?
+
+  cartMinSubtotal Decimal? @db.Decimal(14, 2)
+  cartMinQuantity Int?
+
+  minApplicableTierLevel Int?
+  requiresCustomer       Boolean @default(false)
+
+  actionType  PromotionActionType
+  actionValue Decimal             @db.Decimal(14, 4)
+
+  bogoTriggerQty         Int?
+  bogoGetQty             Int?
+  bogoGetDiscountPercent Decimal? @db.Decimal(10, 4)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  targets PromotionTarget[]
+  stores  PromotionStore[]
+
+  @@index([companyId, status, validFrom, validTo, priority])
+}
+
+model PromotionTarget {
+  id          String              @id @default(cuid())
+  promotionId String
+  promotion   Promotion           @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  targetType  PromotionTargetType
+  targetId    String?
+
+  @@index([promotionId])
+  @@index([targetType, targetId])
+}
+
+model PromotionStore {
+  promotionId String
+  storeId     String
+  promotion   Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  store       Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@id([promotionId, storeId])
+  @@index([storeId])
 }

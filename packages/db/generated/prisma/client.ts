@@ -176,3 +176,23 @@ export type Order = Prisma.OrderModel
  * 
  */
 export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model OrderItemDiscount
+ * 
+ */
+export type OrderItemDiscount = Prisma.OrderItemDiscountModel
+/**
+ * Model Promotion
+ * 
+ */
+export type Promotion = Prisma.PromotionModel
+/**
+ * Model PromotionTarget
+ * 
+ */
+export type PromotionTarget = Prisma.PromotionTargetModel
+/**
+ * Model PromotionStore
+ * 
+ */
+export type PromotionStore = Prisma.PromotionStoreModel
