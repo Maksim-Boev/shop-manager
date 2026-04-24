@@ -8,4 +8,17 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Company.ts'
+export type * from './models/User.ts'
+export type * from './models/ManagerStore.ts'
+export type * from './models/Store.ts'
+export type * from './models/TaxRate.ts'
+export type * from './models/Category.ts'
+export type * from './models/Subcategory.ts'
+export type * from './models/Tag.ts'
+export type * from './models/Product.ts'
+export type * from './models/ProductTag.ts'
+export type * from './models/ProductBarcode.ts'
+export type * from './models/StoreProduct.ts'
+export type * from './models/PriceHistory.ts'
 export type * from './commonInputTypes.ts'

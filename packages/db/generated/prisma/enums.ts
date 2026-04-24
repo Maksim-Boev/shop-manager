@@ -9,9 +9,74 @@
 * 🟢 You can import this file directly.
 */
 
-export const Role = {
+export const UserRole = {
   SUPER_ADMIN: 'SUPER_ADMIN',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  MANAGER: 'MANAGER',
+  CASHIER: 'CASHIER'
 } as const
 
-export type Role = (typeof Role)[keyof typeof Role]
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const UserStatus = {
+  ACTIVE: 'ACTIVE',
+  BLOCKED: 'BLOCKED'
+} as const
+
+export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const StoreType = {
+  SHOP: 'SHOP',
+  WAREHOUSE: 'WAREHOUSE'
+} as const
+
+export type StoreType = (typeof StoreType)[keyof typeof StoreType]
+
+
+export const StoreStatus = {
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type StoreStatus = (typeof StoreStatus)[keyof typeof StoreStatus]
+
+
+export const TierAssignmentMode = {
+  CUMULATIVE_LIFETIME: 'CUMULATIVE_LIFETIME',
+  ROLLING_WINDOW: 'ROLLING_WINDOW',
+  MANUAL_ONLY: 'MANUAL_ONLY'
+} as const
+
+export type TierAssignmentMode = (typeof TierAssignmentMode)[keyof typeof TierAssignmentMode]
+
+
+export const PointsExpiryMode = {
+  NEVER: 'NEVER',
+  AFTER_EARN_DAYS: 'AFTER_EARN_DAYS',
+  AFTER_INACTIVITY_DAYS: 'AFTER_INACTIVITY_DAYS'
+} as const
+
+export type PointsExpiryMode = (typeof PointsExpiryMode)[keyof typeof PointsExpiryMode]
+
+
+export const ProductUnit = {
+  PIECE: 'PIECE',
+  KG: 'KG',
+  GRAM: 'GRAM',
+  LITER: 'LITER',
+  MILLILITER: 'MILLILITER',
+  METER: 'METER',
+  PACK: 'PACK'
+} as const
+
+export type ProductUnit = (typeof ProductUnit)[keyof typeof ProductUnit]
+
+
+export const ProductStatus = {
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type ProductStatus = (typeof ProductStatus)[keyof typeof ProductStatus]

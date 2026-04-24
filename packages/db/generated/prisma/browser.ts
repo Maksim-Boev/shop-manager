@@ -17,4 +17,68 @@ import * as Prisma from './internal/prismaNamespaceBrowser.ts'
 export { Prisma }
 export * as $Enums from './enums.ts'
 export * from './enums.ts';
-
+/**
+ * Model Company
+ * 
+ */
+export type Company = Prisma.CompanyModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model ManagerStore
+ * 
+ */
+export type ManagerStore = Prisma.ManagerStoreModel
+/**
+ * Model Store
+ * 
+ */
+export type Store = Prisma.StoreModel
+/**
+ * Model TaxRate
+ * 
+ */
+export type TaxRate = Prisma.TaxRateModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
+ * Model Subcategory
+ * 
+ */
+export type Subcategory = Prisma.SubcategoryModel
+/**
+ * Model Tag
+ * 
+ */
+export type Tag = Prisma.TagModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model ProductTag
+ * 
+ */
+export type ProductTag = Prisma.ProductTagModel
+/**
+ * Model ProductBarcode
+ * 
+ */
+export type ProductBarcode = Prisma.ProductBarcodeModel
+/**
+ * Model StoreProduct
+ * 
+ */
+export type StoreProduct = Prisma.StoreProductModel
+/**
+ * Model PriceHistory
+ * 
+ */
+export type PriceHistory = Prisma.PriceHistoryModel

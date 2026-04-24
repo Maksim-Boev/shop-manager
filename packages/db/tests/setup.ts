@@ -1,22 +1,9 @@
-import { execSync } from 'node:child_process'
-import { beforeAll, beforeEach, afterAll } from 'vitest'
+import { afterAll } from 'vitest'
 import { prisma } from '../lib/prisma'
 
-beforeAll(() => {
-  execSync('pnpm exec prisma migrate reset --force --skip-seed', {
-    stdio: 'inherit',
-    env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL_TEST },
-  })
-})
-
-beforeEach(async () => {
-  const tables = await prisma.$queryRawUnsafe<{ tablename: string }[]>(
-    `select tablename from pg_tables where schemaname = 'public' and tablename <> '_prisma_migrations'`,
-  )
-  if (tables.length === 0) return
-  const list = tables.map((t) => `"public"."${t.tablename}"`).join(', ')
-  await prisma.$executeRawUnsafe(`truncate ${list} restart identity cascade`)
-})
+// Тестовой БД нет — всё работает на DATABASE_URL (dev-БД). Миграции применяет пользователь,
+// поэтому `prisma migrate reset` здесь не вызываем (он бы стёр dev-данные).
+// Стратегия изоляции между тестами будет добавлена отдельно, когда перейдём к этапу тестов.
 
 afterAll(async () => {
   await prisma.$disconnect()

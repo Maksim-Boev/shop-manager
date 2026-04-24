@@ -31,8 +31,8 @@ export * from "./enums.ts"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Companies
+ * const companies = await prisma.company.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -41,4 +41,68 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
-
+/**
+ * Model Company
+ * 
+ */
+export type Company = Prisma.CompanyModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model ManagerStore
+ * 
+ */
+export type ManagerStore = Prisma.ManagerStoreModel
+/**
+ * Model Store
+ * 
+ */
+export type Store = Prisma.StoreModel
+/**
+ * Model TaxRate
+ * 
+ */
+export type TaxRate = Prisma.TaxRateModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
+ * Model Subcategory
+ * 
+ */
+export type Subcategory = Prisma.SubcategoryModel
+/**
+ * Model Tag
+ * 
+ */
+export type Tag = Prisma.TagModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model ProductTag
+ * 
+ */
+export type ProductTag = Prisma.ProductTagModel
+/**
+ * Model ProductBarcode
+ * 
+ */
+export type ProductBarcode = Prisma.ProductBarcodeModel
+/**
+ * Model StoreProduct
+ * 
+ */
+export type StoreProduct = Prisma.StoreProductModel
+/**
+ * Model PriceHistory
+ * 
+ */
+export type PriceHistory = Prisma.PriceHistoryModel

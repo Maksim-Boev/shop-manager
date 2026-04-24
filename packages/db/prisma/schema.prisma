@@ -7,9 +7,242 @@ datasource db {
   provider = "postgresql"
 }
 
-// ------ ENUM ------ //
+// ============ ENUMS ============
 
-enum Role {
+enum UserRole {
   SUPER_ADMIN
   ADMIN
+  MANAGER
+  CASHIER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+}
+
+enum StoreType {
+  SHOP
+  WAREHOUSE
+}
+
+enum StoreStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum TierAssignmentMode {
+  CUMULATIVE_LIFETIME
+  ROLLING_WINDOW
+  MANUAL_ONLY
+}
+
+enum PointsExpiryMode {
+  NEVER
+  AFTER_EARN_DAYS
+  AFTER_INACTIVITY_DAYS
+}
+
+enum ProductUnit {
+  PIECE
+  KG
+  GRAM
+  LITER
+  MILLILITER
+  METER
+  PACK
+}
+
+enum ProductStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+// ============ MODELS ============
+
+model Company {
+  id                      String             @id @default(cuid())
+  name                    String
+  tierAssignmentMode      TierAssignmentMode
+  tierRollingWindowDays   Int?
+  pointsEarnPercent       Decimal            @db.Decimal(10, 4)
+  pointsRedemptionRate    Decimal            @db.Decimal(10, 4)
+  pointsExpiryMode        PointsExpiryMode
+  pointsExpiryDays        Int?
+  maxPromotionPercent     Decimal            @db.Decimal(10, 4)
+  maxTierPercent          Decimal            @db.Decimal(10, 4)
+  maxCustomerRulePercent  Decimal            @db.Decimal(10, 4)
+  maxTotalDiscountPercent Decimal            @db.Decimal(10, 4)
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
+
+  users  User[]
+  stores Store[]
+}
+
+model User {
+  id           String     @id @default(cuid())
+  companyId    String?
+  company      Company?   @relation(fields: [companyId], references: [id])
+  email        String     @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  role         UserRole
+  status       UserStatus @default(ACTIVE)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  managedStores ManagerStore[]
+
+  @@index([companyId, role])
+}
+
+model ManagerStore {
+  userId  String
+  storeId String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, storeId])
+  @@index([storeId])
+}
+
+model Store {
+  id                  String      @id @default(cuid())
+  companyId           String
+  company             Company     @relation(fields: [companyId], references: [id])
+  type                StoreType
+  name                String
+  address             String?
+  enableFiscalReports Boolean     @default(false)
+  status              StoreStatus @default(ACTIVE)
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  managers      ManagerStore[]
+  storeProducts StoreProduct[]
+
+  @@index([companyId, status])
+}
+
+model TaxRate {
+  id        String  @id @default(cuid())
+  companyId String
+  name      String
+  rate      Decimal @db.Decimal(10, 4)
+  isDefault Boolean @default(false)
+
+  products Product[]
+
+  @@index([companyId])
+}
+
+model Category {
+  id        String @id @default(cuid())
+  companyId String
+  name      String
+  sortOrder Int    @default(0)
+
+  subcategories Subcategory[]
+  products      Product[]
+
+  @@index([companyId])
+}
+
+model Subcategory {
+  id         String   @id @default(cuid())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  name       String
+  sortOrder  Int      @default(0)
+
+  products Product[]
+
+  @@index([categoryId])
+}
+
+model Tag {
+  id        String @id @default(cuid())
+  companyId String
+  name      String
+
+  products ProductTag[]
+
+  @@unique([companyId, name])
+}
+
+model Product {
+  id            String        @id @default(cuid())
+  companyId     String
+  sku           String
+  name          String
+  unit          ProductUnit
+  basePrice     Decimal       @db.Decimal(14, 2)
+  taxRateId     String
+  taxRate       TaxRate       @relation(fields: [taxRateId], references: [id])
+  categoryId    String
+  category      Category      @relation(fields: [categoryId], references: [id])
+  subcategoryId String?
+  subcategory   Subcategory?  @relation(fields: [subcategoryId], references: [id])
+  status        ProductStatus @default(ACTIVE)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  barcodes      ProductBarcode[]
+  tags          ProductTag[]
+  storeProducts StoreProduct[]
+
+  @@index([companyId, status])
+  // UNIQUE (companyId, sku) WHERE status != 'ARCHIVED' — добавляется raw SQL в миграцию
+}
+
+model ProductTag {
+  productId String
+  tagId     String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([productId, tagId])
+  @@index([tagId])
+}
+
+model ProductBarcode {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  barcode   String
+  isPrimary Boolean @default(false)
+  isActive  Boolean @default(true)
+
+  @@index([productId])
+  // UNIQUE (barcode) WHERE isActive = true — добавляется raw SQL в миграцию
+}
+
+model StoreProduct {
+  id            String   @id @default(cuid())
+  storeId       String
+  productId     String
+  store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  isAvailable   Boolean  @default(true)
+  priceOverride Decimal? @db.Decimal(14, 2)
+  stock         Decimal  @default(0) @db.Decimal(14, 3)
+
+  @@unique([storeId, productId])
+  @@index([productId])
+}
+
+model PriceHistory {
+  id              String   @id @default(cuid())
+  companyId       String
+  productId       String
+  storeId         String?
+  oldPrice        Decimal  @db.Decimal(14, 2)
+  newPrice        Decimal  @db.Decimal(14, 2)
+  changedByUserId String?
+  changedAt       DateTime @default(now())
+
+  @@index([productId, changedAt])
+  @@index([companyId, changedAt])
 }
