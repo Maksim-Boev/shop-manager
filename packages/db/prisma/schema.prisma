@@ -183,6 +183,16 @@ enum PointsTransactionType {
   REFUND_SPEND_REVERSAL
 }
 
+enum ShiftStatus {
+  OPEN
+  CLOSED
+}
+
+enum ShiftReportType {
+  X
+  Z
+}
+
 // ============ MODELS ============
 
 model Company {
@@ -771,4 +781,35 @@ model PointsTransaction {
   @@index([customerId, occurredAt])
   @@index([customerId, type, expiresAt])
   @@index([returnId])
+}
+
+model Shift {
+  id            String      @id @default(cuid())
+  companyId     String
+  storeId       String
+  cashierUserId String
+  status        ShiftStatus @default(OPEN)
+  openedAt      DateTime    @default(now())
+  closedAt      DateTime?
+  openingCash   Decimal     @db.Decimal(14, 2)
+  closingCash   Decimal?    @db.Decimal(14, 2)
+  expectedCash  Decimal?    @db.Decimal(14, 2)
+  variance      Decimal?    @db.Decimal(14, 2)
+
+  reports ShiftReport[]
+
+  @@index([companyId, cashierUserId, status])
+  @@index([storeId, status])
+  // UNIQUE (companyId, cashierUserId) WHERE status='OPEN' — добавляется raw SQL
+}
+
+model ShiftReport {
+  id        String          @id @default(cuid())
+  shiftId   String
+  shift     Shift           @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+  type      ShiftReportType
+  printedAt DateTime        @default(now())
+  snapshot  Json
+
+  @@index([shiftId])
 }

@@ -87,7 +87,9 @@ export const ModelName = {
   Tier: 'Tier',
   TierRule: 'TierRule',
   CustomerDiscountRule: 'CustomerDiscountRule',
-  PointsTransaction: 'PointsTransaction'
+  PointsTransaction: 'PointsTransaction',
+  Shift: 'Shift',
+  ShiftReport: 'ShiftReport'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -604,6 +606,34 @@ export const PointsTransactionScalarFieldEnum = {
 export type PointsTransactionScalarFieldEnum = (typeof PointsTransactionScalarFieldEnum)[keyof typeof PointsTransactionScalarFieldEnum]
 
 
+export const ShiftScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  storeId: 'storeId',
+  cashierUserId: 'cashierUserId',
+  status: 'status',
+  openedAt: 'openedAt',
+  closedAt: 'closedAt',
+  openingCash: 'openingCash',
+  closingCash: 'closingCash',
+  expectedCash: 'expectedCash',
+  variance: 'variance'
+} as const
+
+export type ShiftScalarFieldEnum = (typeof ShiftScalarFieldEnum)[keyof typeof ShiftScalarFieldEnum]
+
+
+export const ShiftReportScalarFieldEnum = {
+  id: 'id',
+  shiftId: 'shiftId',
+  type: 'type',
+  printedAt: 'printedAt',
+  snapshot: 'snapshot'
+} as const
+
+export type ShiftReportScalarFieldEnum = (typeof ShiftReportScalarFieldEnum)[keyof typeof ShiftReportScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -618,6 +648,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

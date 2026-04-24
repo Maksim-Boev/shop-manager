@@ -259,3 +259,19 @@ export const PointsTransactionType = {
 } as const
 
 export type PointsTransactionType = (typeof PointsTransactionType)[keyof typeof PointsTransactionType]
+
+
+export const ShiftStatus = {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED'
+} as const
+
+export type ShiftStatus = (typeof ShiftStatus)[keyof typeof ShiftStatus]
+
+
+export const ShiftReportType = {
+  X: 'X',
+  Z: 'Z'
+} as const
+
+export type ShiftReportType = (typeof ShiftReportType)[keyof typeof ShiftReportType]

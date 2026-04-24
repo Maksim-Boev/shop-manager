@@ -202,3 +202,13 @@ export type CustomerDiscountRule = Prisma.CustomerDiscountRuleModel
  * 
  */
 export type PointsTransaction = Prisma.PointsTransactionModel
+/**
+ * Model Shift
+ * 
+ */
+export type Shift = Prisma.ShiftModel
+/**
+ * Model ShiftReport
+ * 
+ */
+export type ShiftReport = Prisma.ShiftReportModel
