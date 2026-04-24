@@ -295,6 +295,7 @@ export type CustomerWhereInput = {
   tier?: Prisma.XOR<Prisma.TierNullableScalarRelationFilter, Prisma.TierWhereInput> | null
   contacts?: Prisma.CustomerContactListRelationFilter
   discountRules?: Prisma.CustomerDiscountRuleListRelationFilter
+  pointsTransactions?: Prisma.PointsTransactionListRelationFilter
 }
 
 export type CustomerOrderByWithRelationInput = {
@@ -315,6 +316,7 @@ export type CustomerOrderByWithRelationInput = {
   tier?: Prisma.TierOrderByWithRelationInput
   contacts?: Prisma.CustomerContactOrderByRelationAggregateInput
   discountRules?: Prisma.CustomerDiscountRuleOrderByRelationAggregateInput
+  pointsTransactions?: Prisma.PointsTransactionOrderByRelationAggregateInput
 }
 
 export type CustomerWhereUniqueInput = Prisma.AtLeast<{
@@ -338,6 +340,7 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   tier?: Prisma.XOR<Prisma.TierNullableScalarRelationFilter, Prisma.TierWhereInput> | null
   contacts?: Prisma.CustomerContactListRelationFilter
   discountRules?: Prisma.CustomerDiscountRuleListRelationFilter
+  pointsTransactions?: Prisma.PointsTransactionListRelationFilter
 }, "id">
 
 export type CustomerOrderByWithAggregationInput = {
@@ -399,6 +402,7 @@ export type CustomerCreateInput = {
   tier?: Prisma.TierCreateNestedOneWithoutCustomersInput
   contacts?: Prisma.CustomerContactCreateNestedManyWithoutCustomerInput
   discountRules?: Prisma.CustomerDiscountRuleCreateNestedManyWithoutCustomerInput
+  pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateInput = {
@@ -418,6 +422,7 @@ export type CustomerUncheckedCreateInput = {
   updatedAt?: Date | string
   contacts?: Prisma.CustomerContactUncheckedCreateNestedManyWithoutCustomerInput
   discountRules?: Prisma.CustomerDiscountRuleUncheckedCreateNestedManyWithoutCustomerInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
@@ -437,6 +442,7 @@ export type CustomerUpdateInput = {
   tier?: Prisma.TierUpdateOneWithoutCustomersNestedInput
   contacts?: Prisma.CustomerContactUpdateManyWithoutCustomerNestedInput
   discountRules?: Prisma.CustomerDiscountRuleUpdateManyWithoutCustomerNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateInput = {
@@ -456,6 +462,7 @@ export type CustomerUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.CustomerContactUncheckedUpdateManyWithoutCustomerNestedInput
   discountRules?: Prisma.CustomerDiscountRuleUncheckedUpdateManyWithoutCustomerNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyInput = {
@@ -658,6 +665,20 @@ export type CustomerUpdateOneRequiredWithoutDiscountRulesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutDiscountRulesInput, Prisma.CustomerUpdateWithoutDiscountRulesInput>, Prisma.CustomerUncheckedUpdateWithoutDiscountRulesInput>
 }
 
+export type CustomerCreateNestedOneWithoutPointsTransactionsInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutPointsTransactionsInput, Prisma.CustomerUncheckedCreateWithoutPointsTransactionsInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutPointsTransactionsInput
+  connect?: Prisma.CustomerWhereUniqueInput
+}
+
+export type CustomerUpdateOneRequiredWithoutPointsTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutPointsTransactionsInput, Prisma.CustomerUncheckedCreateWithoutPointsTransactionsInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutPointsTransactionsInput
+  upsert?: Prisma.CustomerUpsertWithoutPointsTransactionsInput
+  connect?: Prisma.CustomerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutPointsTransactionsInput, Prisma.CustomerUpdateWithoutPointsTransactionsInput>, Prisma.CustomerUncheckedUpdateWithoutPointsTransactionsInput>
+}
+
 export type CustomerCreateWithoutContactsInput = {
   id?: string
   companyId: string
@@ -674,6 +695,7 @@ export type CustomerCreateWithoutContactsInput = {
   updatedAt?: Date | string
   tier?: Prisma.TierCreateNestedOneWithoutCustomersInput
   discountRules?: Prisma.CustomerDiscountRuleCreateNestedManyWithoutCustomerInput
+  pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutContactsInput = {
@@ -692,6 +714,7 @@ export type CustomerUncheckedCreateWithoutContactsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   discountRules?: Prisma.CustomerDiscountRuleUncheckedCreateNestedManyWithoutCustomerInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutContactsInput = {
@@ -726,6 +749,7 @@ export type CustomerUpdateWithoutContactsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tier?: Prisma.TierUpdateOneWithoutCustomersNestedInput
   discountRules?: Prisma.CustomerDiscountRuleUpdateManyWithoutCustomerNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutContactsInput = {
@@ -744,6 +768,7 @@ export type CustomerUncheckedUpdateWithoutContactsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   discountRules?: Prisma.CustomerDiscountRuleUncheckedUpdateManyWithoutCustomerNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutTierInput = {
@@ -762,6 +787,7 @@ export type CustomerCreateWithoutTierInput = {
   updatedAt?: Date | string
   contacts?: Prisma.CustomerContactCreateNestedManyWithoutCustomerInput
   discountRules?: Prisma.CustomerDiscountRuleCreateNestedManyWithoutCustomerInput
+  pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutTierInput = {
@@ -780,6 +806,7 @@ export type CustomerUncheckedCreateWithoutTierInput = {
   updatedAt?: Date | string
   contacts?: Prisma.CustomerContactUncheckedCreateNestedManyWithoutCustomerInput
   discountRules?: Prisma.CustomerDiscountRuleUncheckedCreateNestedManyWithoutCustomerInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutTierInput = {
@@ -844,6 +871,7 @@ export type CustomerCreateWithoutDiscountRulesInput = {
   updatedAt?: Date | string
   tier?: Prisma.TierCreateNestedOneWithoutCustomersInput
   contacts?: Prisma.CustomerContactCreateNestedManyWithoutCustomerInput
+  pointsTransactions?: Prisma.PointsTransactionCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutDiscountRulesInput = {
@@ -862,6 +890,7 @@ export type CustomerUncheckedCreateWithoutDiscountRulesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.CustomerContactUncheckedCreateNestedManyWithoutCustomerInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutDiscountRulesInput = {
@@ -896,6 +925,7 @@ export type CustomerUpdateWithoutDiscountRulesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tier?: Prisma.TierUpdateOneWithoutCustomersNestedInput
   contacts?: Prisma.CustomerContactUpdateManyWithoutCustomerNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutDiscountRulesInput = {
@@ -914,6 +944,99 @@ export type CustomerUncheckedUpdateWithoutDiscountRulesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.CustomerContactUncheckedUpdateManyWithoutCustomerNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerCreateWithoutPointsTransactionsInput = {
+  id?: string
+  companyId: string
+  firstName: string
+  lastName: string
+  middleName?: string | null
+  birthday?: Date | string | null
+  pointsBalance?: number
+  totalSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lastPurchaseAt?: Date | string | null
+  status?: $Enums.CustomerStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tier?: Prisma.TierCreateNestedOneWithoutCustomersInput
+  contacts?: Prisma.CustomerContactCreateNestedManyWithoutCustomerInput
+  discountRules?: Prisma.CustomerDiscountRuleCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerUncheckedCreateWithoutPointsTransactionsInput = {
+  id?: string
+  companyId: string
+  firstName: string
+  lastName: string
+  middleName?: string | null
+  birthday?: Date | string | null
+  tierId?: string | null
+  pointsBalance?: number
+  totalSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  lastPurchaseAt?: Date | string | null
+  status?: $Enums.CustomerStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contacts?: Prisma.CustomerContactUncheckedCreateNestedManyWithoutCustomerInput
+  discountRules?: Prisma.CustomerDiscountRuleUncheckedCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerCreateOrConnectWithoutPointsTransactionsInput = {
+  where: Prisma.CustomerWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutPointsTransactionsInput, Prisma.CustomerUncheckedCreateWithoutPointsTransactionsInput>
+}
+
+export type CustomerUpsertWithoutPointsTransactionsInput = {
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutPointsTransactionsInput, Prisma.CustomerUncheckedUpdateWithoutPointsTransactionsInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutPointsTransactionsInput, Prisma.CustomerUncheckedCreateWithoutPointsTransactionsInput>
+  where?: Prisma.CustomerWhereInput
+}
+
+export type CustomerUpdateToOneWithWhereWithoutPointsTransactionsInput = {
+  where?: Prisma.CustomerWhereInput
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutPointsTransactionsInput, Prisma.CustomerUncheckedUpdateWithoutPointsTransactionsInput>
+}
+
+export type CustomerUpdateWithoutPointsTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthday?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsBalance?: Prisma.IntFieldUpdateOperationsInput | number
+  totalSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lastPurchaseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tier?: Prisma.TierUpdateOneWithoutCustomersNestedInput
+  contacts?: Prisma.CustomerContactUpdateManyWithoutCustomerNestedInput
+  discountRules?: Prisma.CustomerDiscountRuleUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerUncheckedUpdateWithoutPointsTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthday?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pointsBalance?: Prisma.IntFieldUpdateOperationsInput | number
+  totalSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lastPurchaseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.CustomerContactUncheckedUpdateManyWithoutCustomerNestedInput
+  discountRules?: Prisma.CustomerDiscountRuleUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyTierInput = {
@@ -948,6 +1071,7 @@ export type CustomerUpdateWithoutTierInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.CustomerContactUpdateManyWithoutCustomerNestedInput
   discountRules?: Prisma.CustomerDiscountRuleUpdateManyWithoutCustomerNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutTierInput = {
@@ -966,6 +1090,7 @@ export type CustomerUncheckedUpdateWithoutTierInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.CustomerContactUncheckedUpdateManyWithoutCustomerNestedInput
   discountRules?: Prisma.CustomerDiscountRuleUncheckedUpdateManyWithoutCustomerNestedInput
+  pointsTransactions?: Prisma.PointsTransactionUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateManyWithoutTierInput = {
@@ -992,11 +1117,13 @@ export type CustomerUncheckedUpdateManyWithoutTierInput = {
 export type CustomerCountOutputType = {
   contacts: number
   discountRules: number
+  pointsTransactions: number
 }
 
 export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contacts?: boolean | CustomerCountOutputTypeCountContactsArgs
   discountRules?: boolean | CustomerCountOutputTypeCountDiscountRulesArgs
+  pointsTransactions?: boolean | CustomerCountOutputTypeCountPointsTransactionsArgs
 }
 
 /**
@@ -1023,6 +1150,13 @@ export type CustomerCountOutputTypeCountDiscountRulesArgs<ExtArgs extends runtim
   where?: Prisma.CustomerDiscountRuleWhereInput
 }
 
+/**
+ * CustomerCountOutputType without action
+ */
+export type CustomerCountOutputTypeCountPointsTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PointsTransactionWhereInput
+}
+
 
 export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1042,6 +1176,7 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   tier?: boolean | Prisma.Customer$tierArgs<ExtArgs>
   contacts?: boolean | Prisma.Customer$contactsArgs<ExtArgs>
   discountRules?: boolean | Prisma.Customer$discountRulesArgs<ExtArgs>
+  pointsTransactions?: boolean | Prisma.Customer$pointsTransactionsArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
@@ -1103,6 +1238,7 @@ export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   tier?: boolean | Prisma.Customer$tierArgs<ExtArgs>
   contacts?: boolean | Prisma.Customer$contactsArgs<ExtArgs>
   discountRules?: boolean | Prisma.Customer$discountRulesArgs<ExtArgs>
+  pointsTransactions?: boolean | Prisma.Customer$pointsTransactionsArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CustomerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1118,6 +1254,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     tier: Prisma.$TierPayload<ExtArgs> | null
     contacts: Prisma.$CustomerContactPayload<ExtArgs>[]
     discountRules: Prisma.$CustomerDiscountRulePayload<ExtArgs>[]
+    pointsTransactions: Prisma.$PointsTransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1531,6 +1668,7 @@ export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime
   tier<T extends Prisma.Customer$tierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$tierArgs<ExtArgs>>): Prisma.Prisma__TierClient<runtime.Types.Result.GetResult<Prisma.$TierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   contacts<T extends Prisma.Customer$contactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   discountRules<T extends Prisma.Customer$discountRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$discountRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerDiscountRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pointsTransactions<T extends Prisma.Customer$pointsTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$pointsTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PointsTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2039,6 +2177,30 @@ export type Customer$discountRulesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.CustomerDiscountRuleScalarFieldEnum | Prisma.CustomerDiscountRuleScalarFieldEnum[]
+}
+
+/**
+ * Customer.pointsTransactions
+ */
+export type Customer$pointsTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PointsTransaction
+   */
+  select?: Prisma.PointsTransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PointsTransaction
+   */
+  omit?: Prisma.PointsTransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PointsTransactionInclude<ExtArgs> | null
+  where?: Prisma.PointsTransactionWhereInput
+  orderBy?: Prisma.PointsTransactionOrderByWithRelationInput | Prisma.PointsTransactionOrderByWithRelationInput[]
+  cursor?: Prisma.PointsTransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PointsTransactionScalarFieldEnum | Prisma.PointsTransactionScalarFieldEnum[]
 }
 
 /**

@@ -86,7 +86,8 @@ export const ModelName = {
   CustomerContact: 'CustomerContact',
   Tier: 'Tier',
   TierRule: 'TierRule',
-  CustomerDiscountRule: 'CustomerDiscountRule'
+  CustomerDiscountRule: 'CustomerDiscountRule',
+  PointsTransaction: 'PointsTransaction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -585,6 +586,22 @@ export const CustomerDiscountRuleScalarFieldEnum = {
 } as const
 
 export type CustomerDiscountRuleScalarFieldEnum = (typeof CustomerDiscountRuleScalarFieldEnum)[keyof typeof CustomerDiscountRuleScalarFieldEnum]
+
+
+export const PointsTransactionScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  customerId: 'customerId',
+  orderId: 'orderId',
+  returnId: 'returnId',
+  type: 'type',
+  amount: 'amount',
+  balanceAfter: 'balanceAfter',
+  occurredAt: 'occurredAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type PointsTransactionScalarFieldEnum = (typeof PointsTransactionScalarFieldEnum)[keyof typeof PointsTransactionScalarFieldEnum]
 
 
 export const SortOrder = {

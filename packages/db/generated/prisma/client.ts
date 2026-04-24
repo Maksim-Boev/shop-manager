@@ -221,3 +221,8 @@ export type TierRule = Prisma.TierRuleModel
  * 
  */
 export type CustomerDiscountRule = Prisma.CustomerDiscountRuleModel
+/**
+ * Model PointsTransaction
+ * 
+ */
+export type PointsTransaction = Prisma.PointsTransactionModel

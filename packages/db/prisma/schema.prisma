@@ -174,6 +174,15 @@ enum DiscountRuleScope {
   PRODUCT
 }
 
+enum PointsTransactionType {
+  EARN
+  SPEND
+  EXPIRE
+  MANUAL
+  REFUND_EARN_REVERSAL
+  REFUND_SPEND_REVERSAL
+}
+
 // ============ MODELS ============
 
 model Company {
@@ -685,8 +694,9 @@ model Customer {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  contacts      CustomerContact[]
-  discountRules CustomerDiscountRule[]
+  contacts           CustomerContact[]
+  discountRules      CustomerDiscountRule[]
+  pointsTransactions PointsTransaction[]
 
   @@index([companyId, status])
   @@index([companyId, lastPurchaseAt])
@@ -743,4 +753,22 @@ model CustomerDiscountRule {
   validTo         DateTime?
 
   @@index([customerId])
+}
+
+model PointsTransaction {
+  id           String                @id @default(cuid())
+  companyId    String
+  customerId   String
+  customer     Customer              @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  orderId      String?
+  returnId     String?
+  type         PointsTransactionType
+  amount       Int
+  balanceAfter Int
+  occurredAt   DateTime              @default(now())
+  expiresAt    DateTime?
+
+  @@index([customerId, occurredAt])
+  @@index([customerId, type, expiresAt])
+  @@index([returnId])
 }

@@ -419,7 +419,8 @@ export const ModelName = {
   CustomerContact: 'CustomerContact',
   Tier: 'Tier',
   TierRule: 'TierRule',
-  CustomerDiscountRule: 'CustomerDiscountRule'
+  CustomerDiscountRule: 'CustomerDiscountRule',
+  PointsTransaction: 'PointsTransaction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -435,7 +436,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "managerStore" | "store" | "taxRate" | "category" | "subcategory" | "tag" | "product" | "productTag" | "productBarcode" | "storeProduct" | "priceHistory" | "stockTransfer" | "stockTransferItem" | "inventoryAudit" | "inventoryAuditItem" | "manualAdjustment" | "stockMovement" | "supplier" | "purchaseOrder" | "purchaseOrderItem" | "goodsReceipt" | "goodsReceiptItem" | "storeOrderCounter" | "order" | "orderItem" | "orderItemDiscount" | "promotion" | "promotionTarget" | "promotionStore" | "customer" | "customerContact" | "tier" | "tierRule" | "customerDiscountRule"
+    modelProps: "company" | "user" | "managerStore" | "store" | "taxRate" | "category" | "subcategory" | "tag" | "product" | "productTag" | "productBarcode" | "storeProduct" | "priceHistory" | "stockTransfer" | "stockTransferItem" | "inventoryAudit" | "inventoryAuditItem" | "manualAdjustment" | "stockMovement" | "supplier" | "purchaseOrder" | "purchaseOrderItem" | "goodsReceipt" | "goodsReceiptItem" | "storeOrderCounter" | "order" | "orderItem" | "orderItemDiscount" | "promotion" | "promotionTarget" | "promotionStore" | "customer" | "customerContact" | "tier" | "tierRule" | "customerDiscountRule" | "pointsTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3103,6 +3104,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PointsTransaction: {
+      payload: Prisma.$PointsTransactionPayload<ExtArgs>
+      fields: Prisma.PointsTransactionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PointsTransactionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PointsTransactionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload>
+        }
+        findFirst: {
+          args: Prisma.PointsTransactionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PointsTransactionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload>
+        }
+        findMany: {
+          args: Prisma.PointsTransactionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload>[]
+        }
+        create: {
+          args: Prisma.PointsTransactionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload>
+        }
+        createMany: {
+          args: Prisma.PointsTransactionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PointsTransactionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload>[]
+        }
+        delete: {
+          args: Prisma.PointsTransactionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload>
+        }
+        update: {
+          args: Prisma.PointsTransactionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PointsTransactionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PointsTransactionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PointsTransactionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload>[]
+        }
+        upsert: {
+          args: Prisma.PointsTransactionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointsTransactionPayload>
+        }
+        aggregate: {
+          args: Prisma.PointsTransactionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePointsTransaction>
+        }
+        groupBy: {
+          args: Prisma.PointsTransactionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PointsTransactionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PointsTransactionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PointsTransactionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3624,6 +3699,22 @@ export const CustomerDiscountRuleScalarFieldEnum = {
 export type CustomerDiscountRuleScalarFieldEnum = (typeof CustomerDiscountRuleScalarFieldEnum)[keyof typeof CustomerDiscountRuleScalarFieldEnum]
 
 
+export const PointsTransactionScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  customerId: 'customerId',
+  orderId: 'orderId',
+  returnId: 'returnId',
+  type: 'type',
+  amount: 'amount',
+  balanceAfter: 'balanceAfter',
+  occurredAt: 'occurredAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type PointsTransactionScalarFieldEnum = (typeof PointsTransactionScalarFieldEnum)[keyof typeof PointsTransactionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -4099,6 +4190,20 @@ export type ListEnumDiscountRuleScopeFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'PointsTransactionType'
+ */
+export type EnumPointsTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PointsTransactionType'>
+    
+
+
+/**
+ * Reference to a field of type 'PointsTransactionType[]'
+ */
+export type ListEnumPointsTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PointsTransactionType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4242,6 +4347,7 @@ export type GlobalOmitConfig = {
   tier?: Prisma.TierOmit
   tierRule?: Prisma.TierRuleOmit
   customerDiscountRule?: Prisma.CustomerDiscountRuleOmit
+  pointsTransaction?: Prisma.PointsTransactionOmit
 }
 
 /* Types for Logging */

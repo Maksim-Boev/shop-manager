@@ -247,3 +247,15 @@ export const DiscountRuleScope = {
 } as const
 
 export type DiscountRuleScope = (typeof DiscountRuleScope)[keyof typeof DiscountRuleScope]
+
+
+export const PointsTransactionType = {
+  EARN: 'EARN',
+  SPEND: 'SPEND',
+  EXPIRE: 'EXPIRE',
+  MANUAL: 'MANUAL',
+  REFUND_EARN_REVERSAL: 'REFUND_EARN_REVERSAL',
+  REFUND_SPEND_REVERSAL: 'REFUND_SPEND_REVERSAL'
+} as const
+
+export type PointsTransactionType = (typeof PointsTransactionType)[keyof typeof PointsTransactionType]
