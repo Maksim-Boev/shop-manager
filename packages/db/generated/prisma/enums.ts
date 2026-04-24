@@ -140,3 +140,42 @@ export const PurchaseSourceType = {
 } as const
 
 export type PurchaseSourceType = (typeof PurchaseSourceType)[keyof typeof PurchaseSourceType]
+
+
+export const OrderState = {
+  DRAFT: 'DRAFT',
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  FULFILLED: 'FULFILLED',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type OrderState = (typeof OrderState)[keyof typeof OrderState]
+
+
+export const DeliveryType = {
+  PICKUP: 'PICKUP',
+  DELIVERY: 'DELIVERY'
+} as const
+
+export type DeliveryType = (typeof DeliveryType)[keyof typeof DeliveryType]
+
+
+export const DeliveryStatus = {
+  NONE: 'NONE',
+  PREPARING: 'PREPARING',
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
+  DELIVERED: 'DELIVERED'
+} as const
+
+export type DeliveryStatus = (typeof DeliveryStatus)[keyof typeof DeliveryStatus]
+
+
+export const PaymentMethod = {
+  CASH: 'CASH',
+  CARD: 'CARD',
+  MANUAL: 'MANUAL'
+} as const
+
+export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]

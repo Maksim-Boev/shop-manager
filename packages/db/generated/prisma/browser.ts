@@ -137,3 +137,18 @@ export type GoodsReceipt = Prisma.GoodsReceiptModel
  * 
  */
 export type GoodsReceiptItem = Prisma.GoodsReceiptItemModel
+/**
+ * Model StoreOrderCounter
+ * 
+ */
+export type StoreOrderCounter = Prisma.StoreOrderCounterModel
+/**
+ * Model Order
+ * 
+ */
+export type Order = Prisma.OrderModel
+/**
+ * Model OrderItem
+ * 
+ */
+export type OrderItem = Prisma.OrderItemModel

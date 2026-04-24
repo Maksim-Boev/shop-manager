@@ -100,6 +100,33 @@ enum PurchaseSourceType {
   WAREHOUSE
 }
 
+enum OrderState {
+  DRAFT
+  PENDING
+  PAID
+  FULFILLED
+  CANCELLED
+  REFUNDED
+}
+
+enum DeliveryType {
+  PICKUP
+  DELIVERY
+}
+
+enum DeliveryStatus {
+  NONE
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  MANUAL
+}
+
 // ============ MODELS ============
 
 model Company {
@@ -166,6 +193,7 @@ model Store {
   storeProducts StoreProduct[]
   transfersOut  StockTransfer[] @relation("StockTransferSource")
   transfersIn   StockTransfer[] @relation("StockTransferDestination")
+  orderCounter  StoreOrderCounter?
 
   @@index([companyId, status])
 }
@@ -383,7 +411,8 @@ model StockMovement {
   inventoryAuditItem InventoryAuditItem? @relation(fields: [inventoryAuditItemId], references: [id])
   manualAdjustment   ManualAdjustment?   @relation(fields: [manualAdjustmentId], references: [id])
   goodsReceiptItem   GoodsReceiptItem?   @relation("GoodsReceiptItemMovements", fields: [goodsReceiptItemId], references: [id])
-  // orderItem / returnItem будут добавлены в соответствующих задачах
+  orderItem          OrderItem?          @relation("OrderItemMovements", fields: [orderItemId], references: [id])
+  // returnItem будет добавлен в соответствующей задаче
 
   @@index([storeId, productId, occurredAt])
   @@index([companyId, occurredAt])
@@ -456,4 +485,66 @@ model GoodsReceiptItem {
   movements StockMovement[] @relation("GoodsReceiptItemMovements")
 
   @@index([goodsReceiptId])
+}
+
+model StoreOrderCounter {
+  storeId    String @id
+  store      Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  nextNumber Int    @default(1)
+}
+
+model Order {
+  id            String     @id @default(cuid())
+  companyId     String
+  storeId       String
+  orderNumber   Int
+  state         OrderState @default(DRAFT)
+  cashierUserId String
+  shiftId       String?
+  customerId    String?
+
+  deliveryType    DeliveryType   @default(PICKUP)
+  deliveryAddress Json?
+  deliveryStatus  DeliveryStatus @default(NONE)
+
+  subtotal      Decimal @default(0) @db.Decimal(14, 2)
+  discountTotal Decimal @default(0) @db.Decimal(14, 2)
+  taxTotal      Decimal @default(0) @db.Decimal(14, 2)
+  grandTotal    Decimal @default(0) @db.Decimal(14, 2)
+
+  pointsRedeemed Int @default(0)
+  pointsEarned   Int @default(0)
+
+  paymentMethod PaymentMethod?
+  paidAmount    Decimal?       @db.Decimal(14, 2)
+  paidAt        DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items OrderItem[]
+
+  @@unique([storeId, orderNumber])
+  @@index([companyId, storeId, state, createdAt])
+  @@index([customerId])
+}
+
+model OrderItem {
+  id                  String      @id @default(cuid())
+  orderId             String
+  order               Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId           String
+  productNameSnapshot String
+  unitSnapshot        ProductUnit
+  originalUnitPrice   Decimal     @db.Decimal(14, 2)
+  taxRateSnapshot     Decimal     @db.Decimal(10, 4)
+  quantity            Decimal     @db.Decimal(14, 3)
+  discountTotal       Decimal     @default(0) @db.Decimal(14, 2)
+  lineTotal           Decimal     @db.Decimal(14, 2)
+  sourcePromotionId   String?
+
+  movements StockMovement[] @relation("OrderItemMovements")
+
+  @@index([orderId])
+  @@index([productId])
 }
