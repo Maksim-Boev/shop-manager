@@ -1,0 +1,864 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============ ENUMS ============
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  MANAGER
+  CASHIER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+}
+
+enum StoreType {
+  SHOP
+  WAREHOUSE
+}
+
+enum StoreStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum TierAssignmentMode {
+  CUMULATIVE_LIFETIME
+  ROLLING_WINDOW
+  MANUAL_ONLY
+}
+
+enum PointsExpiryMode {
+  NEVER
+  AFTER_EARN_DAYS
+  AFTER_INACTIVITY_DAYS
+}
+
+enum ProductUnit {
+  PIECE
+  KG
+  GRAM
+  LITER
+  MILLILITER
+  METER
+  PACK
+}
+
+enum ProductStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum StockMovementType {
+  SALE
+  RETURN
+  RECEIVE
+  TRANSFER_IN
+  TRANSFER_OUT
+  INVENTORY_ADJUST
+  MANUAL_ADJUST
+}
+
+enum DocState {
+  DRAFT
+  APPLIED
+  CANCELLED
+}
+
+enum TransferState {
+  DRAFT
+  IN_TRANSIT
+  COMPLETED
+  CANCELLED
+}
+
+enum SupplierStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum PurchaseOrderState {
+  DRAFT
+  PLACED
+  PARTIALLY_RECEIVED
+  RECEIVED
+  CANCELLED
+}
+
+enum PurchaseSourceType {
+  SUPPLIER
+  ANY_SUPPLIER
+  WAREHOUSE
+}
+
+enum OrderState {
+  DRAFT
+  PENDING
+  PAID
+  FULFILLED
+  CANCELLED
+  REFUNDED
+}
+
+enum DeliveryType {
+  PICKUP
+  DELIVERY
+}
+
+enum DeliveryStatus {
+  NONE
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  MANUAL
+}
+
+enum DiscountSourceType {
+  PROMOTION
+  TIER
+  CUSTOMER_RULE
+  POINTS
+}
+
+enum PromotionStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum PromotionActionType {
+  PERCENT
+  FIXED_AMOUNT
+  FIXED_PRICE
+  BOGO
+}
+
+enum PromotionTargetType {
+  ALL
+  PRODUCT
+  CATEGORY
+  SUBCATEGORY
+  TAG
+}
+
+enum CustomerStatus {
+  ACTIVE
+  BLOCKED
+}
+
+enum CustomerContactType {
+  PHONE
+  LOYALTY_CARD
+}
+
+enum DiscountRuleScope {
+  WHOLE_ORDER
+  CATEGORY
+  SUBCATEGORY
+  TAG
+  PRODUCT
+}
+
+enum PointsTransactionType {
+  EARN
+  SPEND
+  EXPIRE
+  MANUAL
+  REFUND_EARN_REVERSAL
+  REFUND_SPEND_REVERSAL
+}
+
+enum ShiftStatus {
+  OPEN
+  CLOSED
+}
+
+enum ShiftReportType {
+  X
+  Z
+}
+
+// ============ MODELS ============
+
+model Company {
+  id                      String             @id @default(cuid())
+  name                    String
+  tierAssignmentMode      TierAssignmentMode
+  tierRollingWindowDays   Int?
+  pointsEarnPercent       Decimal            @db.Decimal(10, 4)
+  pointsRedemptionRate    Decimal            @db.Decimal(10, 4)
+  pointsExpiryMode        PointsExpiryMode
+  pointsExpiryDays        Int?
+  maxPromotionPercent     Decimal            @db.Decimal(10, 4)
+  maxTierPercent          Decimal            @db.Decimal(10, 4)
+  maxCustomerRulePercent  Decimal            @db.Decimal(10, 4)
+  maxTotalDiscountPercent Decimal            @db.Decimal(10, 4)
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
+
+  users  User[]
+  stores Store[]
+}
+
+model User {
+  id           String     @id @default(cuid())
+  companyId    String?
+  company      Company?   @relation(fields: [companyId], references: [id])
+  email        String     @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  role         UserRole
+  status       UserStatus @default(ACTIVE)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  managedStores ManagerStore[]
+
+  @@index([companyId, role])
+}
+
+model ManagerStore {
+  userId  String
+  storeId String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, storeId])
+  @@index([storeId])
+}
+
+model Store {
+  id                  String      @id @default(cuid())
+  companyId           String
+  company             Company     @relation(fields: [companyId], references: [id])
+  type                StoreType
+  name                String
+  address             String?
+  enableFiscalReports Boolean     @default(false)
+  status              StoreStatus @default(ACTIVE)
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  managers        ManagerStore[]
+  storeProducts   StoreProduct[]
+  transfersOut    StockTransfer[] @relation("StockTransferSource")
+  transfersIn     StockTransfer[] @relation("StockTransferDestination")
+  orderCounter    StoreOrderCounter?
+  promotionStores PromotionStore[]
+
+  @@index([companyId, status])
+}
+
+model TaxRate {
+  id        String  @id @default(cuid())
+  companyId String
+  name      String
+  rate      Decimal @db.Decimal(10, 4)
+  isDefault Boolean @default(false)
+
+  products Product[]
+
+  @@index([companyId])
+}
+
+model Category {
+  id        String @id @default(cuid())
+  companyId String
+  name      String
+  sortOrder Int    @default(0)
+
+  subcategories Subcategory[]
+  products      Product[]
+
+  @@index([companyId])
+}
+
+model Subcategory {
+  id         String   @id @default(cuid())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  name       String
+  sortOrder  Int      @default(0)
+
+  products Product[]
+
+  @@index([categoryId])
+}
+
+model Tag {
+  id        String @id @default(cuid())
+  companyId String
+  name      String
+
+  products ProductTag[]
+
+  @@unique([companyId, name])
+}
+
+model Product {
+  id            String        @id @default(cuid())
+  companyId     String
+  sku           String
+  name          String
+  unit          ProductUnit
+  basePrice     Decimal       @db.Decimal(14, 2)
+  taxRateId     String
+  taxRate       TaxRate       @relation(fields: [taxRateId], references: [id])
+  categoryId    String
+  category      Category      @relation(fields: [categoryId], references: [id])
+  subcategoryId String?
+  subcategory   Subcategory?  @relation(fields: [subcategoryId], references: [id])
+  status        ProductStatus @default(ACTIVE)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  barcodes      ProductBarcode[]
+  tags          ProductTag[]
+  storeProducts StoreProduct[]
+
+  @@index([companyId, status])
+  // UNIQUE (companyId, sku) WHERE status != 'ARCHIVED' — добавляется raw SQL в миграцию
+}
+
+model ProductTag {
+  productId String
+  tagId     String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([productId, tagId])
+  @@index([tagId])
+}
+
+model ProductBarcode {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  barcode   String
+  isPrimary Boolean @default(false)
+  isActive  Boolean @default(true)
+
+  @@index([productId])
+  // UNIQUE (barcode) WHERE isActive = true — добавляется raw SQL в миграцию
+}
+
+model StoreProduct {
+  id            String   @id @default(cuid())
+  storeId       String
+  productId     String
+  store         Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  isAvailable   Boolean  @default(true)
+  priceOverride Decimal? @db.Decimal(14, 2)
+  stock         Decimal  @default(0) @db.Decimal(14, 3)
+
+  @@unique([storeId, productId])
+  @@index([productId])
+}
+
+model PriceHistory {
+  id              String   @id @default(cuid())
+  companyId       String
+  productId       String
+  storeId         String?
+  oldPrice        Decimal  @db.Decimal(14, 2)
+  newPrice        Decimal  @db.Decimal(14, 2)
+  changedByUserId String?
+  changedAt       DateTime @default(now())
+
+  @@index([productId, changedAt])
+  @@index([companyId, changedAt])
+}
+
+model StockTransfer {
+  id                 String        @id @default(cuid())
+  companyId          String
+  sourceStoreId      String
+  destinationStoreId String
+  sourceStore        Store         @relation("StockTransferSource", fields: [sourceStoreId], references: [id])
+  destinationStore   Store         @relation("StockTransferDestination", fields: [destinationStoreId], references: [id])
+  state              TransferState @default(DRAFT)
+  createdByUserId    String
+  createdAt          DateTime      @default(now())
+  completedAt        DateTime?
+
+  items StockTransferItem[]
+
+  @@index([companyId, state])
+}
+
+model StockTransferItem {
+  id              String        @id @default(cuid())
+  stockTransferId String
+  transfer        StockTransfer @relation(fields: [stockTransferId], references: [id], onDelete: Cascade)
+  productId       String
+  quantity        Decimal       @db.Decimal(14, 3)
+
+  movements StockMovement[]
+
+  @@index([stockTransferId])
+}
+
+model InventoryAudit {
+  id              String    @id @default(cuid())
+  companyId       String
+  storeId         String
+  state           DocState  @default(DRAFT)
+  startedAt       DateTime  @default(now())
+  appliedAt       DateTime?
+  createdByUserId String
+
+  items InventoryAuditItem[]
+
+  @@index([companyId, storeId, state])
+}
+
+model InventoryAuditItem {
+  id               String         @id @default(cuid())
+  inventoryAuditId String
+  audit            InventoryAudit @relation(fields: [inventoryAuditId], references: [id], onDelete: Cascade)
+  productId        String
+  expectedQty      Decimal        @db.Decimal(14, 3)
+  countedQty       Decimal        @db.Decimal(14, 3)
+  delta            Decimal        @db.Decimal(14, 3)
+
+  movements StockMovement[]
+
+  @@index([inventoryAuditId])
+}
+
+model ManualAdjustment {
+  id              String   @id @default(cuid())
+  companyId       String
+  storeId         String
+  productId       String
+  quantity        Decimal  @db.Decimal(14, 3)
+  reason          String
+  createdByUserId String
+  createdAt       DateTime @default(now())
+
+  movements StockMovement[]
+
+  @@index([companyId, storeId])
+}
+
+model StockMovement {
+  id         String            @id @default(cuid())
+  companyId  String
+  storeId    String
+  productId  String
+  quantity   Decimal           @db.Decimal(14, 3)
+  type       StockMovementType
+  occurredAt DateTime          @default(now())
+
+  orderItemId          String?
+  returnItemId         String?
+  goodsReceiptItemId   String?
+  stockTransferItemId  String?
+  inventoryAuditItemId String?
+  manualAdjustmentId   String?
+
+  stockTransferItem  StockTransferItem?  @relation(fields: [stockTransferItemId], references: [id])
+  inventoryAuditItem InventoryAuditItem? @relation(fields: [inventoryAuditItemId], references: [id])
+  manualAdjustment   ManualAdjustment?   @relation(fields: [manualAdjustmentId], references: [id])
+  goodsReceiptItem   GoodsReceiptItem?   @relation("GoodsReceiptItemMovements", fields: [goodsReceiptItemId], references: [id])
+  orderItem          OrderItem?          @relation("OrderItemMovements", fields: [orderItemId], references: [id])
+  returnItem         ReturnItem?         @relation("ReturnItemMovements", fields: [returnItemId], references: [id])
+
+  @@index([storeId, productId, occurredAt])
+  @@index([companyId, occurredAt])
+}
+
+model Supplier {
+  id          String         @id @default(cuid())
+  companyId   String
+  name        String
+  contactInfo String?
+  status      SupplierStatus @default(ACTIVE)
+
+  purchaseOrders PurchaseOrder[]
+
+  @@index([companyId, status])
+}
+
+model PurchaseOrder {
+  id                 String             @id @default(cuid())
+  companyId          String
+  destinationStoreId String
+  sourceType         PurchaseSourceType
+  supplierId         String?
+  supplier           Supplier?          @relation(fields: [supplierId], references: [id])
+  sourceWarehouseId  String?
+  state              PurchaseOrderState @default(DRAFT)
+  placedAt           DateTime?
+  createdByUserId    String
+  createdAt          DateTime           @default(now())
+
+  items    PurchaseOrderItem[]
+  receipts GoodsReceipt[]
+
+  @@index([companyId, state])
+}
+
+model PurchaseOrderItem {
+  id              String        @id @default(cuid())
+  purchaseOrderId String
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  productId       String
+  orderedQty      Decimal       @db.Decimal(14, 3)
+  unitCost        Decimal?      @db.Decimal(14, 2)
+
+  receiptItems GoodsReceiptItem[]
+
+  @@index([purchaseOrderId])
+}
+
+model GoodsReceipt {
+  id               String        @id @default(cuid())
+  purchaseOrderId  String
+  purchaseOrder    PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
+  receivedAt       DateTime      @default(now())
+  receivedByUserId String
+
+  items GoodsReceiptItem[]
+
+  @@index([purchaseOrderId])
+}
+
+model GoodsReceiptItem {
+  id                  String            @id @default(cuid())
+  goodsReceiptId      String
+  goodsReceipt        GoodsReceipt      @relation(fields: [goodsReceiptId], references: [id], onDelete: Cascade)
+  purchaseOrderItemId String
+  purchaseOrderItem   PurchaseOrderItem @relation(fields: [purchaseOrderItemId], references: [id])
+  quantity            Decimal           @db.Decimal(14, 3)
+
+  movements StockMovement[] @relation("GoodsReceiptItemMovements")
+
+  @@index([goodsReceiptId])
+}
+
+model StoreOrderCounter {
+  storeId    String @id
+  store      Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  nextNumber Int    @default(1)
+}
+
+model Order {
+  id            String     @id @default(cuid())
+  companyId     String
+  storeId       String
+  orderNumber   Int
+  state         OrderState @default(DRAFT)
+  cashierUserId String
+  shiftId       String?
+  customerId    String?
+
+  deliveryType    DeliveryType   @default(PICKUP)
+  deliveryAddress Json?
+  deliveryStatus  DeliveryStatus @default(NONE)
+
+  subtotal      Decimal @default(0) @db.Decimal(14, 2)
+  discountTotal Decimal @default(0) @db.Decimal(14, 2)
+  taxTotal      Decimal @default(0) @db.Decimal(14, 2)
+  grandTotal    Decimal @default(0) @db.Decimal(14, 2)
+
+  pointsRedeemed Int @default(0)
+  pointsEarned   Int @default(0)
+
+  paymentMethod PaymentMethod?
+  paidAmount    Decimal?       @db.Decimal(14, 2)
+  paidAt        DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items OrderItem[]
+
+  @@unique([storeId, orderNumber])
+  @@index([companyId, storeId, state, createdAt])
+  @@index([customerId])
+}
+
+model OrderItem {
+  id                  String      @id @default(cuid())
+  orderId             String
+  order               Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId           String
+  productNameSnapshot String
+  unitSnapshot        ProductUnit
+  originalUnitPrice   Decimal     @db.Decimal(14, 2)
+  taxRateSnapshot     Decimal     @db.Decimal(10, 4)
+  quantity            Decimal     @db.Decimal(14, 3)
+  discountTotal       Decimal     @default(0) @db.Decimal(14, 2)
+  lineTotal           Decimal     @db.Decimal(14, 2)
+  sourcePromotionId   String?
+
+  movements StockMovement[]     @relation("OrderItemMovements")
+  discounts OrderItemDiscount[]
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model OrderItemDiscount {
+  id             String             @id @default(cuid())
+  orderItemId    String
+  orderItem      OrderItem          @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  sourceType     DiscountSourceType
+  sourceId       String
+  appliedPercent Decimal?           @db.Decimal(10, 4)
+  appliedAmount  Decimal            @db.Decimal(14, 2)
+
+  @@index([orderItemId])
+  @@index([sourceType, sourceId])
+}
+
+model Promotion {
+  id          String          @id @default(cuid())
+  companyId   String
+  name        String
+  description String?
+  status      PromotionStatus @default(DRAFT)
+  priority    Int             @default(0)
+
+  validFrom     DateTime
+  validTo       DateTime
+  dayOfWeekMask Int[]    @default([])
+  timeOfDayFrom String? // "HH:MM"
+  timeOfDayTo   String?
+
+  cartMinSubtotal Decimal? @db.Decimal(14, 2)
+  cartMinQuantity Int?
+
+  minApplicableTierLevel Int?
+  requiresCustomer       Boolean @default(false)
+
+  actionType  PromotionActionType
+  actionValue Decimal             @db.Decimal(14, 4)
+
+  bogoTriggerQty         Int?
+  bogoGetQty             Int?
+  bogoGetDiscountPercent Decimal? @db.Decimal(10, 4)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  targets PromotionTarget[]
+  stores  PromotionStore[]
+
+  @@index([companyId, status, validFrom, validTo, priority])
+}
+
+model PromotionTarget {
+  id          String              @id @default(cuid())
+  promotionId String
+  promotion   Promotion           @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  targetType  PromotionTargetType
+  targetId    String?
+
+  @@index([promotionId])
+  @@index([targetType, targetId])
+}
+
+model PromotionStore {
+  promotionId String
+  storeId     String
+  promotion   Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  store       Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@id([promotionId, storeId])
+  @@index([storeId])
+}
+
+model Customer {
+  id             String         @id @default(cuid())
+  companyId      String
+  firstName      String
+  lastName       String
+  middleName     String?
+  birthday       DateTime?
+  tierId         String?
+  tier           Tier?          @relation(fields: [tierId], references: [id])
+  pointsBalance  Int            @default(0)
+  totalSpent     Decimal        @default(0) @db.Decimal(14, 2)
+  lastPurchaseAt DateTime?
+  status         CustomerStatus @default(ACTIVE)
+  notes          String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  contacts           CustomerContact[]
+  discountRules      CustomerDiscountRule[]
+  pointsTransactions PointsTransaction[]
+
+  @@index([companyId, status])
+  @@index([companyId, lastPurchaseAt])
+}
+
+model CustomerContact {
+  id         String              @id @default(cuid())
+  customerId String
+  companyId  String // денормализовано для уник. индекса; заполняется триггером BEFORE INSERT
+  customer   Customer            @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  type       CustomerContactType
+  value      String
+  isPrimary  Boolean             @default(false)
+
+  @@unique([companyId, type, value])
+  @@index([customerId])
+}
+
+model Tier {
+  id             String  @id @default(cuid())
+  companyId      String
+  name           String
+  level          Int
+  entryThreshold Decimal @db.Decimal(14, 2)
+
+  rules     TierRule[]
+  customers Customer[]
+
+  @@unique([companyId, level])
+  @@index([companyId])
+}
+
+model TierRule {
+  id              String            @id @default(cuid())
+  tierId          String
+  tier            Tier              @relation(fields: [tierId], references: [id], onDelete: Cascade)
+  scope           DiscountRuleScope
+  targetId        String?
+  discountPercent Decimal?          @db.Decimal(10, 4)
+  discountAmount  Decimal?          @db.Decimal(14, 2)
+
+  @@index([tierId])
+}
+
+model CustomerDiscountRule {
+  id              String            @id @default(cuid())
+  customerId      String
+  customer        Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  scope           DiscountRuleScope
+  targetId        String?
+  discountPercent Decimal?          @db.Decimal(10, 4)
+  discountAmount  Decimal?          @db.Decimal(14, 2)
+  validFrom       DateTime?
+  validTo         DateTime?
+
+  @@index([customerId])
+}
+
+model PointsTransaction {
+  id           String                @id @default(cuid())
+  companyId    String
+  customerId   String
+  customer     Customer              @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  orderId      String?
+  returnId     String?
+  type         PointsTransactionType
+  amount       Int
+  balanceAfter Int
+  occurredAt   DateTime              @default(now())
+  expiresAt    DateTime?
+
+  @@index([customerId, occurredAt])
+  @@index([customerId, type, expiresAt])
+  @@index([returnId])
+}
+
+model Shift {
+  id            String      @id @default(cuid())
+  companyId     String
+  storeId       String
+  cashierUserId String
+  status        ShiftStatus @default(OPEN)
+  openedAt      DateTime    @default(now())
+  closedAt      DateTime?
+  openingCash   Decimal     @db.Decimal(14, 2)
+  closingCash   Decimal?    @db.Decimal(14, 2)
+  expectedCash  Decimal?    @db.Decimal(14, 2)
+  variance      Decimal?    @db.Decimal(14, 2)
+
+  reports ShiftReport[]
+
+  @@index([companyId, cashierUserId, status])
+  @@index([storeId, status])
+  // UNIQUE (companyId, cashierUserId) WHERE status='OPEN' — добавляется raw SQL
+}
+
+model ShiftReport {
+  id        String          @id @default(cuid())
+  shiftId   String
+  shift     Shift           @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+  type      ShiftReportType
+  printedAt DateTime        @default(now())
+  snapshot  Json
+
+  @@index([shiftId])
+}
+
+enum ReturnState {
+  DRAFT
+  APPLIED
+  CANCELLED
+}
+
+enum ReturnReasonCode {
+  BRAK
+  NOT_FIT
+  REFUSAL
+  OTHER
+}
+
+model Return {
+  id              String           @id @default(cuid())
+  companyId       String
+  storeId         String
+  orderId         String
+  shiftId         String
+  state           ReturnState      @default(DRAFT)
+  reasonCode      ReturnReasonCode
+  reasonNotes     String?
+  refundMethod    PaymentMethod
+  refundAmount    Decimal          @db.Decimal(14, 2)
+  createdByUserId String
+  createdAt       DateTime         @default(now())
+  appliedAt       DateTime?
+
+  items ReturnItem[]
+
+  @@index([companyId, storeId, state])
+  @@index([orderId])
+}
+
+model ReturnItem {
+  id               String  @id @default(cuid())
+  returnId         String
+  return_          Return  @relation(fields: [returnId], references: [id], onDelete: Cascade)
+  orderItemId      String
+  quantity         Decimal @db.Decimal(14, 3)
+  unitRefundAmount Decimal @db.Decimal(14, 2)
+  refundSubtotal   Decimal @db.Decimal(14, 2)
+
+  movements StockMovement[] @relation("ReturnItemMovements")
+
+  @@index([returnId])
+  @@index([orderItemId])
+}

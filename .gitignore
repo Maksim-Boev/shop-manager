@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+**/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -47,3 +48,9 @@ next-env.d.ts
 # Claude AI instructions files
 **/CLAUDE.md
 /generated/prisma/
+/apps/cashier/.next/
+/apps/manager/.next/
+/docs/superpowers/
+/apps/manager/prototype/
+/apps/cashier/prototype/
+/.superpowers/
