@@ -196,3 +196,28 @@ export type PromotionTarget = Prisma.PromotionTargetModel
  * 
  */
 export type PromotionStore = Prisma.PromotionStoreModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel
+/**
+ * Model CustomerContact
+ * 
+ */
+export type CustomerContact = Prisma.CustomerContactModel
+/**
+ * Model Tier
+ * 
+ */
+export type Tier = Prisma.TierModel
+/**
+ * Model TierRule
+ * 
+ */
+export type TierRule = Prisma.TierRuleModel
+/**
+ * Model CustomerDiscountRule
+ * 
+ */
+export type CustomerDiscountRule = Prisma.CustomerDiscountRuleModel

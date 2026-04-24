@@ -681,6 +681,57 @@ export type EnumPromotionTargetTypeWithAggregatesFilter<$PrismaModel = never> = 
   _max?: Prisma.NestedEnumPromotionTargetTypeFilter<$PrismaModel>
 }
 
+export type EnumCustomerStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomerStatus | Prisma.EnumCustomerStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomerStatus[] | Prisma.ListEnumCustomerStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomerStatus[] | Prisma.ListEnumCustomerStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomerStatusFilter<$PrismaModel> | $Enums.CustomerStatus
+}
+
+export type EnumCustomerStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomerStatus | Prisma.EnumCustomerStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomerStatus[] | Prisma.ListEnumCustomerStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomerStatus[] | Prisma.ListEnumCustomerStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomerStatusWithAggregatesFilter<$PrismaModel> | $Enums.CustomerStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCustomerStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCustomerStatusFilter<$PrismaModel>
+}
+
+export type EnumCustomerContactTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomerContactType | Prisma.EnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomerContactType[] | Prisma.ListEnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomerContactType[] | Prisma.ListEnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomerContactTypeFilter<$PrismaModel> | $Enums.CustomerContactType
+}
+
+export type EnumCustomerContactTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomerContactType | Prisma.EnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomerContactType[] | Prisma.ListEnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomerContactType[] | Prisma.ListEnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomerContactTypeWithAggregatesFilter<$PrismaModel> | $Enums.CustomerContactType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCustomerContactTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCustomerContactTypeFilter<$PrismaModel>
+}
+
+export type EnumDiscountRuleScopeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DiscountRuleScope | Prisma.EnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.DiscountRuleScope[] | Prisma.ListEnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DiscountRuleScope[] | Prisma.ListEnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDiscountRuleScopeFilter<$PrismaModel> | $Enums.DiscountRuleScope
+}
+
+export type EnumDiscountRuleScopeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DiscountRuleScope | Prisma.EnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.DiscountRuleScope[] | Prisma.ListEnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DiscountRuleScope[] | Prisma.ListEnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDiscountRuleScopeWithAggregatesFilter<$PrismaModel> | $Enums.DiscountRuleScope
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDiscountRuleScopeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDiscountRuleScopeFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1332,6 +1383,57 @@ export type NestedEnumPromotionTargetTypeWithAggregatesFilter<$PrismaModel = nev
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPromotionTargetTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPromotionTargetTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumCustomerStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomerStatus | Prisma.EnumCustomerStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomerStatus[] | Prisma.ListEnumCustomerStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomerStatus[] | Prisma.ListEnumCustomerStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomerStatusFilter<$PrismaModel> | $Enums.CustomerStatus
+}
+
+export type NestedEnumCustomerStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomerStatus | Prisma.EnumCustomerStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomerStatus[] | Prisma.ListEnumCustomerStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomerStatus[] | Prisma.ListEnumCustomerStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomerStatusWithAggregatesFilter<$PrismaModel> | $Enums.CustomerStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCustomerStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCustomerStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumCustomerContactTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomerContactType | Prisma.EnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomerContactType[] | Prisma.ListEnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomerContactType[] | Prisma.ListEnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomerContactTypeFilter<$PrismaModel> | $Enums.CustomerContactType
+}
+
+export type NestedEnumCustomerContactTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CustomerContactType | Prisma.EnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CustomerContactType[] | Prisma.ListEnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CustomerContactType[] | Prisma.ListEnumCustomerContactTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCustomerContactTypeWithAggregatesFilter<$PrismaModel> | $Enums.CustomerContactType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCustomerContactTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCustomerContactTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumDiscountRuleScopeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DiscountRuleScope | Prisma.EnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.DiscountRuleScope[] | Prisma.ListEnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DiscountRuleScope[] | Prisma.ListEnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDiscountRuleScopeFilter<$PrismaModel> | $Enums.DiscountRuleScope
+}
+
+export type NestedEnumDiscountRuleScopeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DiscountRuleScope | Prisma.EnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.DiscountRuleScope[] | Prisma.ListEnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DiscountRuleScope[] | Prisma.ListEnumDiscountRuleScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDiscountRuleScopeWithAggregatesFilter<$PrismaModel> | $Enums.DiscountRuleScope
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDiscountRuleScopeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDiscountRuleScopeFilter<$PrismaModel>
 }
 
 

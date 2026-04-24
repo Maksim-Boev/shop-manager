@@ -156,6 +156,24 @@ enum PromotionTargetType {
   TAG
 }
 
+enum CustomerStatus {
+  ACTIVE
+  BLOCKED
+}
+
+enum CustomerContactType {
+  PHONE
+  LOYALTY_CARD
+}
+
+enum DiscountRuleScope {
+  WHOLE_ORDER
+  CATEGORY
+  SUBCATEGORY
+  TAG
+  PRODUCT
+}
+
 // ============ MODELS ============
 
 model Company {
@@ -648,4 +666,81 @@ model PromotionStore {
 
   @@id([promotionId, storeId])
   @@index([storeId])
+}
+
+model Customer {
+  id             String         @id @default(cuid())
+  companyId      String
+  firstName      String
+  lastName       String
+  middleName     String?
+  birthday       DateTime?
+  tierId         String?
+  tier           Tier?          @relation(fields: [tierId], references: [id])
+  pointsBalance  Int            @default(0)
+  totalSpent     Decimal        @default(0) @db.Decimal(14, 2)
+  lastPurchaseAt DateTime?
+  status         CustomerStatus @default(ACTIVE)
+  notes          String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  contacts      CustomerContact[]
+  discountRules CustomerDiscountRule[]
+
+  @@index([companyId, status])
+  @@index([companyId, lastPurchaseAt])
+}
+
+model CustomerContact {
+  id         String              @id @default(cuid())
+  customerId String
+  companyId  String // денормализовано для уник. индекса; заполняется триггером BEFORE INSERT
+  customer   Customer            @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  type       CustomerContactType
+  value      String
+  isPrimary  Boolean             @default(false)
+
+  @@unique([companyId, type, value])
+  @@index([customerId])
+}
+
+model Tier {
+  id             String  @id @default(cuid())
+  companyId      String
+  name           String
+  level          Int
+  entryThreshold Decimal @db.Decimal(14, 2)
+
+  rules     TierRule[]
+  customers Customer[]
+
+  @@unique([companyId, level])
+  @@index([companyId])
+}
+
+model TierRule {
+  id              String            @id @default(cuid())
+  tierId          String
+  tier            Tier              @relation(fields: [tierId], references: [id], onDelete: Cascade)
+  scope           DiscountRuleScope
+  targetId        String?
+  discountPercent Decimal?          @db.Decimal(10, 4)
+  discountAmount  Decimal?          @db.Decimal(14, 2)
+
+  @@index([tierId])
+}
+
+model CustomerDiscountRule {
+  id              String            @id @default(cuid())
+  customerId      String
+  customer        Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  scope           DiscountRuleScope
+  targetId        String?
+  discountPercent Decimal?          @db.Decimal(10, 4)
+  discountAmount  Decimal?          @db.Decimal(14, 2)
+  validFrom       DateTime?
+  validTo         DateTime?
+
+  @@index([customerId])
 }

@@ -81,7 +81,12 @@ export const ModelName = {
   OrderItemDiscount: 'OrderItemDiscount',
   Promotion: 'Promotion',
   PromotionTarget: 'PromotionTarget',
-  PromotionStore: 'PromotionStore'
+  PromotionStore: 'PromotionStore',
+  Customer: 'Customer',
+  CustomerContact: 'CustomerContact',
+  Tier: 'Tier',
+  TierRule: 'TierRule',
+  CustomerDiscountRule: 'CustomerDiscountRule'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -511,6 +516,75 @@ export const PromotionStoreScalarFieldEnum = {
 } as const
 
 export type PromotionStoreScalarFieldEnum = (typeof PromotionStoreScalarFieldEnum)[keyof typeof PromotionStoreScalarFieldEnum]
+
+
+export const CustomerScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  middleName: 'middleName',
+  birthday: 'birthday',
+  tierId: 'tierId',
+  pointsBalance: 'pointsBalance',
+  totalSpent: 'totalSpent',
+  lastPurchaseAt: 'lastPurchaseAt',
+  status: 'status',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+export const CustomerContactScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  companyId: 'companyId',
+  type: 'type',
+  value: 'value',
+  isPrimary: 'isPrimary'
+} as const
+
+export type CustomerContactScalarFieldEnum = (typeof CustomerContactScalarFieldEnum)[keyof typeof CustomerContactScalarFieldEnum]
+
+
+export const TierScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  name: 'name',
+  level: 'level',
+  entryThreshold: 'entryThreshold'
+} as const
+
+export type TierScalarFieldEnum = (typeof TierScalarFieldEnum)[keyof typeof TierScalarFieldEnum]
+
+
+export const TierRuleScalarFieldEnum = {
+  id: 'id',
+  tierId: 'tierId',
+  scope: 'scope',
+  targetId: 'targetId',
+  discountPercent: 'discountPercent',
+  discountAmount: 'discountAmount'
+} as const
+
+export type TierRuleScalarFieldEnum = (typeof TierRuleScalarFieldEnum)[keyof typeof TierRuleScalarFieldEnum]
+
+
+export const CustomerDiscountRuleScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  scope: 'scope',
+  targetId: 'targetId',
+  discountPercent: 'discountPercent',
+  discountAmount: 'discountAmount',
+  validFrom: 'validFrom',
+  validTo: 'validTo'
+} as const
+
+export type CustomerDiscountRuleScalarFieldEnum = (typeof CustomerDiscountRuleScalarFieldEnum)[keyof typeof CustomerDiscountRuleScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -220,3 +220,30 @@ export const PromotionTargetType = {
 } as const
 
 export type PromotionTargetType = (typeof PromotionTargetType)[keyof typeof PromotionTargetType]
+
+
+export const CustomerStatus = {
+  ACTIVE: 'ACTIVE',
+  BLOCKED: 'BLOCKED'
+} as const
+
+export type CustomerStatus = (typeof CustomerStatus)[keyof typeof CustomerStatus]
+
+
+export const CustomerContactType = {
+  PHONE: 'PHONE',
+  LOYALTY_CARD: 'LOYALTY_CARD'
+} as const
+
+export type CustomerContactType = (typeof CustomerContactType)[keyof typeof CustomerContactType]
+
+
+export const DiscountRuleScope = {
+  WHOLE_ORDER: 'WHOLE_ORDER',
+  CATEGORY: 'CATEGORY',
+  SUBCATEGORY: 'SUBCATEGORY',
+  TAG: 'TAG',
+  PRODUCT: 'PRODUCT'
+} as const
+
+export type DiscountRuleScope = (typeof DiscountRuleScope)[keyof typeof DiscountRuleScope]
