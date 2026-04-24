@@ -81,6 +81,25 @@ enum TransferState {
   CANCELLED
 }
 
+enum SupplierStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum PurchaseOrderState {
+  DRAFT
+  PLACED
+  PARTIALLY_RECEIVED
+  RECEIVED
+  CANCELLED
+}
+
+enum PurchaseSourceType {
+  SUPPLIER
+  ANY_SUPPLIER
+  WAREHOUSE
+}
+
 // ============ MODELS ============
 
 model Company {
@@ -363,8 +382,78 @@ model StockMovement {
   stockTransferItem  StockTransferItem?  @relation(fields: [stockTransferItemId], references: [id])
   inventoryAuditItem InventoryAuditItem? @relation(fields: [inventoryAuditItemId], references: [id])
   manualAdjustment   ManualAdjustment?   @relation(fields: [manualAdjustmentId], references: [id])
-  // orderItem / returnItem / goodsReceiptItem будут добавлены в соответствующих задачах
+  goodsReceiptItem   GoodsReceiptItem?   @relation("GoodsReceiptItemMovements", fields: [goodsReceiptItemId], references: [id])
+  // orderItem / returnItem будут добавлены в соответствующих задачах
 
   @@index([storeId, productId, occurredAt])
   @@index([companyId, occurredAt])
+}
+
+model Supplier {
+  id          String         @id @default(cuid())
+  companyId   String
+  name        String
+  contactInfo String?
+  status      SupplierStatus @default(ACTIVE)
+
+  purchaseOrders PurchaseOrder[]
+
+  @@index([companyId, status])
+}
+
+model PurchaseOrder {
+  id                 String             @id @default(cuid())
+  companyId          String
+  destinationStoreId String
+  sourceType         PurchaseSourceType
+  supplierId         String?
+  supplier           Supplier?          @relation(fields: [supplierId], references: [id])
+  sourceWarehouseId  String?
+  state              PurchaseOrderState @default(DRAFT)
+  placedAt           DateTime?
+  createdByUserId    String
+  createdAt          DateTime           @default(now())
+
+  items    PurchaseOrderItem[]
+  receipts GoodsReceipt[]
+
+  @@index([companyId, state])
+}
+
+model PurchaseOrderItem {
+  id              String        @id @default(cuid())
+  purchaseOrderId String
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  productId       String
+  orderedQty      Decimal       @db.Decimal(14, 3)
+  unitCost        Decimal?      @db.Decimal(14, 2)
+
+  receiptItems GoodsReceiptItem[]
+
+  @@index([purchaseOrderId])
+}
+
+model GoodsReceipt {
+  id               String        @id @default(cuid())
+  purchaseOrderId  String
+  purchaseOrder    PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
+  receivedAt       DateTime      @default(now())
+  receivedByUserId String
+
+  items GoodsReceiptItem[]
+
+  @@index([purchaseOrderId])
+}
+
+model GoodsReceiptItem {
+  id                  String            @id @default(cuid())
+  goodsReceiptId      String
+  goodsReceipt        GoodsReceipt      @relation(fields: [goodsReceiptId], references: [id], onDelete: Cascade)
+  purchaseOrderItemId String
+  purchaseOrderItem   PurchaseOrderItem @relation(fields: [purchaseOrderItemId], references: [id])
+  quantity            Decimal           @db.Decimal(14, 3)
+
+  movements StockMovement[] @relation("GoodsReceiptItemMovements")
+
+  @@index([goodsReceiptId])
 }

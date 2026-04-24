@@ -112,3 +112,31 @@ export const TransferState = {
 } as const
 
 export type TransferState = (typeof TransferState)[keyof typeof TransferState]
+
+
+export const SupplierStatus = {
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type SupplierStatus = (typeof SupplierStatus)[keyof typeof SupplierStatus]
+
+
+export const PurchaseOrderState = {
+  DRAFT: 'DRAFT',
+  PLACED: 'PLACED',
+  PARTIALLY_RECEIVED: 'PARTIALLY_RECEIVED',
+  RECEIVED: 'RECEIVED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type PurchaseOrderState = (typeof PurchaseOrderState)[keyof typeof PurchaseOrderState]
+
+
+export const PurchaseSourceType = {
+  SUPPLIER: 'SUPPLIER',
+  ANY_SUPPLIER: 'ANY_SUPPLIER',
+  WAREHOUSE: 'WAREHOUSE'
+} as const
+
+export type PurchaseSourceType = (typeof PurchaseSourceType)[keyof typeof PurchaseSourceType]

@@ -112,3 +112,28 @@ export type ManualAdjustment = Prisma.ManualAdjustmentModel
  * 
  */
 export type StockMovement = Prisma.StockMovementModel
+/**
+ * Model Supplier
+ * 
+ */
+export type Supplier = Prisma.SupplierModel
+/**
+ * Model PurchaseOrder
+ * 
+ */
+export type PurchaseOrder = Prisma.PurchaseOrderModel
+/**
+ * Model PurchaseOrderItem
+ * 
+ */
+export type PurchaseOrderItem = Prisma.PurchaseOrderItemModel
+/**
+ * Model GoodsReceipt
+ * 
+ */
+export type GoodsReceipt = Prisma.GoodsReceiptModel
+/**
+ * Model GoodsReceiptItem
+ * 
+ */
+export type GoodsReceiptItem = Prisma.GoodsReceiptItemModel

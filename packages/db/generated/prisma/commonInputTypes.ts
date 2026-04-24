@@ -443,6 +443,57 @@ export type EnumStockMovementTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumStockMovementTypeFilter<$PrismaModel>
 }
 
+export type EnumSupplierStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierStatus | Prisma.EnumSupplierStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplierStatus[] | Prisma.ListEnumSupplierStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplierStatus[] | Prisma.ListEnumSupplierStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplierStatusFilter<$PrismaModel> | $Enums.SupplierStatus
+}
+
+export type EnumSupplierStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierStatus | Prisma.EnumSupplierStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplierStatus[] | Prisma.ListEnumSupplierStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplierStatus[] | Prisma.ListEnumSupplierStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplierStatusWithAggregatesFilter<$PrismaModel> | $Enums.SupplierStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplierStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplierStatusFilter<$PrismaModel>
+}
+
+export type EnumPurchaseSourceTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseSourceType | Prisma.EnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PurchaseSourceType[] | Prisma.ListEnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PurchaseSourceType[] | Prisma.ListEnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPurchaseSourceTypeFilter<$PrismaModel> | $Enums.PurchaseSourceType
+}
+
+export type EnumPurchaseOrderStateFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseOrderState | Prisma.EnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  in?: $Enums.PurchaseOrderState[] | Prisma.ListEnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PurchaseOrderState[] | Prisma.ListEnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPurchaseOrderStateFilter<$PrismaModel> | $Enums.PurchaseOrderState
+}
+
+export type EnumPurchaseSourceTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseSourceType | Prisma.EnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PurchaseSourceType[] | Prisma.ListEnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PurchaseSourceType[] | Prisma.ListEnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPurchaseSourceTypeWithAggregatesFilter<$PrismaModel> | $Enums.PurchaseSourceType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPurchaseSourceTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPurchaseSourceTypeFilter<$PrismaModel>
+}
+
+export type EnumPurchaseOrderStateWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseOrderState | Prisma.EnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  in?: $Enums.PurchaseOrderState[] | Prisma.ListEnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PurchaseOrderState[] | Prisma.ListEnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPurchaseOrderStateWithAggregatesFilter<$PrismaModel> | $Enums.PurchaseOrderState
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPurchaseOrderStateFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPurchaseOrderStateFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -883,6 +934,57 @@ export type NestedEnumStockMovementTypeWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumStockMovementTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumStockMovementTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumSupplierStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierStatus | Prisma.EnumSupplierStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplierStatus[] | Prisma.ListEnumSupplierStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplierStatus[] | Prisma.ListEnumSupplierStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplierStatusFilter<$PrismaModel> | $Enums.SupplierStatus
+}
+
+export type NestedEnumSupplierStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierStatus | Prisma.EnumSupplierStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplierStatus[] | Prisma.ListEnumSupplierStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplierStatus[] | Prisma.ListEnumSupplierStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplierStatusWithAggregatesFilter<$PrismaModel> | $Enums.SupplierStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplierStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplierStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumPurchaseSourceTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseSourceType | Prisma.EnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PurchaseSourceType[] | Prisma.ListEnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PurchaseSourceType[] | Prisma.ListEnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPurchaseSourceTypeFilter<$PrismaModel> | $Enums.PurchaseSourceType
+}
+
+export type NestedEnumPurchaseOrderStateFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseOrderState | Prisma.EnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  in?: $Enums.PurchaseOrderState[] | Prisma.ListEnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PurchaseOrderState[] | Prisma.ListEnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPurchaseOrderStateFilter<$PrismaModel> | $Enums.PurchaseOrderState
+}
+
+export type NestedEnumPurchaseSourceTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseSourceType | Prisma.EnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PurchaseSourceType[] | Prisma.ListEnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PurchaseSourceType[] | Prisma.ListEnumPurchaseSourceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPurchaseSourceTypeWithAggregatesFilter<$PrismaModel> | $Enums.PurchaseSourceType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPurchaseSourceTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPurchaseSourceTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumPurchaseOrderStateWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseOrderState | Prisma.EnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  in?: $Enums.PurchaseOrderState[] | Prisma.ListEnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PurchaseOrderState[] | Prisma.ListEnumPurchaseOrderStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPurchaseOrderStateWithAggregatesFilter<$PrismaModel> | $Enums.PurchaseOrderState
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPurchaseOrderStateFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPurchaseOrderStateFilter<$PrismaModel>
 }
 
 
