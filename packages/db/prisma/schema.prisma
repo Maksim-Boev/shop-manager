@@ -58,6 +58,29 @@ enum ProductStatus {
   ARCHIVED
 }
 
+enum StockMovementType {
+  SALE
+  RETURN
+  RECEIVE
+  TRANSFER_IN
+  TRANSFER_OUT
+  INVENTORY_ADJUST
+  MANUAL_ADJUST
+}
+
+enum DocState {
+  DRAFT
+  APPLIED
+  CANCELLED
+}
+
+enum TransferState {
+  DRAFT
+  IN_TRANSIT
+  COMPLETED
+  CANCELLED
+}
+
 // ============ MODELS ============
 
 model Company {
@@ -122,6 +145,8 @@ model Store {
 
   managers      ManagerStore[]
   storeProducts StoreProduct[]
+  transfersOut  StockTransfer[] @relation("StockTransferSource")
+  transfersIn   StockTransfer[] @relation("StockTransferDestination")
 
   @@index([companyId, status])
 }
@@ -245,4 +270,101 @@ model PriceHistory {
 
   @@index([productId, changedAt])
   @@index([companyId, changedAt])
+}
+
+model StockTransfer {
+  id                 String        @id @default(cuid())
+  companyId          String
+  sourceStoreId      String
+  destinationStoreId String
+  sourceStore        Store         @relation("StockTransferSource", fields: [sourceStoreId], references: [id])
+  destinationStore   Store         @relation("StockTransferDestination", fields: [destinationStoreId], references: [id])
+  state              TransferState @default(DRAFT)
+  createdByUserId    String
+  createdAt          DateTime      @default(now())
+  completedAt        DateTime?
+
+  items StockTransferItem[]
+
+  @@index([companyId, state])
+}
+
+model StockTransferItem {
+  id              String        @id @default(cuid())
+  stockTransferId String
+  transfer        StockTransfer @relation(fields: [stockTransferId], references: [id], onDelete: Cascade)
+  productId       String
+  quantity        Decimal       @db.Decimal(14, 3)
+
+  movements StockMovement[]
+
+  @@index([stockTransferId])
+}
+
+model InventoryAudit {
+  id              String    @id @default(cuid())
+  companyId       String
+  storeId         String
+  state           DocState  @default(DRAFT)
+  startedAt       DateTime  @default(now())
+  appliedAt       DateTime?
+  createdByUserId String
+
+  items InventoryAuditItem[]
+
+  @@index([companyId, storeId, state])
+}
+
+model InventoryAuditItem {
+  id               String         @id @default(cuid())
+  inventoryAuditId String
+  audit            InventoryAudit @relation(fields: [inventoryAuditId], references: [id], onDelete: Cascade)
+  productId        String
+  expectedQty      Decimal        @db.Decimal(14, 3)
+  countedQty       Decimal        @db.Decimal(14, 3)
+  delta            Decimal        @db.Decimal(14, 3)
+
+  movements StockMovement[]
+
+  @@index([inventoryAuditId])
+}
+
+model ManualAdjustment {
+  id              String   @id @default(cuid())
+  companyId       String
+  storeId         String
+  productId       String
+  quantity        Decimal  @db.Decimal(14, 3)
+  reason          String
+  createdByUserId String
+  createdAt       DateTime @default(now())
+
+  movements StockMovement[]
+
+  @@index([companyId, storeId])
+}
+
+model StockMovement {
+  id         String            @id @default(cuid())
+  companyId  String
+  storeId    String
+  productId  String
+  quantity   Decimal           @db.Decimal(14, 3)
+  type       StockMovementType
+  occurredAt DateTime          @default(now())
+
+  orderItemId          String?
+  returnItemId         String?
+  goodsReceiptItemId   String?
+  stockTransferItemId  String?
+  inventoryAuditItemId String?
+  manualAdjustmentId   String?
+
+  stockTransferItem  StockTransferItem?  @relation(fields: [stockTransferItemId], references: [id])
+  inventoryAuditItem InventoryAuditItem? @relation(fields: [inventoryAuditItemId], references: [id])
+  manualAdjustment   ManualAdjustment?   @relation(fields: [manualAdjustmentId], references: [id])
+  // orderItem / returnItem / goodsReceiptItem будут добавлены в соответствующих задачах
+
+  @@index([storeId, productId, occurredAt])
+  @@index([companyId, occurredAt])
 }

@@ -106,3 +106,33 @@ export type StoreProduct = Prisma.StoreProductModel
  * 
  */
 export type PriceHistory = Prisma.PriceHistoryModel
+/**
+ * Model StockTransfer
+ * 
+ */
+export type StockTransfer = Prisma.StockTransferModel
+/**
+ * Model StockTransferItem
+ * 
+ */
+export type StockTransferItem = Prisma.StockTransferItemModel
+/**
+ * Model InventoryAudit
+ * 
+ */
+export type InventoryAudit = Prisma.InventoryAuditModel
+/**
+ * Model InventoryAuditItem
+ * 
+ */
+export type InventoryAuditItem = Prisma.InventoryAuditItemModel
+/**
+ * Model ManualAdjustment
+ * 
+ */
+export type ManualAdjustment = Prisma.ManualAdjustmentModel
+/**
+ * Model StockMovement
+ * 
+ */
+export type StockMovement = Prisma.StockMovementModel

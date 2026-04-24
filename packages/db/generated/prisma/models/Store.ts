@@ -217,6 +217,8 @@ export type StoreWhereInput = {
   company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   managers?: Prisma.ManagerStoreListRelationFilter
   storeProducts?: Prisma.StoreProductListRelationFilter
+  transfersOut?: Prisma.StockTransferListRelationFilter
+  transfersIn?: Prisma.StockTransferListRelationFilter
 }
 
 export type StoreOrderByWithRelationInput = {
@@ -232,6 +234,8 @@ export type StoreOrderByWithRelationInput = {
   company?: Prisma.CompanyOrderByWithRelationInput
   managers?: Prisma.ManagerStoreOrderByRelationAggregateInput
   storeProducts?: Prisma.StoreProductOrderByRelationAggregateInput
+  transfersOut?: Prisma.StockTransferOrderByRelationAggregateInput
+  transfersIn?: Prisma.StockTransferOrderByRelationAggregateInput
 }
 
 export type StoreWhereUniqueInput = Prisma.AtLeast<{
@@ -250,6 +254,8 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   managers?: Prisma.ManagerStoreListRelationFilter
   storeProducts?: Prisma.StoreProductListRelationFilter
+  transfersOut?: Prisma.StockTransferListRelationFilter
+  transfersIn?: Prisma.StockTransferListRelationFilter
 }, "id">
 
 export type StoreOrderByWithAggregationInput = {
@@ -294,6 +300,8 @@ export type StoreCreateInput = {
   company: Prisma.CompanyCreateNestedOneWithoutStoresInput
   managers?: Prisma.ManagerStoreCreateNestedManyWithoutStoreInput
   storeProducts?: Prisma.StoreProductCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
 }
 
 export type StoreUncheckedCreateInput = {
@@ -308,6 +316,8 @@ export type StoreUncheckedCreateInput = {
   updatedAt?: Date | string
   managers?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutStoreInput
   storeProducts?: Prisma.StoreProductUncheckedCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
 }
 
 export type StoreUpdateInput = {
@@ -322,6 +332,8 @@ export type StoreUpdateInput = {
   company?: Prisma.CompanyUpdateOneRequiredWithoutStoresNestedInput
   managers?: Prisma.ManagerStoreUpdateManyWithoutStoreNestedInput
   storeProducts?: Prisma.StoreProductUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
 }
 
 export type StoreUncheckedUpdateInput = {
@@ -336,6 +348,8 @@ export type StoreUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   managers?: Prisma.ManagerStoreUncheckedUpdateManyWithoutStoreNestedInput
   storeProducts?: Prisma.StoreProductUncheckedUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
 }
 
 export type StoreCreateManyInput = {
@@ -506,6 +520,34 @@ export type StoreUpdateOneRequiredWithoutStoreProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutStoreProductsInput, Prisma.StoreUpdateWithoutStoreProductsInput>, Prisma.StoreUncheckedUpdateWithoutStoreProductsInput>
 }
 
+export type StoreCreateNestedOneWithoutTransfersOutInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTransfersOutInput, Prisma.StoreUncheckedCreateWithoutTransfersOutInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTransfersOutInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreCreateNestedOneWithoutTransfersInInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTransfersInInput, Prisma.StoreUncheckedCreateWithoutTransfersInInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTransfersInInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutTransfersOutNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTransfersOutInput, Prisma.StoreUncheckedCreateWithoutTransfersOutInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTransfersOutInput
+  upsert?: Prisma.StoreUpsertWithoutTransfersOutInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutTransfersOutInput, Prisma.StoreUpdateWithoutTransfersOutInput>, Prisma.StoreUncheckedUpdateWithoutTransfersOutInput>
+}
+
+export type StoreUpdateOneRequiredWithoutTransfersInNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTransfersInInput, Prisma.StoreUncheckedCreateWithoutTransfersInInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTransfersInInput
+  upsert?: Prisma.StoreUpsertWithoutTransfersInInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutTransfersInInput, Prisma.StoreUpdateWithoutTransfersInInput>, Prisma.StoreUncheckedUpdateWithoutTransfersInInput>
+}
+
 export type StoreCreateWithoutCompanyInput = {
   id?: string
   type: $Enums.StoreType
@@ -517,6 +559,8 @@ export type StoreCreateWithoutCompanyInput = {
   updatedAt?: Date | string
   managers?: Prisma.ManagerStoreCreateNestedManyWithoutStoreInput
   storeProducts?: Prisma.StoreProductCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
 }
 
 export type StoreUncheckedCreateWithoutCompanyInput = {
@@ -530,6 +574,8 @@ export type StoreUncheckedCreateWithoutCompanyInput = {
   updatedAt?: Date | string
   managers?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutStoreInput
   storeProducts?: Prisma.StoreProductUncheckedCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
 }
 
 export type StoreCreateOrConnectWithoutCompanyInput = {
@@ -584,6 +630,8 @@ export type StoreCreateWithoutManagersInput = {
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutStoresInput
   storeProducts?: Prisma.StoreProductCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
 }
 
 export type StoreUncheckedCreateWithoutManagersInput = {
@@ -597,6 +645,8 @@ export type StoreUncheckedCreateWithoutManagersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   storeProducts?: Prisma.StoreProductUncheckedCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
 }
 
 export type StoreCreateOrConnectWithoutManagersInput = {
@@ -626,6 +676,8 @@ export type StoreUpdateWithoutManagersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutStoresNestedInput
   storeProducts?: Prisma.StoreProductUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutManagersInput = {
@@ -639,6 +691,8 @@ export type StoreUncheckedUpdateWithoutManagersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   storeProducts?: Prisma.StoreProductUncheckedUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
 }
 
 export type StoreCreateWithoutStoreProductsInput = {
@@ -652,6 +706,8 @@ export type StoreCreateWithoutStoreProductsInput = {
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutStoresInput
   managers?: Prisma.ManagerStoreCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
 }
 
 export type StoreUncheckedCreateWithoutStoreProductsInput = {
@@ -665,6 +721,8 @@ export type StoreUncheckedCreateWithoutStoreProductsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   managers?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
 }
 
 export type StoreCreateOrConnectWithoutStoreProductsInput = {
@@ -694,6 +752,8 @@ export type StoreUpdateWithoutStoreProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutStoresNestedInput
   managers?: Prisma.ManagerStoreUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutStoreProductsInput = {
@@ -707,6 +767,160 @@ export type StoreUncheckedUpdateWithoutStoreProductsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   managers?: Prisma.ManagerStoreUncheckedUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
+}
+
+export type StoreCreateWithoutTransfersOutInput = {
+  id?: string
+  type: $Enums.StoreType
+  name: string
+  address?: string | null
+  enableFiscalReports?: boolean
+  status?: $Enums.StoreStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company: Prisma.CompanyCreateNestedOneWithoutStoresInput
+  managers?: Prisma.ManagerStoreCreateNestedManyWithoutStoreInput
+  storeProducts?: Prisma.StoreProductCreateNestedManyWithoutStoreInput
+  transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
+}
+
+export type StoreUncheckedCreateWithoutTransfersOutInput = {
+  id?: string
+  companyId: string
+  type: $Enums.StoreType
+  name: string
+  address?: string | null
+  enableFiscalReports?: boolean
+  status?: $Enums.StoreStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  managers?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutStoreInput
+  storeProducts?: Prisma.StoreProductUncheckedCreateNestedManyWithoutStoreInput
+  transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
+}
+
+export type StoreCreateOrConnectWithoutTransfersOutInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTransfersOutInput, Prisma.StoreUncheckedCreateWithoutTransfersOutInput>
+}
+
+export type StoreCreateWithoutTransfersInInput = {
+  id?: string
+  type: $Enums.StoreType
+  name: string
+  address?: string | null
+  enableFiscalReports?: boolean
+  status?: $Enums.StoreStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company: Prisma.CompanyCreateNestedOneWithoutStoresInput
+  managers?: Prisma.ManagerStoreCreateNestedManyWithoutStoreInput
+  storeProducts?: Prisma.StoreProductCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
+}
+
+export type StoreUncheckedCreateWithoutTransfersInInput = {
+  id?: string
+  companyId: string
+  type: $Enums.StoreType
+  name: string
+  address?: string | null
+  enableFiscalReports?: boolean
+  status?: $Enums.StoreStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  managers?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutStoreInput
+  storeProducts?: Prisma.StoreProductUncheckedCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
+}
+
+export type StoreCreateOrConnectWithoutTransfersInInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTransfersInInput, Prisma.StoreUncheckedCreateWithoutTransfersInInput>
+}
+
+export type StoreUpsertWithoutTransfersOutInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutTransfersOutInput, Prisma.StoreUncheckedUpdateWithoutTransfersOutInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTransfersOutInput, Prisma.StoreUncheckedCreateWithoutTransfersOutInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutTransfersOutInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutTransfersOutInput, Prisma.StoreUncheckedUpdateWithoutTransfersOutInput>
+}
+
+export type StoreUpdateWithoutTransfersOutInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneRequiredWithoutStoresNestedInput
+  managers?: Prisma.ManagerStoreUpdateManyWithoutStoreNestedInput
+  storeProducts?: Prisma.StoreProductUpdateManyWithoutStoreNestedInput
+  transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutTransfersOutInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managers?: Prisma.ManagerStoreUncheckedUpdateManyWithoutStoreNestedInput
+  storeProducts?: Prisma.StoreProductUncheckedUpdateManyWithoutStoreNestedInput
+  transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
+}
+
+export type StoreUpsertWithoutTransfersInInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutTransfersInInput, Prisma.StoreUncheckedUpdateWithoutTransfersInInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTransfersInInput, Prisma.StoreUncheckedCreateWithoutTransfersInInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutTransfersInInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutTransfersInInput, Prisma.StoreUncheckedUpdateWithoutTransfersInInput>
+}
+
+export type StoreUpdateWithoutTransfersInInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneRequiredWithoutStoresNestedInput
+  managers?: Prisma.ManagerStoreUpdateManyWithoutStoreNestedInput
+  storeProducts?: Prisma.StoreProductUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutTransfersInInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managers?: Prisma.ManagerStoreUncheckedUpdateManyWithoutStoreNestedInput
+  storeProducts?: Prisma.StoreProductUncheckedUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
 }
 
 export type StoreCreateManyCompanyInput = {
@@ -731,6 +945,8 @@ export type StoreUpdateWithoutCompanyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   managers?: Prisma.ManagerStoreUpdateManyWithoutStoreNestedInput
   storeProducts?: Prisma.StoreProductUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutCompanyInput = {
@@ -744,6 +960,8 @@ export type StoreUncheckedUpdateWithoutCompanyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   managers?: Prisma.ManagerStoreUncheckedUpdateManyWithoutStoreNestedInput
   storeProducts?: Prisma.StoreProductUncheckedUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
 }
 
 export type StoreUncheckedUpdateManyWithoutCompanyInput = {
@@ -765,11 +983,15 @@ export type StoreUncheckedUpdateManyWithoutCompanyInput = {
 export type StoreCountOutputType = {
   managers: number
   storeProducts: number
+  transfersOut: number
+  transfersIn: number
 }
 
 export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   managers?: boolean | StoreCountOutputTypeCountManagersArgs
   storeProducts?: boolean | StoreCountOutputTypeCountStoreProductsArgs
+  transfersOut?: boolean | StoreCountOutputTypeCountTransfersOutArgs
+  transfersIn?: boolean | StoreCountOutputTypeCountTransfersInArgs
 }
 
 /**
@@ -796,6 +1018,20 @@ export type StoreCountOutputTypeCountStoreProductsArgs<ExtArgs extends runtime.T
   where?: Prisma.StoreProductWhereInput
 }
 
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountTransfersOutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockTransferWhereInput
+}
+
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountTransfersInArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockTransferWhereInput
+}
+
 
 export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -810,6 +1046,8 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   managers?: boolean | Prisma.Store$managersArgs<ExtArgs>
   storeProducts?: boolean | Prisma.Store$storeProductsArgs<ExtArgs>
+  transfersOut?: boolean | Prisma.Store$transfersOutArgs<ExtArgs>
+  transfersIn?: boolean | Prisma.Store$transfersInArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["store"]>
 
@@ -856,6 +1094,8 @@ export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   managers?: boolean | Prisma.Store$managersArgs<ExtArgs>
   storeProducts?: boolean | Prisma.Store$storeProductsArgs<ExtArgs>
+  transfersOut?: boolean | Prisma.Store$transfersOutArgs<ExtArgs>
+  transfersIn?: boolean | Prisma.Store$transfersInArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StoreIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -871,6 +1111,8 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     company: Prisma.$CompanyPayload<ExtArgs>
     managers: Prisma.$ManagerStorePayload<ExtArgs>[]
     storeProducts: Prisma.$StoreProductPayload<ExtArgs>[]
+    transfersOut: Prisma.$StockTransferPayload<ExtArgs>[]
+    transfersIn: Prisma.$StockTransferPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1279,6 +1521,8 @@ export interface Prisma__StoreClient<T, Null = never, ExtArgs extends runtime.Ty
   company<T extends Prisma.CompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   managers<T extends Prisma.Store$managersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$managersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerStorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   storeProducts<T extends Prisma.Store$storeProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$storeProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoreProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transfersOut<T extends Prisma.Store$transfersOutArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$transfersOutArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transfersIn<T extends Prisma.Store$transfersInArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$transfersInArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1763,6 +2007,54 @@ export type Store$storeProductsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.StoreProductScalarFieldEnum | Prisma.StoreProductScalarFieldEnum[]
+}
+
+/**
+ * Store.transfersOut
+ */
+export type Store$transfersOutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockTransfer
+   */
+  select?: Prisma.StockTransferSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockTransfer
+   */
+  omit?: Prisma.StockTransferOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockTransferInclude<ExtArgs> | null
+  where?: Prisma.StockTransferWhereInput
+  orderBy?: Prisma.StockTransferOrderByWithRelationInput | Prisma.StockTransferOrderByWithRelationInput[]
+  cursor?: Prisma.StockTransferWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockTransferScalarFieldEnum | Prisma.StockTransferScalarFieldEnum[]
+}
+
+/**
+ * Store.transfersIn
+ */
+export type Store$transfersInArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockTransfer
+   */
+  select?: Prisma.StockTransferSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockTransfer
+   */
+  omit?: Prisma.StockTransferOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockTransferInclude<ExtArgs> | null
+  where?: Prisma.StockTransferWhereInput
+  orderBy?: Prisma.StockTransferOrderByWithRelationInput | Prisma.StockTransferOrderByWithRelationInput[]
+  cursor?: Prisma.StockTransferWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockTransferScalarFieldEnum | Prisma.StockTransferScalarFieldEnum[]
 }
 
 /**

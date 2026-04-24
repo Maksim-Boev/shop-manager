@@ -63,7 +63,13 @@ export const ModelName = {
   ProductTag: 'ProductTag',
   ProductBarcode: 'ProductBarcode',
   StoreProduct: 'StoreProduct',
-  PriceHistory: 'PriceHistory'
+  PriceHistory: 'PriceHistory',
+  StockTransfer: 'StockTransfer',
+  StockTransferItem: 'StockTransferItem',
+  InventoryAudit: 'InventoryAudit',
+  InventoryAuditItem: 'InventoryAuditItem',
+  ManualAdjustment: 'ManualAdjustment',
+  StockMovement: 'StockMovement'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -242,6 +248,88 @@ export const PriceHistoryScalarFieldEnum = {
 } as const
 
 export type PriceHistoryScalarFieldEnum = (typeof PriceHistoryScalarFieldEnum)[keyof typeof PriceHistoryScalarFieldEnum]
+
+
+export const StockTransferScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  sourceStoreId: 'sourceStoreId',
+  destinationStoreId: 'destinationStoreId',
+  state: 'state',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt',
+  completedAt: 'completedAt'
+} as const
+
+export type StockTransferScalarFieldEnum = (typeof StockTransferScalarFieldEnum)[keyof typeof StockTransferScalarFieldEnum]
+
+
+export const StockTransferItemScalarFieldEnum = {
+  id: 'id',
+  stockTransferId: 'stockTransferId',
+  productId: 'productId',
+  quantity: 'quantity'
+} as const
+
+export type StockTransferItemScalarFieldEnum = (typeof StockTransferItemScalarFieldEnum)[keyof typeof StockTransferItemScalarFieldEnum]
+
+
+export const InventoryAuditScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  storeId: 'storeId',
+  state: 'state',
+  startedAt: 'startedAt',
+  appliedAt: 'appliedAt',
+  createdByUserId: 'createdByUserId'
+} as const
+
+export type InventoryAuditScalarFieldEnum = (typeof InventoryAuditScalarFieldEnum)[keyof typeof InventoryAuditScalarFieldEnum]
+
+
+export const InventoryAuditItemScalarFieldEnum = {
+  id: 'id',
+  inventoryAuditId: 'inventoryAuditId',
+  productId: 'productId',
+  expectedQty: 'expectedQty',
+  countedQty: 'countedQty',
+  delta: 'delta'
+} as const
+
+export type InventoryAuditItemScalarFieldEnum = (typeof InventoryAuditItemScalarFieldEnum)[keyof typeof InventoryAuditItemScalarFieldEnum]
+
+
+export const ManualAdjustmentScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  storeId: 'storeId',
+  productId: 'productId',
+  quantity: 'quantity',
+  reason: 'reason',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type ManualAdjustmentScalarFieldEnum = (typeof ManualAdjustmentScalarFieldEnum)[keyof typeof ManualAdjustmentScalarFieldEnum]
+
+
+export const StockMovementScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  storeId: 'storeId',
+  productId: 'productId',
+  quantity: 'quantity',
+  type: 'type',
+  occurredAt: 'occurredAt',
+  orderItemId: 'orderItemId',
+  returnItemId: 'returnItemId',
+  goodsReceiptItemId: 'goodsReceiptItemId',
+  stockTransferItemId: 'stockTransferItemId',
+  inventoryAuditItemId: 'inventoryAuditItemId',
+  manualAdjustmentId: 'manualAdjustmentId'
+} as const
+
+export type StockMovementScalarFieldEnum = (typeof StockMovementScalarFieldEnum)[keyof typeof StockMovementScalarFieldEnum]
 
 
 export const SortOrder = {

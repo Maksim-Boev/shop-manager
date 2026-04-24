@@ -80,3 +80,35 @@ export const ProductStatus = {
 } as const
 
 export type ProductStatus = (typeof ProductStatus)[keyof typeof ProductStatus]
+
+
+export const StockMovementType = {
+  SALE: 'SALE',
+  RETURN: 'RETURN',
+  RECEIVE: 'RECEIVE',
+  TRANSFER_IN: 'TRANSFER_IN',
+  TRANSFER_OUT: 'TRANSFER_OUT',
+  INVENTORY_ADJUST: 'INVENTORY_ADJUST',
+  MANUAL_ADJUST: 'MANUAL_ADJUST'
+} as const
+
+export type StockMovementType = (typeof StockMovementType)[keyof typeof StockMovementType]
+
+
+export const DocState = {
+  DRAFT: 'DRAFT',
+  APPLIED: 'APPLIED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type DocState = (typeof DocState)[keyof typeof DocState]
+
+
+export const TransferState = {
+  DRAFT: 'DRAFT',
+  IN_TRANSIT: 'IN_TRANSIT',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type TransferState = (typeof TransferState)[keyof typeof TransferState]
