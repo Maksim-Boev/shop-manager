@@ -277,6 +277,25 @@ export const ShiftReportType = {
 export type ShiftReportType = (typeof ShiftReportType)[keyof typeof ShiftReportType]
 
 
+export const SalaryRatePeriod = {
+  HOUR: 'HOUR',
+  DAY: 'DAY',
+  WEEK: 'WEEK',
+  MONTH: 'MONTH'
+} as const
+
+export type SalaryRatePeriod = (typeof SalaryRatePeriod)[keyof typeof SalaryRatePeriod]
+
+
+export const SalaryPayoutStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type SalaryPayoutStatus = (typeof SalaryPayoutStatus)[keyof typeof SalaryPayoutStatus]
+
+
 export const ReturnState = {
   DRAFT: 'DRAFT',
   APPLIED: 'APPLIED',

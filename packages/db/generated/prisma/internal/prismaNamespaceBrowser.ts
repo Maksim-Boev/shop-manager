@@ -91,7 +91,9 @@ export const ModelName = {
   Shift: 'Shift',
   ShiftReport: 'ShiftReport',
   Return: 'Return',
-  ReturnItem: 'ReturnItem'
+  ReturnItem: 'ReturnItem',
+  UserSalaryRate: 'UserSalaryRate',
+  SalaryPayout: 'SalaryPayout'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -665,6 +667,42 @@ export const ReturnItemScalarFieldEnum = {
 } as const
 
 export type ReturnItemScalarFieldEnum = (typeof ReturnItemScalarFieldEnum)[keyof typeof ReturnItemScalarFieldEnum]
+
+
+export const UserSalaryRateScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  userId: 'userId',
+  ratePeriod: 'ratePeriod',
+  rateAmount: 'rateAmount',
+  salesPercent: 'salesPercent',
+  effectiveFrom: 'effectiveFrom',
+  effectiveTo: 'effectiveTo',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserSalaryRateScalarFieldEnum = (typeof UserSalaryRateScalarFieldEnum)[keyof typeof UserSalaryRateScalarFieldEnum]
+
+
+export const SalaryPayoutScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  userId: 'userId',
+  periodYear: 'periodYear',
+  periodMonth: 'periodMonth',
+  totalAmount: 'totalAmount',
+  status: 'status',
+  paidAt: 'paidAt',
+  paymentMethod: 'paymentMethod',
+  notes: 'notes',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SalaryPayoutScalarFieldEnum = (typeof SalaryPayoutScalarFieldEnum)[keyof typeof SalaryPayoutScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -885,6 +885,40 @@ export type EnumPaymentMethodWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumPaymentMethodFilter<$PrismaModel>
 }
 
+export type EnumSalaryRatePeriodFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryRatePeriod | Prisma.EnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryRatePeriod[] | Prisma.ListEnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryRatePeriod[] | Prisma.ListEnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryRatePeriodFilter<$PrismaModel> | $Enums.SalaryRatePeriod
+}
+
+export type EnumSalaryRatePeriodWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryRatePeriod | Prisma.EnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryRatePeriod[] | Prisma.ListEnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryRatePeriod[] | Prisma.ListEnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryRatePeriodWithAggregatesFilter<$PrismaModel> | $Enums.SalaryRatePeriod
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSalaryRatePeriodFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSalaryRatePeriodFilter<$PrismaModel>
+}
+
+export type EnumSalaryPayoutStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryPayoutStatus | Prisma.EnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryPayoutStatus[] | Prisma.ListEnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryPayoutStatus[] | Prisma.ListEnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryPayoutStatusFilter<$PrismaModel> | $Enums.SalaryPayoutStatus
+}
+
+export type EnumSalaryPayoutStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryPayoutStatus | Prisma.EnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryPayoutStatus[] | Prisma.ListEnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryPayoutStatus[] | Prisma.ListEnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryPayoutStatusWithAggregatesFilter<$PrismaModel> | $Enums.SalaryPayoutStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSalaryPayoutStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSalaryPayoutStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1713,6 +1747,40 @@ export type NestedEnumPaymentMethodWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPaymentMethodFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPaymentMethodFilter<$PrismaModel>
+}
+
+export type NestedEnumSalaryRatePeriodFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryRatePeriod | Prisma.EnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryRatePeriod[] | Prisma.ListEnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryRatePeriod[] | Prisma.ListEnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryRatePeriodFilter<$PrismaModel> | $Enums.SalaryRatePeriod
+}
+
+export type NestedEnumSalaryRatePeriodWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryRatePeriod | Prisma.EnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryRatePeriod[] | Prisma.ListEnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryRatePeriod[] | Prisma.ListEnumSalaryRatePeriodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryRatePeriodWithAggregatesFilter<$PrismaModel> | $Enums.SalaryRatePeriod
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSalaryRatePeriodFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSalaryRatePeriodFilter<$PrismaModel>
+}
+
+export type NestedEnumSalaryPayoutStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryPayoutStatus | Prisma.EnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryPayoutStatus[] | Prisma.ListEnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryPayoutStatus[] | Prisma.ListEnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryPayoutStatusFilter<$PrismaModel> | $Enums.SalaryPayoutStatus
+}
+
+export type NestedEnumSalaryPayoutStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryPayoutStatus | Prisma.EnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryPayoutStatus[] | Prisma.ListEnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryPayoutStatus[] | Prisma.ListEnumSalaryPayoutStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryPayoutStatusWithAggregatesFilter<$PrismaModel> | $Enums.SalaryPayoutStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSalaryPayoutStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSalaryPayoutStatusFilter<$PrismaModel>
 }
 
 

@@ -224,6 +224,8 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   managedStores?: Prisma.ManagerStoreListRelationFilter
+  salaryRates?: Prisma.UserSalaryRateListRelationFilter
+  salaryPayouts?: Prisma.SalaryPayoutListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -239,6 +241,8 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   company?: Prisma.CompanyOrderByWithRelationInput
   managedStores?: Prisma.ManagerStoreOrderByRelationAggregateInput
+  salaryRates?: Prisma.UserSalaryRateOrderByRelationAggregateInput
+  salaryPayouts?: Prisma.SalaryPayoutOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -257,6 +261,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   managedStores?: Prisma.ManagerStoreListRelationFilter
+  salaryRates?: Prisma.UserSalaryRateListRelationFilter
+  salaryPayouts?: Prisma.SalaryPayoutListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -303,6 +309,8 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   company?: Prisma.CompanyCreateNestedOneWithoutUsersInput
   managedStores?: Prisma.ManagerStoreCreateNestedManyWithoutUserInput
+  salaryRates?: Prisma.UserSalaryRateCreateNestedManyWithoutUserInput
+  salaryPayouts?: Prisma.SalaryPayoutCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -317,6 +325,8 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   managedStores?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutUserInput
+  salaryRates?: Prisma.UserSalaryRateUncheckedCreateNestedManyWithoutUserInput
+  salaryPayouts?: Prisma.SalaryPayoutUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -331,6 +341,8 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneWithoutUsersNestedInput
   managedStores?: Prisma.ManagerStoreUpdateManyWithoutUserNestedInput
+  salaryRates?: Prisma.UserSalaryRateUpdateManyWithoutUserNestedInput
+  salaryPayouts?: Prisma.SalaryPayoutUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -345,6 +357,8 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   managedStores?: Prisma.ManagerStoreUncheckedUpdateManyWithoutUserNestedInput
+  salaryRates?: Prisma.UserSalaryRateUncheckedUpdateManyWithoutUserNestedInput
+  salaryPayouts?: Prisma.SalaryPayoutUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -507,6 +521,34 @@ export type UserUpdateOneRequiredWithoutManagedStoresNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutManagedStoresInput, Prisma.UserUpdateWithoutManagedStoresInput>, Prisma.UserUncheckedUpdateWithoutManagedStoresInput>
 }
 
+export type UserCreateNestedOneWithoutSalaryRatesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSalaryRatesInput, Prisma.UserUncheckedCreateWithoutSalaryRatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSalaryRatesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSalaryRatesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSalaryRatesInput, Prisma.UserUncheckedCreateWithoutSalaryRatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSalaryRatesInput
+  upsert?: Prisma.UserUpsertWithoutSalaryRatesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSalaryRatesInput, Prisma.UserUpdateWithoutSalaryRatesInput>, Prisma.UserUncheckedUpdateWithoutSalaryRatesInput>
+}
+
+export type UserCreateNestedOneWithoutSalaryPayoutsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSalaryPayoutsInput, Prisma.UserUncheckedCreateWithoutSalaryPayoutsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSalaryPayoutsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSalaryPayoutsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSalaryPayoutsInput, Prisma.UserUncheckedCreateWithoutSalaryPayoutsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSalaryPayoutsInput
+  upsert?: Prisma.UserUpsertWithoutSalaryPayoutsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSalaryPayoutsInput, Prisma.UserUpdateWithoutSalaryPayoutsInput>, Prisma.UserUncheckedUpdateWithoutSalaryPayoutsInput>
+}
+
 export type UserCreateWithoutCompanyInput = {
   id?: string
   email: string
@@ -518,6 +560,8 @@ export type UserCreateWithoutCompanyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   managedStores?: Prisma.ManagerStoreCreateNestedManyWithoutUserInput
+  salaryRates?: Prisma.UserSalaryRateCreateNestedManyWithoutUserInput
+  salaryPayouts?: Prisma.SalaryPayoutCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCompanyInput = {
@@ -531,6 +575,8 @@ export type UserUncheckedCreateWithoutCompanyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   managedStores?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutUserInput
+  salaryRates?: Prisma.UserSalaryRateUncheckedCreateNestedManyWithoutUserInput
+  salaryPayouts?: Prisma.SalaryPayoutUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCompanyInput = {
@@ -586,6 +632,8 @@ export type UserCreateWithoutManagedStoresInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   company?: Prisma.CompanyCreateNestedOneWithoutUsersInput
+  salaryRates?: Prisma.UserSalaryRateCreateNestedManyWithoutUserInput
+  salaryPayouts?: Prisma.SalaryPayoutCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutManagedStoresInput = {
@@ -599,6 +647,8 @@ export type UserUncheckedCreateWithoutManagedStoresInput = {
   status?: $Enums.UserStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  salaryRates?: Prisma.UserSalaryRateUncheckedCreateNestedManyWithoutUserInput
+  salaryPayouts?: Prisma.SalaryPayoutUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutManagedStoresInput = {
@@ -628,6 +678,8 @@ export type UserUpdateWithoutManagedStoresInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneWithoutUsersNestedInput
+  salaryRates?: Prisma.UserSalaryRateUpdateManyWithoutUserNestedInput
+  salaryPayouts?: Prisma.SalaryPayoutUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutManagedStoresInput = {
@@ -641,6 +693,160 @@ export type UserUncheckedUpdateWithoutManagedStoresInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  salaryRates?: Prisma.UserSalaryRateUncheckedUpdateManyWithoutUserNestedInput
+  salaryPayouts?: Prisma.SalaryPayoutUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSalaryRatesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company?: Prisma.CompanyCreateNestedOneWithoutUsersInput
+  managedStores?: Prisma.ManagerStoreCreateNestedManyWithoutUserInput
+  salaryPayouts?: Prisma.SalaryPayoutCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSalaryRatesInput = {
+  id?: string
+  companyId?: string | null
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  managedStores?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutUserInput
+  salaryPayouts?: Prisma.SalaryPayoutUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSalaryRatesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSalaryRatesInput, Prisma.UserUncheckedCreateWithoutSalaryRatesInput>
+}
+
+export type UserUpsertWithoutSalaryRatesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSalaryRatesInput, Prisma.UserUncheckedUpdateWithoutSalaryRatesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSalaryRatesInput, Prisma.UserUncheckedCreateWithoutSalaryRatesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSalaryRatesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSalaryRatesInput, Prisma.UserUncheckedUpdateWithoutSalaryRatesInput>
+}
+
+export type UserUpdateWithoutSalaryRatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneWithoutUsersNestedInput
+  managedStores?: Prisma.ManagerStoreUpdateManyWithoutUserNestedInput
+  salaryPayouts?: Prisma.SalaryPayoutUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSalaryRatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedStores?: Prisma.ManagerStoreUncheckedUpdateManyWithoutUserNestedInput
+  salaryPayouts?: Prisma.SalaryPayoutUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSalaryPayoutsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company?: Prisma.CompanyCreateNestedOneWithoutUsersInput
+  managedStores?: Prisma.ManagerStoreCreateNestedManyWithoutUserInput
+  salaryRates?: Prisma.UserSalaryRateCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSalaryPayoutsInput = {
+  id?: string
+  companyId?: string | null
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  managedStores?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutUserInput
+  salaryRates?: Prisma.UserSalaryRateUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSalaryPayoutsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSalaryPayoutsInput, Prisma.UserUncheckedCreateWithoutSalaryPayoutsInput>
+}
+
+export type UserUpsertWithoutSalaryPayoutsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSalaryPayoutsInput, Prisma.UserUncheckedUpdateWithoutSalaryPayoutsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSalaryPayoutsInput, Prisma.UserUncheckedCreateWithoutSalaryPayoutsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSalaryPayoutsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSalaryPayoutsInput, Prisma.UserUncheckedUpdateWithoutSalaryPayoutsInput>
+}
+
+export type UserUpdateWithoutSalaryPayoutsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneWithoutUsersNestedInput
+  managedStores?: Prisma.ManagerStoreUpdateManyWithoutUserNestedInput
+  salaryRates?: Prisma.UserSalaryRateUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSalaryPayoutsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedStores?: Prisma.ManagerStoreUncheckedUpdateManyWithoutUserNestedInput
+  salaryRates?: Prisma.UserSalaryRateUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyCompanyInput = {
@@ -666,6 +872,8 @@ export type UserUpdateWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   managedStores?: Prisma.ManagerStoreUpdateManyWithoutUserNestedInput
+  salaryRates?: Prisma.UserSalaryRateUpdateManyWithoutUserNestedInput
+  salaryPayouts?: Prisma.SalaryPayoutUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCompanyInput = {
@@ -679,6 +887,8 @@ export type UserUncheckedUpdateWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   managedStores?: Prisma.ManagerStoreUncheckedUpdateManyWithoutUserNestedInput
+  salaryRates?: Prisma.UserSalaryRateUncheckedUpdateManyWithoutUserNestedInput
+  salaryPayouts?: Prisma.SalaryPayoutUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutCompanyInput = {
@@ -700,10 +910,14 @@ export type UserUncheckedUpdateManyWithoutCompanyInput = {
 
 export type UserCountOutputType = {
   managedStores: number
+  salaryRates: number
+  salaryPayouts: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   managedStores?: boolean | UserCountOutputTypeCountManagedStoresArgs
+  salaryRates?: boolean | UserCountOutputTypeCountSalaryRatesArgs
+  salaryPayouts?: boolean | UserCountOutputTypeCountSalaryPayoutsArgs
 }
 
 /**
@@ -723,6 +937,20 @@ export type UserCountOutputTypeCountManagedStoresArgs<ExtArgs extends runtime.Ty
   where?: Prisma.ManagerStoreWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSalaryRatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserSalaryRateWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSalaryPayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SalaryPayoutWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -737,6 +965,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   company?: boolean | Prisma.User$companyArgs<ExtArgs>
   managedStores?: boolean | Prisma.User$managedStoresArgs<ExtArgs>
+  salaryRates?: boolean | Prisma.User$salaryRatesArgs<ExtArgs>
+  salaryPayouts?: boolean | Prisma.User$salaryPayoutsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -785,6 +1015,8 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.User$companyArgs<ExtArgs>
   managedStores?: boolean | Prisma.User$managedStoresArgs<ExtArgs>
+  salaryRates?: boolean | Prisma.User$salaryRatesArgs<ExtArgs>
+  salaryPayouts?: boolean | Prisma.User$salaryPayoutsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -799,6 +1031,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     company: Prisma.$CompanyPayload<ExtArgs> | null
     managedStores: Prisma.$ManagerStorePayload<ExtArgs>[]
+    salaryRates: Prisma.$UserSalaryRatePayload<ExtArgs>[]
+    salaryPayouts: Prisma.$SalaryPayoutPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1207,6 +1441,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   company<T extends Prisma.User$companyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$companyArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   managedStores<T extends Prisma.User$managedStoresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$managedStoresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerStorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  salaryRates<T extends Prisma.User$salaryRatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$salaryRatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserSalaryRatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  salaryPayouts<T extends Prisma.User$salaryPayoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$salaryPayoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalaryPayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1687,6 +1923,54 @@ export type User$managedStoresArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.ManagerStoreScalarFieldEnum | Prisma.ManagerStoreScalarFieldEnum[]
+}
+
+/**
+ * User.salaryRates
+ */
+export type User$salaryRatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserSalaryRate
+   */
+  select?: Prisma.UserSalaryRateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserSalaryRate
+   */
+  omit?: Prisma.UserSalaryRateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserSalaryRateInclude<ExtArgs> | null
+  where?: Prisma.UserSalaryRateWhereInput
+  orderBy?: Prisma.UserSalaryRateOrderByWithRelationInput | Prisma.UserSalaryRateOrderByWithRelationInput[]
+  cursor?: Prisma.UserSalaryRateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserSalaryRateScalarFieldEnum | Prisma.UserSalaryRateScalarFieldEnum[]
+}
+
+/**
+ * User.salaryPayouts
+ */
+export type User$salaryPayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SalaryPayout
+   */
+  select?: Prisma.SalaryPayoutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SalaryPayout
+   */
+  omit?: Prisma.SalaryPayoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SalaryPayoutInclude<ExtArgs> | null
+  where?: Prisma.SalaryPayoutWhereInput
+  orderBy?: Prisma.SalaryPayoutOrderByWithRelationInput | Prisma.SalaryPayoutOrderByWithRelationInput[]
+  cursor?: Prisma.SalaryPayoutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SalaryPayoutScalarFieldEnum | Prisma.SalaryPayoutScalarFieldEnum[]
 }
 
 /**
