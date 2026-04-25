@@ -11,9 +11,8 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset",
-    "db:migrate:test": "dotenv -e ../../.env -- cross-env-shell \"DATABASE_URL=$DATABASE_URL_TEST prisma migrate deploy\"",
-    "test": "dotenv -e ../../.env -- cross-env-shell \"DATABASE_URL=$DATABASE_URL_TEST vitest run\"",
-    "test:watch": "dotenv -e ../../.env -- cross-env-shell \"DATABASE_URL=$DATABASE_URL_TEST vitest\""
+    "test": "dotenv -e ../../.env -- vitest run",
+    "test:watch": "dotenv -e ../../.env -- vitest"
   },
   "exports": {
     ".": "./index.ts",
