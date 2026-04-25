@@ -63,7 +63,11 @@ afterEach(async () => {
   // 6. Store (FK: RESTRICT от Store к Company — должно быть последним перед Company)
   await prisma.store.deleteMany({ where: { companyId: { in: ids } } })
 
-  // 7. User (FK: SET NULL) и Company
+  // 7. Зарплаты (RESTRICT от SalaryPayout к User; UserSalaryRate каскадится, чистим явно)
+  await prisma.salaryPayout.deleteMany({ where: { companyId: { in: ids } } })
+  await prisma.userSalaryRate.deleteMany({ where: { companyId: { in: ids } } })
+
+  // 8. User (FK: SET NULL) и Company
   await prisma.user.deleteMany({ where: { companyId: { in: ids } } })
   await prisma.company.deleteMany({ where: { id: { in: ids } } })
 })

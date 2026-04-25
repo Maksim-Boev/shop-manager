@@ -193,6 +193,19 @@ enum ShiftReportType {
   Z
 }
 
+enum SalaryRatePeriod {
+  HOUR
+  DAY
+  WEEK
+  MONTH
+}
+
+enum SalaryPayoutStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
 // ============ MODELS ============
 
 model Company {
@@ -229,6 +242,8 @@ model User {
   updatedAt    DateTime   @updatedAt
 
   managedStores ManagerStore[]
+  salaryRates   UserSalaryRate[]
+  salaryPayouts SalaryPayout[]
 
   @@index([companyId, role])
 }
@@ -861,4 +876,50 @@ model ReturnItem {
 
   @@index([returnId])
   @@index([orderItemId])
+}
+
+model UserSalaryRate {
+  id              String           @id @default(cuid())
+  companyId       String
+  userId          String
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ratePeriod      SalaryRatePeriod
+  rateAmount      Decimal          @db.Decimal(14, 2)
+  salesPercent    Decimal          @db.Decimal(10, 4)
+  effectiveFrom   DateTime
+  effectiveTo     DateTime?
+  createdByUserId String
+  createdAt       DateTime         @default(now())
+
+  @@index([userId, effectiveFrom])
+  @@index([companyId, effectiveFrom])
+  // CHECK: rateAmount >= 0, salesPercent >= 0
+  // CHECK: effectiveTo IS NULL OR effectiveTo > effectiveFrom
+  // UNIQUE (userId) WHERE effectiveTo IS NULL — добавляется raw SQL в миграцию
+}
+
+model SalaryPayout {
+  id              String             @id @default(cuid())
+  companyId       String
+  userId          String
+  user            User               @relation(fields: [userId], references: [id])
+  periodYear      Int
+  periodMonth     Int
+  totalAmount     Decimal            @db.Decimal(14, 2)
+  status          SalaryPayoutStatus @default(PENDING)
+  paidAt          DateTime?
+  paymentMethod   PaymentMethod?
+  notes           String?
+  createdByUserId String
+  updatedByUserId String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@unique([userId, periodYear, periodMonth])
+  @@index([companyId, periodYear, periodMonth])
+  @@index([status])
+  // CHECK: periodMonth BETWEEN 1 AND 12, periodYear BETWEEN 2000 AND 3000
+  // CHECK: totalAmount >= 0
+  // CHECK: (status='PAID') ↔ (paidAt IS NOT NULL AND paymentMethod IS NOT NULL)
+  // CHECK: status='CANCELLED' → paidAt IS NULL
 }

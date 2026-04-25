@@ -246,3 +246,13 @@ export type Return = Prisma.ReturnModel
  * 
  */
 export type ReturnItem = Prisma.ReturnItemModel
+/**
+ * Model UserSalaryRate
+ * 
+ */
+export type UserSalaryRate = Prisma.UserSalaryRateModel
+/**
+ * Model SalaryPayout
+ * 
+ */
+export type SalaryPayout = Prisma.SalaryPayoutModel
