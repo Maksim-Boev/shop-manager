@@ -1,0 +1,10 @@
+{
+  "extends": "@shop/config/typescript/tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "generated"]
+}

@@ -2,3 +2,32 @@ export { prisma } from './lib/prisma'
 export { getNextOrderNumber } from './lib/order-counter'
 export { withPointsLock } from './lib/points-lock'
 export type { PrismaClient } from './generated/prisma/client'
+
+// Services
+export {
+  openShift,
+  closeShift,
+  generateShiftReport,
+} from './lib/services/shift'
+
+export {
+  createOrder,
+  addOrderItem,
+  removeOrderItem,
+  updateOrderItemQty,
+  confirmOrder,
+  payOrder,
+  fulfillOrder,
+  cancelOrder,
+} from './lib/services/order'
+
+// Errors
+export {
+  ShopError,
+  ShiftAlreadyOpenError,
+  ShiftNotOpenError,
+  OrderStateError,
+  ProductNotAvailableError,
+  InsufficientStockError,
+  InsufficientPointsError,
+} from './lib/services/errors'
