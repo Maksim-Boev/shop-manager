@@ -29,16 +29,19 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const { pathname } = nextUrl
       if (pathname.startsWith('/api/auth') || pathname === '/login') return true
-      if (!auth) return false
+      if (!auth?.user?.role) return false
       if (auth.user.role === 'CASHIER') return false
       return true
     },
     session({ session, token }) {
-      session.user.id        = token.id as string
-      session.user.companyId = token.companyId as string | null
-      session.user.role      = token.role as 'SUPER_ADMIN' | 'ADMIN' | 'MANAGER' | 'CASHIER'
-      session.user.firstName = token.firstName as string
-      session.user.lastName  = token.lastName as string
+      session.user = {
+        ...(session.user ?? {}),
+        id:        token.id        as string,
+        companyId: token.companyId as string | null,
+        role:      token.role      as 'SUPER_ADMIN' | 'ADMIN' | 'MANAGER' | 'CASHIER',
+        firstName: token.firstName as string,
+        lastName:  token.lastName  as string,
+      }
       return session
     },
   },
