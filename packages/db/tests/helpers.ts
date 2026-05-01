@@ -72,6 +72,14 @@ export const createTestProduct = async (
   })
 }
 
+export const cleanupTestCompanies = async () => {
+  const companies = await prisma.company.findMany({ where: { name: { contains: TEST_MARKER } } })
+  if (companies.length === 0) return
+  const ids = companies.map(c => c.id)
+  await prisma.store.deleteMany({ where: { companyId: { in: ids } } })
+  await prisma.company.deleteMany({ where: { id: { in: ids } } })
+}
+
 export const createTestCustomer = async (companyId: string) =>
   prisma.customer.create({
     data: {
@@ -80,3 +88,63 @@ export const createTestCustomer = async (companyId: string) =>
       lastName: 'Customer',
     },
   })
+
+export const createTestTier = async (
+  companyId: string,
+  overrides: Partial<{ name: string; level: number; entryThreshold: string }> = {},
+) =>
+  prisma.tier.create({
+    data: {
+      companyId,
+      name: overrides.name ?? 'Silver',
+      level: overrides.level ?? 1,
+      entryThreshold: overrides.entryThreshold ?? '0',
+    },
+  })
+
+export const createTestPromotion = async (
+  companyId: string,
+  storeId: string,
+  overrides: Partial<{
+    name: string
+    actionType: 'PERCENT' | 'FIXED_AMOUNT' | 'FIXED_PRICE' | 'BOGO'
+    actionValue: string
+    targetType: 'ALL' | 'PRODUCT' | 'CATEGORY' | 'SUBCATEGORY' | 'TAG'
+    targetId: string | null
+    validFrom: Date
+    validTo: Date
+    bogoTriggerQty: number
+    bogoGetQty: number
+    bogoGetDiscountPercent: string
+    priority: number
+  }> = {},
+) => {
+  const now = new Date()
+  const far = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000)
+  const promo = await prisma.promotion.create({
+    data: {
+      companyId,
+      name: overrides.name ?? 'Test Promo',
+      status: 'ACTIVE',
+      priority: overrides.priority ?? 0,
+      actionType: overrides.actionType ?? 'PERCENT',
+      actionValue: overrides.actionValue ?? '10',
+      validFrom: overrides.validFrom ?? now,
+      validTo: overrides.validTo ?? far,
+      bogoTriggerQty: overrides.bogoTriggerQty,
+      bogoGetQty: overrides.bogoGetQty,
+      bogoGetDiscountPercent: overrides.bogoGetDiscountPercent,
+    },
+  })
+  await prisma.promotionTarget.create({
+    data: {
+      promotionId: promo.id,
+      targetType: overrides.targetType ?? 'ALL',
+      targetId: overrides.targetId ?? null,
+    },
+  })
+  await prisma.promotionStore.create({
+    data: { promotionId: promo.id, storeId },
+  })
+  return promo
+}
