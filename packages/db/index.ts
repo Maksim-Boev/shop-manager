@@ -37,3 +37,6 @@ export {
   ReturnStateError,
   ExcessReturnQuantityError,
 } from './lib/services/errors'
+
+export { verifyCredentials } from './lib/auth'
+export type { AuthUser } from './lib/auth'
