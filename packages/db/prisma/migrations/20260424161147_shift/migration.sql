@@ -44,7 +44,7 @@ CREATE INDEX "ShiftReport_shiftId_idx" ON "ShiftReport"("shiftId");
 -- AddForeignKey
 ALTER TABLE "ShiftReport" ADD CONSTRAINT "ShiftReport_shiftId_fkey" FOREIGN KEY ("shiftId") REFERENCES "Shift"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 -- Дописать в конец миграции `<ts>_shift/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name shift`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name shift`.
 --
 --   1) Partial unique: у одного кассира не более одной OPEN-смены в компании.
 --   2) CHECK: поля закрытия (closedAt / closingCash / expectedCash / variance) когерентны со status.

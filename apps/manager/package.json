@@ -9,15 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@shop/db": "workspace:*",
-    "@shop/ui": "workspace:*",
+    "@pkg/db": "workspace:*",
+    "@pkg/ui": "workspace:*",
     "lucide-react": "^1.8.0",
     "next": "16.2.3",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@shop/config": "workspace:*",
+    "@pkg/config": "workspace:*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

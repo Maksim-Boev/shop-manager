@@ -1,5 +1,5 @@
-import type { Order, PrismaClient } from '../../generated/prisma/client'
-import { Prisma } from '../../generated/prisma/client'
+import type { Order, PrismaClient } from '@/generated/prisma/client'
+import { Prisma } from '@/generated/prisma/client'
 import { InsufficientPointsError, OrderStateError } from './errors'
 
 type Tx = Parameters<Parameters<PrismaClient['$transaction']>[0]>[0]
@@ -90,24 +90,28 @@ const _findBestLoyaltyRule = (
   item: { productId: string },
   product: { categoryId: string; subcategoryId: string | null; tags: Array<{ tagId: string }> },
 ): LoyaltyMatch | null => {
-  let best: { priority: number; sourceType: 'TIER' | 'CUSTOMER_RULE'; rule: LoyaltyMatch['rule']; sourceId: string } | null = null
+  type Candidate = { priority: number; sourceType: 'TIER' | 'CUSTOMER_RULE'; rule: LoyaltyMatch['rule']; sourceId: string }
+  const candidates: Candidate[] = []
 
-  const tryRule = (
-    rule: { scope: string; targetId: string | null; discountPercent: Prisma.Decimal | null; discountAmount: Prisma.Decimal | null },
-    sourceType: 'TIER' | 'CUSTOMER_RULE',
-    sourceId: string,
-  ) => {
-    if (!_ruleMatchesItem(rule, item, product)) return
-    const priority = SCOPE_PRIORITY[rule.scope] ?? 0
-    if (!best || priority > best.priority || (priority === best.priority && sourceType === 'CUSTOMER_RULE')) {
-      best = { priority, sourceType, rule, sourceId }
+  for (const r of tierRules) {
+    if (_ruleMatchesItem(r, item, product))
+      candidates.push({ priority: SCOPE_PRIORITY[r.scope] ?? 0, sourceType: 'TIER', rule: r, sourceId: r.tierId })
+  }
+  for (const r of customerRules) {
+    if (_ruleMatchesItem(r, item, product))
+      candidates.push({ priority: SCOPE_PRIORITY[r.scope] ?? 0, sourceType: 'CUSTOMER_RULE', rule: r, sourceId: r.id })
+  }
+
+  if (candidates.length === 0) return null
+
+  let best = candidates[0]
+  for (const c of candidates.slice(1)) {
+    if (c.priority > best.priority || (c.priority === best.priority && c.sourceType === 'CUSTOMER_RULE')) {
+      best = c
     }
   }
 
-  for (const r of tierRules) tryRule(r, 'TIER', r.tierId)
-  for (const r of customerRules) tryRule(r, 'CUSTOMER_RULE', r.id)
-
-  return best ? { rule: best.rule, sourceType: best.sourceType, sourceId: best.sourceId } : null
+  return { rule: best.rule, sourceType: best.sourceType, sourceId: best.sourceId }
 }
 
 const _calcRuleDiscount = (

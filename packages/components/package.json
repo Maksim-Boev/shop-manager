@@ -1,19 +1,19 @@
 {
-  "name": "@shop/components",
+  "name": "@pkg/components",
   "version": "0.0.1",
   "private": true,
   "exports": {
     ".": "./index.ts"
   },
   "dependencies": {
-    "@shop/ui": "workspace:*",
+    "@pkg/ui": "workspace:*",
     "lucide-react": "^1.8.0"
   },
   "peerDependencies": {
     "next": ">=15"
   },
   "devDependencies": {
-    "@shop/config": "workspace:*",
+    "@pkg/config": "workspace:*",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "next": "16.2.3",

@@ -1,4 +1,4 @@
--- Дописать в конец миграции `<ts>_catalog/migration.sql` после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name catalog`.
+-- Дописать в конец миграции `<ts>_catalog/migration.sql` после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name catalog`.
 -- Эти partial unique indexes нельзя выразить в schema.prisma и ставятся raw SQL.
 
 -- SKU уникален в рамках компании среди неархивных товаров.

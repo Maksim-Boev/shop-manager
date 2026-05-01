@@ -87,7 +87,7 @@ ALTER TABLE "StoreOrderCounter" ADD CONSTRAINT "StoreOrderCounter_storeId_fkey" 
 -- AddForeignKey
 ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 -- Дописать в конец миграции `<ts>_order/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name order`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name order`.
 --
 -- Два CHECK:
 --   1) Order.payment — все три поля (paymentMethod / paidAmount / paidAt) либо все NULL, либо все заполнены.

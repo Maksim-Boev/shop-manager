@@ -5,8 +5,8 @@ import {
   TruckIcon, AlertTriangleIcon, ClockIcon, ShoppingCartIcon, UserCheckIcon,
   ArrowRightIcon, ChevronRightIcon, DownloadIcon, PlusIcon,
 } from 'lucide-react'
-import { Button } from '@shop/ui'
-import { cn } from '@shop/ui/cn'
+import { Button } from '@pkg/ui'
+import { cn } from '@pkg/ui/cn'
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
 

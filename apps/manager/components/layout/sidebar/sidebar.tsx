@@ -6,7 +6,7 @@ import {
   LayoutDashboardIcon, StoreIcon, UsersIcon, PackageIcon,
   TruckIcon, SettingsIcon, ChevronsUpDownIcon,
 } from 'lucide-react'
-import { cn } from '@shop/ui/cn'
+import { cn } from '@pkg/ui/cn'
 
 const NAV_MAIN = [
   { label: 'Дашборд',          icon: LayoutDashboardIcon, href: '/' },

@@ -10,13 +10,13 @@ importers:
 
   apps/cashier:
     dependencies:
-      '@shop/components':
+      '@pkg/components':
         specifier: workspace:*
         version: link:../../packages/components
-      '@shop/db':
+      '@pkg/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@shop/ui':
+      '@pkg/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       next:
@@ -29,7 +29,7 @@ importers:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
     devDependencies:
-      '@shop/config':
+      '@pkg/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@tailwindcss/postcss':
@@ -59,10 +59,10 @@ importers:
 
   apps/manager:
     dependencies:
-      '@shop/db':
+      '@pkg/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@shop/ui':
+      '@pkg/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       lucide-react:
@@ -78,7 +78,7 @@ importers:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
     devDependencies:
-      '@shop/config':
+      '@pkg/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@tailwindcss/postcss':
@@ -108,14 +108,14 @@ importers:
 
   packages/components:
     dependencies:
-      '@shop/ui':
+      '@pkg/ui':
         specifier: workspace:*
         version: link:../ui
       lucide-react:
         specifier: ^1.8.0
         version: 1.8.0(react@19.2.3)
     devDependencies:
-      '@shop/config':
+      '@pkg/config':
         specifier: workspace:*
         version: link:../config
       '@types/react':
@@ -154,7 +154,7 @@ importers:
         specifier: ^8.20.0
         version: 8.20.0
     devDependencies:
-      '@shop/config':
+      '@pkg/config':
         specifier: workspace:*
         version: link:../config
       '@vitest/ui':
@@ -209,7 +209,7 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
-      '@shop/config':
+      '@pkg/config':
         specifier: workspace:*
         version: link:../config
       '@tailwindcss/postcss':

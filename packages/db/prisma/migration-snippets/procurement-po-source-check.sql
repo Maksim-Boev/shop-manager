@@ -1,5 +1,5 @@
 -- Дописать в конец миграции `<ts>_procurement/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name procurement`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name procurement`.
 --
 -- CHECK `po_source_type_match` — связка PurchaseOrder.sourceType со значениями supplierId / sourceWarehouseId:
 --   SUPPLIER      → supplierId обязателен, sourceWarehouseId запрещён;

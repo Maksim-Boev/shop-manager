@@ -1,4 +1,4 @@
-import type { PrismaClient } from '../generated/prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'
 
 export const getNextOrderNumber = async (
   tx: Pick<PrismaClient, '$queryRawUnsafe' | '$executeRawUnsafe'>,
