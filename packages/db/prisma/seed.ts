@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs'
 import { prisma } from '../lib/prisma'
 
 const main = async () => {
@@ -21,16 +22,40 @@ const main = async () => {
     },
   })
 
-  const admin = await prisma.user.create({
-    data: {
-      companyId: company.id,
-      email: 'admin@demo.local',
-      passwordHash: 'stub',
-      firstName: 'Админ',
-      lastName: 'Админов',
-      role: 'ADMIN',
-    },
-  })
+  const PASSWORD_HASH = await bcrypt.hash('password123', 10)
+
+  const [admin] = await Promise.all([
+    prisma.user.create({
+      data: {
+        companyId: company.id,
+        email: 'admin@test.com',
+        passwordHash: PASSWORD_HASH,
+        firstName: 'Адмін',
+        lastName: 'Тестовий',
+        role: 'ADMIN',
+      },
+    }),
+    prisma.user.create({
+      data: {
+        companyId: company.id,
+        email: 'manager@test.com',
+        passwordHash: PASSWORD_HASH,
+        firstName: 'Менеджер',
+        lastName: 'Тестовий',
+        role: 'MANAGER',
+      },
+    }),
+    prisma.user.create({
+      data: {
+        companyId: company.id,
+        email: 'cashier@test.com',
+        passwordHash: PASSWORD_HASH,
+        firstName: 'Касир',
+        lastName: 'Тестовий',
+        role: 'CASHIER',
+      },
+    }),
+  ])
 
   const [shop, warehouse] = await Promise.all([
     prisma.store.create({
