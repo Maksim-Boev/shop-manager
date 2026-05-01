@@ -1,5 +1,5 @@
-import type { Order, PrismaClient } from '@/generated/prisma/client'
-import { Prisma } from '@/generated/prisma/client'
+import type { Order, PrismaClient } from '../../generated/prisma/client'
+import { Prisma } from '../../generated/prisma/client'
 import { InsufficientPointsError, OrderStateError } from './errors'
 
 type Tx = Parameters<Parameters<PrismaClient['$transaction']>[0]>[0]

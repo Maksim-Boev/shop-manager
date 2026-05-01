@@ -2,18 +2,7 @@ import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { prisma, verifyCredentials } from '@pkg/db'
 import type { AuthUser } from '@pkg/db'
-
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      id: string
-      companyId: string | null
-      role: 'SUPER_ADMIN' | 'ADMIN' | 'MANAGER' | 'CASHIER'
-      firstName: string
-      lastName: string
-    }
-  }
-}
+import { authConfig } from './auth.config'
 
 declare module 'next-auth/jwt' {
   interface JWT {
@@ -29,6 +18,7 @@ declare module 'next-auth/jwt' {
 const ONE_HOUR = 60 * 60 * 1000
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {

@@ -1,5 +1,5 @@
-import type { Order, OrderItem, PrismaClient } from '@/generated/prisma/client'
-import { Prisma } from '@/generated/prisma/client'
+import type { Order, OrderItem, PrismaClient } from '../../generated/prisma/client'
+import { Prisma } from '../../generated/prisma/client'
 import { getNextOrderNumber } from '../order-counter'
 import { withPointsLock } from '../points-lock'
 import { OrderStateError, ProductNotAvailableError, ShiftNotOpenError, ShopError } from './errors'

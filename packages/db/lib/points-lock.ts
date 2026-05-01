@@ -1,4 +1,4 @@
-import type { PrismaClient } from '@/generated/prisma/client'
+import type { PrismaClient } from '../generated/prisma/client'
 
 export const withPointsLock = async <T>(
   tx: Pick<PrismaClient, '$executeRawUnsafe'>,
