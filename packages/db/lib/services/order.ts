@@ -3,6 +3,7 @@ import { Prisma } from '../../generated/prisma/client'
 import { getNextOrderNumber } from '../order-counter'
 import { withPointsLock } from '../points-lock'
 import { InsufficientPointsError, OrderStateError, ProductNotAvailableError, ShiftNotOpenError, ShopError } from './errors'
+import { applyDiscountsInTx } from './discount'
 
 const D = Prisma.Decimal
 
@@ -127,7 +128,11 @@ const _processPoints = async (
       balance -= pointsToRedeem
     }
 
+    // Earn on pre-redemption basis: restore the points discount so redeeming points
+    // doesn't reduce future earning capacity
+    const pointsDiscount = new D(pointsToRedeem).mul(company.pointsRedemptionRate)
     const earned = new D(order.grandTotal)
+      .add(pointsDiscount)
       .mul(company.pointsEarnPercent)
       .floor()
       .toNumber()
@@ -137,23 +142,25 @@ const _processPoints = async (
       expiresAt = new Date(now.getTime() + company.pointsExpiryDays * 24 * 60 * 60 * 1000)
     }
 
-    await tx.pointsTransaction.create({
-      data: {
-        companyId: order.companyId,
-        customerId: order.customerId!,
-        orderId: order.id,
-        type: 'EARN',
-        amount: earned,
-        balanceAfter: balance + earned,
-        occurredAt: now,
-        expiresAt,
-      },
-    })
+    if (earned > 0) {
+      await tx.pointsTransaction.create({
+        data: {
+          companyId: order.companyId,
+          customerId: order.customerId!,
+          orderId: order.id,
+          type: 'EARN',
+          amount: earned,
+          balanceAfter: balance + earned,
+          occurredAt: now,
+          expiresAt,
+        },
+      })
+    }
 
     await tx.customer.update({
       where: { id: order.customerId! },
       data: {
-        pointsBalance: { increment: earned },
+        ...(earned > 0 ? { pointsBalance: { increment: earned } } : {}),
         totalSpent: { increment: new D(order.grandTotal).toFixed(2) },
         lastPurchaseAt: now,
       },
@@ -292,6 +299,7 @@ export const confirmOrder = async (
     if (order.state !== 'DRAFT') throw new OrderStateError(`cannot confirm order in state ${order.state}`)
 
     await _refreshSnapshotsAndRecalc(tx, params.orderId)
+    await applyDiscountsInTx(tx, params.orderId, 0)
 
     return tx.order.update({ where: { id: params.orderId }, data: { state: 'PENDING' } })
   })
@@ -320,15 +328,12 @@ export const payOrder = async (
     }
 
     const pointsToRedeem = params.pointsToRedeem ?? 0
-    if (pointsToRedeem > 0) {
-      if (!order.customerId) throw new ShopError('no customer on order')
-      const customer = await tx.customer.findUniqueOrThrow({ where: { id: order.customerId } })
-      if (customer.pointsBalance < pointsToRedeem) {
-        throw new InsufficientPointsError('insufficient points balance')
-      }
-    }
+    if (pointsToRedeem > 0 && !order.customerId) throw new ShopError('no customer on order')
 
-    // Перечитываем после refresh (grandTotal мог измениться)
+    // Применяем скидки (включая баллы); InsufficientPointsError бросается внутри
+    await applyDiscountsInTx(tx, params.orderId, pointsToRedeem)
+
+    // Перечитываем после refresh + discount (grandTotal финальный)
     order = await tx.order.findUniqueOrThrow({
       where: { id: params.orderId },
       include: { items: true },

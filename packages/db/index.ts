@@ -21,6 +21,10 @@ export {
   cancelOrder,
 } from './lib/services/order'
 
+export { applyDiscounts } from './lib/services/discount'
+
+export { createReturn, applyReturn, cancelReturn } from './lib/services/return'
+
 // Errors
 export {
   ShopError,
@@ -30,4 +34,6 @@ export {
   ProductNotAvailableError,
   InsufficientStockError,
   InsufficientPointsError,
+  ReturnStateError,
+  ExcessReturnQuantityError,
 } from './lib/services/errors'

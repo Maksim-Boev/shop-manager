@@ -11,3 +11,5 @@ export class OrderStateError extends ShopError {}
 export class ProductNotAvailableError extends ShopError {}
 export class InsufficientStockError extends ShopError {}
 export class InsufficientPointsError extends ShopError {}
+export class ReturnStateError extends ShopError {}
+export class ExcessReturnQuantityError extends ShopError {}
