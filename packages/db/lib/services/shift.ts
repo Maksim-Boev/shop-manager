@@ -1,5 +1,5 @@
-import type { PrismaClient, Shift, ShiftReport } from '../../generated/prisma/client'
-import { Prisma } from '../../generated/prisma/client'
+import type { PrismaClient, Shift, ShiftReport } from '@/generated/prisma/client'
+import { Prisma } from '@/generated/prisma/client'
 import { ShiftAlreadyOpenError, ShiftNotOpenError, ShopError } from './errors'
 
 type Tx = Parameters<Parameters<PrismaClient['$transaction']>[0]>[0]

@@ -1,5 +1,5 @@
 -- Дописать в конец миграции `<ts>_points/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name points`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name points`.
 --
 -- Два CHECK:
 --   1) expiresAt допустим только у type=EARN (сгорает только начисленное).

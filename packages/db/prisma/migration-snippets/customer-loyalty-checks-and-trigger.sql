@@ -1,5 +1,5 @@
 -- Дописать в конец миграции `<ts>_customer_loyalty/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name customer_loyalty`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name customer_loyalty`.
 --
 -- Четыре CHECK + один триггер:
 --   1) TierRule: ровно одно из discountPercent / discountAmount заполнено.

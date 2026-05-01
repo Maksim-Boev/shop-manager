@@ -1,5 +1,5 @@
 -- Дописать в конец миграции `<ts>_order/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name order`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name order`.
 --
 -- Два CHECK:
 --   1) Order.payment — все три поля (paymentMethod / paidAmount / paidAt) либо все NULL, либо все заполнены.

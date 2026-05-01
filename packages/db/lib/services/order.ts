@@ -1,8 +1,8 @@
-import type { Order, OrderItem, PrismaClient } from '../../generated/prisma/client'
-import { Prisma } from '../../generated/prisma/client'
+import type { Order, OrderItem, PrismaClient } from '@/generated/prisma/client'
+import { Prisma } from '@/generated/prisma/client'
 import { getNextOrderNumber } from '../order-counter'
 import { withPointsLock } from '../points-lock'
-import { InsufficientPointsError, OrderStateError, ProductNotAvailableError, ShiftNotOpenError, ShopError } from './errors'
+import { OrderStateError, ProductNotAvailableError, ShiftNotOpenError, ShopError } from './errors'
 import { applyDiscountsInTx } from './discount'
 
 const D = Prisma.Decimal

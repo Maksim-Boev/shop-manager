@@ -1,5 +1,5 @@
 -- Дописать в конец миграции `<ts>_promotion/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name promotion`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name promotion`.
 --
 -- Три CHECK-констрейнта:
 --   1) BOGO-поля когерентны с actionType=BOGO.

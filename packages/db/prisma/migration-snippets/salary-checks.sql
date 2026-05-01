@@ -1,5 +1,5 @@
 -- Дописать в конец миграции `<ts>_salary/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name salary`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name salary`.
 --
 --   1) UserSalaryRate: rateAmount/salesPercent неотрицательны.
 --   2) UserSalaryRate: интервал effectiveFrom..effectiveTo валиден.

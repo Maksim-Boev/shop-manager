@@ -98,7 +98,7 @@ ALTER TABLE "GoodsReceiptItem" ADD CONSTRAINT "GoodsReceiptItem_goodsReceiptId_f
 -- AddForeignKey
 ALTER TABLE "GoodsReceiptItem" ADD CONSTRAINT "GoodsReceiptItem_purchaseOrderItemId_fkey" FOREIGN KEY ("purchaseOrderItemId") REFERENCES "PurchaseOrderItem"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 -- Дописать в конец миграции `<ts>_procurement/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name procurement`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name procurement`.
 --
 -- CHECK `po_source_type_match` — связка PurchaseOrder.sourceType со значениями supplierId / sourceWarehouseId:
 --   SUPPLIER      → supplierId обязателен, sourceWarehouseId запрещён;

@@ -98,7 +98,7 @@ ALTER TABLE "PromotionStore" ADD CONSTRAINT "PromotionStore_promotionId_fkey" FO
 -- AddForeignKey
 ALTER TABLE "PromotionStore" ADD CONSTRAINT "PromotionStore_storeId_fkey" FOREIGN KEY ("storeId") REFERENCES "Store"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 -- Дописать в конец миграции `<ts>_promotion/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name promotion`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name promotion`.
 --
 -- Три CHECK-констрейнта:
 --   1) BOGO-поля когерентны с actionType=BOGO.

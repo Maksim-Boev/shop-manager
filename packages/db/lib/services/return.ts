@@ -1,5 +1,5 @@
-import type { PrismaClient } from '../../generated/prisma/client'
-import { Prisma } from '../../generated/prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'
+import { Prisma } from '@/generated/prisma/client'
 import { withPointsLock } from '../points-lock'
 import { ExcessReturnQuantityError, OrderStateError, ReturnStateError, ShiftNotOpenError, ShopError } from './errors'
 

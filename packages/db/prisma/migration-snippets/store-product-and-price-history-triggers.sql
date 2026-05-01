@@ -1,5 +1,5 @@
 -- Дописать в конец миграции `<ts>_store_product_and_price_history/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name store_product_and_price_history`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name store_product_and_price_history`.
 --
 -- Три триггера:
 --   1) Пишет PriceHistory при UPDATE Product.basePrice.

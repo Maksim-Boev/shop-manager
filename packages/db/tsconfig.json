@@ -1,5 +1,5 @@
 {
-  "extends": "@shop/config/typescript/tsconfig.base.json",
+  "extends": "@pkg/config/typescript/tsconfig.base.json",
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"]

@@ -1,5 +1,5 @@
 -- Дописать в конец миграции `<ts>_stock_movement/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name stock_movement`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name stock_movement`.
 --
 -- Четыре CHECK-констрейнта на StockMovement:
 --   1) ровно одна source-FK non-null;

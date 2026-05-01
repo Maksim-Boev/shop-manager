@@ -112,7 +112,7 @@ ALTER TABLE "TierRule" ADD CONSTRAINT "TierRule_tierId_fkey" FOREIGN KEY ("tierI
 -- AddForeignKey
 ALTER TABLE "CustomerDiscountRule" ADD CONSTRAINT "CustomerDiscountRule_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 -- Дописать в конец миграции `<ts>_customer_loyalty/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name customer_loyalty`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name customer_loyalty`.
 --
 -- Четыре CHECK + один триггер:
 --   1) TierRule: ровно одно из discountPercent / discountAmount заполнено.

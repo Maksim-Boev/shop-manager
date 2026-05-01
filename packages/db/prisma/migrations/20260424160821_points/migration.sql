@@ -29,7 +29,7 @@ CREATE INDEX "PointsTransaction_returnId_idx" ON "PointsTransaction"("returnId")
 -- AddForeignKey
 ALTER TABLE "PointsTransaction" ADD CONSTRAINT "PointsTransaction_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 -- Дописать в конец миграции `<ts>_points/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name points`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name points`.
 --
 -- Два CHECK:
 --   1) expiresAt допустим только у type=EARN (сгорает только начисленное).

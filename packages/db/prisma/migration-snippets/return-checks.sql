@@ -1,5 +1,5 @@
 -- Дописать в конец миграции `<ts>_return/migration.sql`
--- после `pnpm --filter @shop/db exec prisma migrate dev --create-only --name return`.
+-- после `pnpm --filter @pkg/db exec prisma migrate dev --create-only --name return`.
 --
 -- Три CHECK:
 --   1) appliedAt обязателен только при state=APPLIED, запрещён иначе.
