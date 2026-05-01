@@ -34,13 +34,17 @@ export const createTestStore = async (
 
 export const createTestUser = async (
   companyId: string,
-  overrides: Partial<{ email: string; role: 'CASHIER' | 'ADMIN' | 'MANAGER' | 'SUPER_ADMIN' }> = {},
+  overrides: Partial<{
+    email: string
+    role: 'CASHIER' | 'ADMIN' | 'MANAGER' | 'SUPER_ADMIN'
+    passwordHash: string
+  }> = {},
 ) =>
   prisma.user.create({
     data: {
       companyId,
       email: overrides.email ?? uniqueEmail(),
-      passwordHash: 'x',
+      passwordHash: overrides.passwordHash ?? 'x',
       firstName: 'Test',
       lastName: 'User',
       role: overrides.role ?? 'CASHIER',

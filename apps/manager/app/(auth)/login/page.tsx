@@ -4,6 +4,12 @@ import { Button } from '@pkg/ui'
 import { cn } from '@pkg/ui/cn'
 import { loginAction } from './actions'
 
+const inputClass = cn(
+  'w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900',
+  'placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2',
+  'focus-visible:ring-indigo-500 focus-visible:border-transparent',
+)
+
 const LoginPage = () => {
   const [error, formAction, isPending] = useActionState(loginAction, null)
 
@@ -32,11 +38,7 @@ const LoginPage = () => {
                 type="email"
                 autoComplete="email"
                 required
-                className={cn(
-                  'w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900',
-                  'placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2',
-                  'focus-visible:ring-indigo-500 focus-visible:border-transparent',
-                )}
+                className={inputClass}
               />
             </div>
             <div>
@@ -49,15 +51,11 @@ const LoginPage = () => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className={cn(
-                  'w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900',
-                  'placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2',
-                  'focus-visible:ring-indigo-500 focus-visible:border-transparent',
-                )}
+                className={inputClass}
               />
             </div>
             {error && (
-              <p className="text-sm text-rose-600">{error}</p>
+              <p role="alert" className="text-sm text-rose-600">{error}</p>
             )}
             <Button type="submit" className="w-full" disabled={isPending}>
               {isPending ? 'Входимо…' : 'Увійти'}
