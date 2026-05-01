@@ -35,8 +35,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: 'Email', type: 'email' },
         password: { label: 'Пароль', type: 'password' },
       },
-      authorize: ({ email, password }) =>
-        verifyCredentials(email as string, password as string),
+      authorize: (credentials) => {
+        const email = credentials?.email
+        const password = credentials?.password
+        if (typeof email !== 'string' || typeof password !== 'string' || !email || !password) {
+          return null
+        }
+        return verifyCredentials(email, password)
+      },
     }),
   ],
   session: { strategy: 'jwt', maxAge: 8 * 60 * 60, updateAge: 60 * 60 },

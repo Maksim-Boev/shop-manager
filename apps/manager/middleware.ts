@@ -12,7 +12,7 @@ export default auth((req) => {
     return NextResponse.redirect(new URL('/login', req.url))
   }
 
-  // CASHIER не имеет доступа к manager-приложению
+  // CASHIER не имеет доступа к manager-приложению; SUPER_ADMIN — пускаем намеренно
   if (req.auth.user.role === 'CASHIER') {
     return NextResponse.redirect(new URL('/login', req.url))
   }
