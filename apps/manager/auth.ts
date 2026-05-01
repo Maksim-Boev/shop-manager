@@ -4,17 +4,6 @@ import { prisma, verifyCredentials } from '@pkg/db'
 import type { AuthUser } from '@pkg/db'
 import { authConfig } from './auth.config'
 
-declare module 'next-auth/jwt' {
-  interface JWT {
-    id?: string
-    companyId?: string | null
-    role?: 'SUPER_ADMIN' | 'ADMIN' | 'MANAGER' | 'CASHIER'
-    firstName?: string
-    lastName?: string
-    checkedAt?: number
-  }
-}
-
 const ONE_HOUR = 60 * 60 * 1000
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
