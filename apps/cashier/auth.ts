@@ -26,15 +26,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   session: { strategy: 'jwt', maxAge: 8 * 60 * 60, updateAge: 60 * 60 },
   callbacks: {
+    ...authConfig.callbacks,
     async jwt({ token, user }) {
       if (user) {
-        const u = user as unknown as AuthUser
-        token.sub       = u.id
-        token.id        = u.id
-        token.companyId = u.companyId
-        token.role      = u.role
-        token.firstName = u.firstName
-        token.lastName  = u.lastName
+        const { id, companyId, role, firstName, lastName } = user as AuthUser
+        token.sub       = id
+        token.id        = id
+        token.companyId = companyId
+        token.role      = role
+        token.firstName = firstName
+        token.lastName  = lastName
         token.checkedAt = Date.now()
         return token
       }
@@ -48,17 +49,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return token
     },
-    session({ session, token }) {
-      session.user = {
-        ...(session.user ?? {}),
-        id:        token.id        as string,
-        companyId: token.companyId as string | null,
-        role:      token.role      as 'SUPER_ADMIN' | 'ADMIN' | 'MANAGER' | 'CASHIER',
-        firstName: token.firstName as string,
-        lastName:  token.lastName  as string,
-      }
-      return session
-    },
   },
-  pages: { signIn: '/login' },
 })
