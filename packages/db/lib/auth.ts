@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs'
 import { prisma } from './prisma'
-import type { UserRole } from '../generated/prisma/client'
+import type { UserRole } from '@/generated/prisma/enums'
+
+export type { UserRole }
 
 export type AuthUser = {
   id: string
@@ -8,6 +10,10 @@ export type AuthUser = {
   role: UserRole
   firstName: string
   lastName: string
+}
+
+export type JwtClaims = AuthUser & {
+  checkedAt?: number
 }
 
 export const verifyCredentials = async (

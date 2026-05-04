@@ -39,4 +39,4 @@ export {
 } from './lib/services/errors'
 
 export { verifyCredentials } from './lib/auth'
-export type { AuthUser } from './lib/auth'
+export type { AuthUser, JwtClaims, UserRole } from './lib/auth'

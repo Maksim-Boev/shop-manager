@@ -1,27 +1,19 @@
 import type { NextAuthConfig } from 'next-auth'
+import type { JWT } from 'next-auth/jwt'
+import type { AuthUser, JwtClaims, UserRole } from '@pkg/db'
 
 declare module 'next-auth' {
   interface Session {
-    user: {
-      id: string
-      companyId: string | null
-      role: 'SUPER_ADMIN' | 'ADMIN' | 'MANAGER' | 'CASHIER'
-      firstName: string
-      lastName: string
-    }
+    user: AuthUser
   }
+  interface User extends AuthUser {}
 }
 
 declare module 'next-auth/jwt' {
-  interface JWT {
-    id?: string
-    companyId?: string | null
-    role?: 'SUPER_ADMIN' | 'ADMIN' | 'MANAGER' | 'CASHIER'
-    firstName?: string
-    lastName?: string
-    checkedAt?: number
-  }
+  interface JWT extends JwtClaims {}
 }
+
+const BLOCKED_ROLE: UserRole = 'CASHIER'
 
 export const authConfig = {
   pages: { signIn: '/login' },
@@ -30,20 +22,19 @@ export const authConfig = {
       const { pathname } = nextUrl
       if (pathname.startsWith('/api/auth') || pathname === '/login') return true
       if (!auth?.user?.role) return false
-      if (auth.user.role === 'CASHIER') return false
+      if (auth.user.role === BLOCKED_ROLE) return false
       return true
     },
     session({ session, token }) {
-      session.user = {
-        ...(session.user ?? {}),
-        id:        token.id        as string,
-        companyId: token.companyId as string | null,
-        role:      token.role      as 'SUPER_ADMIN' | 'ADMIN' | 'MANAGER' | 'CASHIER',
-        firstName: token.firstName as string,
-        lastName:  token.lastName  as string,
-      }
+      session.user.id        = token.id
+      session.user.companyId = token.companyId
+      session.user.role      = token.role
+      session.user.firstName = token.firstName
+      session.user.lastName  = token.lastName
       return session
     },
   },
   providers: [],
 } satisfies NextAuthConfig
+
+export type { JWT }
