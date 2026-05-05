@@ -9,5 +9,5 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "./select"
+} from "./Select"
 export type { SelectTriggerProps } from "./types"

@@ -1,22 +1,19 @@
-'use client'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { auth } from '@/auth'
+import { DashboardShell } from '@/components/layout/DashboardShell'
 
-import { useState } from 'react'
-import { Sidebar } from '@/components/layout/sidebar'
-import { TopBar } from '@/components/layout/topbar'
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await auth()
+  if (!session) redirect('/login')
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const [compact, setCompact] = useState(false)
+  const cookieStore = await cookies()
+  const defaultCompact = cookieStore.get('sidebar_compact')?.value === 'true'
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
-      <Sidebar compact={compact} onToggle={() => setCompact(v => !v)} />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <TopBar />
-        <main className="flex-1 overflow-y-auto p-8">
-          {children}
-        </main>
-      </div>
-    </div>
+    <DashboardShell user={session.user} defaultCompact={defaultCompact}>
+      {children}
+    </DashboardShell>
   )
 }
 

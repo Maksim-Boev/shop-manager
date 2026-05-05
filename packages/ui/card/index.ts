@@ -6,5 +6,5 @@ export {
   CardAction,
   CardDescription,
   CardContent,
-} from "./card"
+} from "./Card"
 export type { CardProps } from "./types"
