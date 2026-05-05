@@ -1,0 +1,49 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - generic [ref=e11]:
+            - generic [ref=e12]: ShopManager
+            - generic [ref=e13]: Retail OS
+        - heading "Ласкаво просимо назад" [level=2] [ref=e14]
+        - paragraph [ref=e15]: Увійдіть, щоб керувати своєю мережею
+      - generic [ref=e17]:
+        - button "Вхід" [ref=e19]
+        - button "Реєстрація" [ref=e20]
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e24]: Робочий email
+          - generic [ref=e25]:
+            - img
+            - textbox "Робочий email" [ref=e26]:
+              - /placeholder: you@company.com.ua
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - generic [ref=e29]: Пароль
+            - button "Забули пароль?" [ref=e30]
+          - generic [ref=e31]:
+            - img
+            - textbox "Пароль" [ref=e32]:
+              - /placeholder: Введіть пароль
+            - button [ref=e33]:
+              - img [ref=e34]
+        - button "Увійти" [ref=e37]:
+          - text: Увійти
+          - img [ref=e38]
+      - paragraph [ref=e41]:
+        - text: Ще немає акаунта?
+        - button "Створити" [ref=e42]
+    - generic [ref=e43]:
+      - generic [ref=e44]:
+        - img [ref=e45]
+        - text: Шифрування TLS 1.3
+      - generic [ref=e48]:
+        - img [ref=e49]
+        - text: SOC 2 Type II
+      - generic [ref=e52]:
+        - img [ref=e53]
+        - text: Дані в Україні
+  - button "Open Next.js Dev Tools" [ref=e61] [cursor=pointer]:
+    - img [ref=e62]

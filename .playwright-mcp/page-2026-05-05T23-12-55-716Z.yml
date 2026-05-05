@@ -1,0 +1,139 @@
+- generic:
+  - generic:
+    - complementary:
+      - generic:
+        - generic:
+          - button:
+            - img
+          - generic:
+            - generic: ShopManager
+            - generic: Retail OS
+      - navigation:
+        - link:
+          - /url: /
+          - img
+          - generic: Дашборд
+        - link:
+          - /url: /shops
+          - img
+          - generic: Магазини
+        - link:
+          - /url: /staff
+          - img
+          - generic: Персонал
+        - generic:
+          - paragraph: Склад
+        - link:
+          - /url: /warehouse
+          - img
+          - generic: Центральний склад
+        - link:
+          - /url: /transfers
+          - img
+          - generic: Переміщення
+        - generic:
+          - paragraph: Система
+        - link:
+          - /url: /settings
+          - img
+          - generic: Налаштування
+      - generic:
+        - generic:
+          - generic:
+            - generic: АТ
+          - generic:
+            - generic: Адмін Тестовий
+            - generic: Адміністратор
+          - button:
+            - img
+    - generic:
+      - banner:
+        - generic: Адмін Тестовий
+        - generic:
+          - button:
+            - img
+            - generic: Пошук…
+            - generic: ⌘K
+          - button:
+            - img
+      - main:
+        - generic:
+          - generic:
+            - generic:
+              - heading [level=1]: Магазини
+              - paragraph: 1 магазинів у мережі
+            - button: Додати магазин
+          - generic:
+            - generic:
+              - img
+              - textbox:
+                - /placeholder: Пошук за назвою або адресою…
+            - generic:
+              - button: Всі
+              - button: Активні
+              - button: Архівовані
+            - generic:
+              - button:
+                - img
+              - button:
+                - img
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - heading [level=3]: Магазин 1
+                  - generic: Активний
+                - generic:
+                  - generic:
+                    - generic: Виручка сьогодні
+                    - generic: ₴ 0
+                  - generic:
+                    - generic: Залишки
+                    - generic: 0 од.
+              - generic:
+                - generic:
+                  - generic:
+                    - img
+                    - text: 0 менедж.
+                  - generic:
+                    - img
+                    - text: Зміна закрита
+                - link:
+                  - /url: /shops/cmonl4ehq0004tgc0onii9doy
+                  - text: Деталі
+                  - img
+  - generic [ref=e139] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e140]:
+      - img [ref=e141]
+    - generic [ref=e144]:
+      - button "Open issues overlay" [ref=e145]:
+        - generic [ref=e146]:
+          - generic [ref=e147]: "1"
+          - generic [ref=e148]: "2"
+        - generic [ref=e149]:
+          - text: Issue
+          - generic [ref=e150]: s
+      - button "Collapse issues badge" [ref=e151]:
+        - img [ref=e152]
+  - alert
+  - dialog "Додати магазин" [ref=e155]:
+    - heading "Додати магазин" [level=2] [ref=e157]
+    - generic [ref=e158]:
+      - generic [ref=e159]:
+        - generic [ref=e160]: Назва магазину *
+        - 'textbox "Наприклад: ТЦ Оазис, вул. Хрещатик" [active] [ref=e161]'
+      - generic [ref=e162]:
+        - text: Адреса
+        - textbox "Вулиця, будинок" [ref=e163]
+      - generic [ref=e164]:
+        - img [ref=e166]
+        - generic [ref=e169]:
+          - generic [ref=e170]: Готово до роботи одразу
+          - generic [ref=e171]: Після створення магазин з'явиться у списку. Додати менеджерів та налаштувати склад можна на сторінці магазину.
+    - generic [ref=e172]:
+      - button "Скасувати" [ref=e173]
+      - button "Створити магазин" [disabled] [ref=e174]
+    - button "Close" [ref=e175]:
+      - img [ref=e176]
+      - generic [ref=e179]: Close

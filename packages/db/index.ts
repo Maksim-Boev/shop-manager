@@ -57,3 +57,7 @@ export {
   getActivityFeed,
   getAlerts,
 } from './lib/queries/dashboard'
+
+// Queries — Shops
+export type { IShopWithStats } from './lib/queries/shops'
+export { getShopsWithStats } from './lib/queries/shops'

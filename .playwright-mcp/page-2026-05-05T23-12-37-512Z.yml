@@ -1,0 +1,125 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e61] [cursor=pointer]:
+    - img [ref=e62]
+  - alert [ref=e65]
+  - generic [ref=e120]:
+    - complementary [ref=e121]:
+      - generic [ref=e123]:
+        - button [ref=e124]:
+          - img [ref=e125]
+        - generic [ref=e128]:
+          - generic [ref=e129]: ShopManager
+          - generic [ref=e130]: Retail OS
+      - navigation [ref=e131]:
+        - link "Дашборд" [ref=e132] [cursor=pointer]:
+          - /url: /
+          - img [ref=e134]
+          - generic [ref=e139]: Дашборд
+        - link "Магазини" [ref=e140] [cursor=pointer]:
+          - /url: /shops
+          - img [ref=e141]
+          - generic [ref=e145]: Магазини
+        - link "Персонал" [ref=e146] [cursor=pointer]:
+          - /url: /staff
+          - img [ref=e147]
+          - generic [ref=e152]: Персонал
+        - paragraph [ref=e154]: Склад
+        - link "Центральний склад" [ref=e155] [cursor=pointer]:
+          - /url: /warehouse
+          - img [ref=e156]
+          - generic [ref=e160]: Центральний склад
+        - link "Переміщення" [ref=e161] [cursor=pointer]:
+          - /url: /transfers
+          - img [ref=e162]
+          - generic [ref=e167]: Переміщення
+        - paragraph [ref=e169]: Система
+        - link "Налаштування" [ref=e170] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e171]
+          - generic [ref=e174]: Налаштування
+      - generic [ref=e176]:
+        - generic [ref=e178]: АТ
+        - generic [ref=e179]:
+          - generic [ref=e180]: Адмін Тестовий
+          - generic [ref=e181]: Адміністратор
+        - button "Вийти" [ref=e182]:
+          - img [ref=e183]
+    - generic [ref=e186]:
+      - banner [ref=e187]:
+        - generic [ref=e188]: Адмін Тестовий
+        - generic [ref=e189]:
+          - button "Пошук… ⌘K" [ref=e190]:
+            - img [ref=e191]
+            - generic [ref=e194]: Пошук…
+            - generic [ref=e195]: ⌘K
+          - button [ref=e196]:
+            - img [ref=e197]
+      - main [ref=e201]:
+        - generic [ref=e202]:
+          - generic [ref=e204]:
+            - heading "Огляд мережі" [level=1] [ref=e205]
+            - generic [ref=e206]: Сьогодні · ср, 6 травня
+          - generic [ref=e208]:
+            - generic [ref=e210]:
+              - img [ref=e213]
+              - generic [ref=e216]: Виручка сьогодні
+              - generic [ref=e217]: ₴ 0
+            - generic [ref=e219]:
+              - img [ref=e222]
+              - generic [ref=e225]: Чеків пробито
+              - generic [ref=e226]: "0"
+              - generic [ref=e227]: Сер. чек ₴ 0.00
+            - generic [ref=e229]:
+              - img [ref=e232]
+              - generic [ref=e236]: Товарів на складах
+              - generic [ref=e237]: "0"
+              - generic [ref=e238]: 0 SKU — нуль; 0 — мало
+            - generic [ref=e240]:
+              - img [ref=e243]
+              - generic [ref=e248]: Персонал на зміні
+              - generic [ref=e249]: 0 / 1
+              - generic [ref=e250]: 0 з 1 магазинів відкриті
+          - generic [ref=e251]:
+            - generic [ref=e253]:
+              - generic [ref=e255]:
+                - heading "Виручка по годинах" [level=2] [ref=e256]
+                - paragraph [ref=e257]: Сьогодні, сумарно по всій мережі
+              - generic [ref=e259]: ₴ 0
+              - generic [ref=e260]:
+                - generic [ref=e263]: "00"
+                - generic [ref=e268]: "02"
+                - generic [ref=e273]: "04"
+                - generic [ref=e278]: "06"
+                - generic [ref=e283]: "08"
+                - generic [ref=e288]: "10"
+                - generic [ref=e293]: "12"
+                - generic [ref=e298]: "14"
+                - generic [ref=e303]: "16"
+                - generic [ref=e308]: "18"
+                - generic [ref=e313]: "20"
+                - generic [ref=e318]: "22"
+            - generic [ref=e322]:
+              - generic [ref=e324]:
+                - heading "Стрічка подій" [level=2] [ref=e325]
+                - paragraph [ref=e326]: На момент завантаження
+              - paragraph [ref=e327]: Подій немає
+          - generic [ref=e328]:
+            - generic [ref=e330]:
+              - generic [ref=e331]:
+                - generic [ref=e332]:
+                  - heading "Топ магазинів за виручкою" [level=2] [ref=e333]
+                  - paragraph [ref=e334]: Сьогодні
+                - link "Усі магазини" [ref=e335] [cursor=pointer]:
+                  - /url: /shops
+                  - text: Усі магазини
+                  - img [ref=e336]
+              - paragraph [ref=e338]: Немає даних за сьогодні
+            - generic [ref=e340]:
+              - generic [ref=e342]:
+                - heading "Потребують уваги" [level=2] [ref=e343]
+                - paragraph [ref=e344]: 1 задач
+              - generic [ref=e346]:
+                - img [ref=e348]
+                - generic [ref=e350]:
+                  - generic [ref=e351]: Не призначено керуючого
+                  - generic [ref=e352]: Магазин 1
