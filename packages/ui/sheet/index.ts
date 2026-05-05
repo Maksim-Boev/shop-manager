@@ -7,5 +7,5 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
-} from "./sheet"
+} from "./Sheet"
 export type { SheetSide, SheetContentProps } from "./types"

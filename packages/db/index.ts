@@ -38,5 +38,22 @@ export {
   ExcessReturnQuantityError,
 } from './lib/services/errors'
 
-export { verifyCredentials } from './lib/auth'
+export { verifyCredentials, hashPassword } from './lib/auth'
 export type { AuthUser, JwtClaims, UserRole } from './lib/auth'
+
+// Queries — Dashboard
+export type {
+  IDashboardKpis,
+  IRevenueByHour,
+  ITopShop,
+  IActivityEvent,
+  IAlert,
+} from './lib/queries/dashboard'
+
+export {
+  getDashboardKpis,
+  getRevenueByHour,
+  getTopShops,
+  getActivityFeed,
+  getAlerts,
+} from './lib/queries/dashboard'

@@ -16,6 +16,9 @@ export type JwtClaims = AuthUser & {
   checkedAt?: number
 }
 
+export const hashPassword = async (password: string): Promise<string> =>
+  bcrypt.hash(password, 12)
+
 export const verifyCredentials = async (
   email: string,
   password: string,

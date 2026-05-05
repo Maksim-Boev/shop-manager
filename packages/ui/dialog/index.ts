@@ -9,5 +9,5 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
-} from "./dialog"
+} from "./Dialog"
 export type { DialogContentProps, DialogFooterProps } from "./types"

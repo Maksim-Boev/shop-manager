@@ -4,9 +4,19 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import {
   LayoutDashboardIcon, StoreIcon, UsersIcon, PackageIcon,
-  TruckIcon, SettingsIcon, ChevronsUpDownIcon,
+  TruckIcon, SettingsIcon, LogOutIcon,
 } from 'lucide-react'
 import { cn } from '@pkg/ui/cn'
+import { Avatar, AvatarFallback, Button } from '@pkg/ui'
+import { logoutAction } from '@/actions/auth'
+import type { AuthUser } from '@pkg/db'
+
+const ROLE_LABELS: Record<string, string> = {
+  SUPER_ADMIN: 'Супер-адмін',
+  ADMIN: 'Адміністратор',
+  MANAGER: 'Менеджер',
+  CASHIER: 'Касир',
+}
 
 const NAV_MAIN = [
   { label: 'Дашборд',          icon: LayoutDashboardIcon, href: '/' },
@@ -23,9 +33,12 @@ const NAV_SYS = [
   { label: 'Налаштування', icon: SettingsIcon, href: '/settings' },
 ]
 
-type NavItemDef = { label: string; icon: React.ElementType; href: string }
+type TNavItemDef = { label: string; icon: React.ElementType; href: string }
 
-const NavItem = ({ item, compact, active }: { item: NavItemDef; compact: boolean; active: boolean }) => (
+const isActive = (pathname: string, href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href)
+
+const NavItem = ({ item, compact, active }: { item: TNavItemDef; compact: boolean; active: boolean }) => (
   <Link
     href={item.href}
     title={compact ? item.label : undefined}
@@ -48,7 +61,7 @@ const NavItem = ({ item, compact, active }: { item: NavItemDef; compact: boolean
 const NavSection = ({
   label, items, compact, pathname,
 }: {
-  label: string; items: NavItemDef[]; compact: boolean; pathname: string
+  label: string; items: TNavItemDef[]; compact: boolean; pathname: string
 }) => (
   <>
     <div className={cn('pt-5 pb-1', compact ? 'text-center' : 'px-3')}>
@@ -56,18 +69,21 @@ const NavSection = ({
       {compact && <div className="h-px bg-slate-100 mx-2" />}
     </div>
     {items.map(i => (
-      <NavItem key={i.href} item={i} compact={compact} active={pathname === i.href} />
+      <NavItem key={i.href} item={i} compact={compact} active={isActive(pathname, i.href)} />
     ))}
   </>
 )
 
-type SidebarProps = {
+interface ISidebarProps {
   compact: boolean
   onToggle: () => void
+  user: AuthUser
 }
 
-const Sidebar = ({ compact, onToggle }: SidebarProps) => {
+const Sidebar = ({ compact, onToggle, user }: ISidebarProps) => {
   const pathname = usePathname()
+  const initials = `${user.firstName[0] ?? ''}${user.lastName[0] ?? ''}`.toUpperCase()
+  const roleLabel = ROLE_LABELS[user.role] ?? user.role
 
   return (
     <aside className={cn(
@@ -98,7 +114,7 @@ const Sidebar = ({ compact, onToggle }: SidebarProps) => {
       {/* Nav */}
       <nav className={cn('flex-1 overflow-y-auto py-4 space-y-1', compact ? 'px-2' : 'px-3')}>
         {NAV_MAIN.map(i => (
-          <NavItem key={i.href} item={i} compact={compact} active={pathname === i.href} />
+          <NavItem key={i.href} item={i} compact={compact} active={isActive(pathname, i.href)} />
         ))}
         <NavSection label="Склад"   items={NAV_STOCK} compact={compact} pathname={pathname} />
         <NavSection label="Система" items={NAV_SYS}   compact={compact} pathname={pathname} />
@@ -107,21 +123,44 @@ const Sidebar = ({ compact, onToggle }: SidebarProps) => {
       {/* User */}
       <div className={cn('border-t border-slate-100', compact ? 'p-2' : 'p-3')}>
         {compact ? (
-          <div className="flex justify-center">
-            <div className="size-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-semibold">
-              АА
-            </div>
+          <div className="flex flex-col items-center gap-1">
+            <Avatar>
+              <AvatarFallback className="bg-indigo-100 text-indigo-700 text-xs font-semibold">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => logoutAction()}
+              title="Вийти"
+              className="text-slate-400 hover:text-rose-600"
+            >
+              <LogOutIcon />
+            </Button>
           </div>
         ) : (
-          <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 cursor-pointer">
-            <div className="size-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-semibold shrink-0">
-              АА
-            </div>
+          <div className="flex items-center gap-3 p-2 rounded-lg">
+            <Avatar>
+              <AvatarFallback className="bg-indigo-100 text-indigo-700 text-xs font-semibold">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-slate-900 truncate">Андрій Антонов</div>
-              <div className="text-xs text-slate-500 truncate">Адміністратор</div>
+              <div className="text-sm font-medium text-slate-900 truncate">
+                {user.firstName} {user.lastName}
+              </div>
+              <div className="text-xs text-slate-500 truncate">{roleLabel}</div>
             </div>
-            <ChevronsUpDownIcon className="size-4 text-slate-400" />
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => logoutAction()}
+              title="Вийти"
+              className="text-slate-400 hover:text-rose-600 shrink-0"
+            >
+              <LogOutIcon />
+            </Button>
           </div>
         )}
       </div>
@@ -130,4 +169,4 @@ const Sidebar = ({ compact, onToggle }: SidebarProps) => {
 }
 
 export { Sidebar }
-export type { SidebarProps }
+export type { ISidebarProps }

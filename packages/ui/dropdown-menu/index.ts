@@ -14,7 +14,7 @@ export {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-} from "./dropdown-menu"
+} from "./DropdownMenu"
 export type {
   DropdownMenuItemProps,
   DropdownMenuCheckboxItemProps,

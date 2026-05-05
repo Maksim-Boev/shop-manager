@@ -5,5 +5,5 @@ export {
   AvatarGroup,
   AvatarGroupCount,
   AvatarBadge,
-} from "./avatar"
+} from "./Avatar"
 export type { AvatarProps } from "./types"

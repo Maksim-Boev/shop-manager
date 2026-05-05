@@ -1,2 +1,2 @@
-export { Sidebar } from './sidebar'
-export type { SidebarProps } from './sidebar'
+export { Sidebar } from './Sidebar'
+export type { ISidebarProps } from './Sidebar'
