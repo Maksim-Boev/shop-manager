@@ -2,9 +2,9 @@
 import { useState, useEffect } from 'react'
 import { X, ShieldCheck, Lock, MapPin } from 'lucide-react'
 import { cn } from '@pkg/ui/cn'
-import SignInForm from './components/SignInForm'
-import SignUpForm from './components/SignUpForm'
-import ForgotPasswordForm from './components/ForgotPasswordForm'
+import { SignInForm } from './components/sign-in-form'
+import { SignUpForm } from './components/sign-up-form'
+import { ForgotPasswordForm } from './components/forgot-password-form'
 import type { TAuthView, TAuthTab } from './types'
 
 const CSS_VARS: React.CSSProperties = {
@@ -219,4 +219,4 @@ const LoginView = () => {
   )
 }
 
-export default LoginView
+export { LoginView }

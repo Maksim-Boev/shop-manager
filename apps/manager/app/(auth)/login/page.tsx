@@ -1,5 +1,11 @@
-import LoginView from '@/view/login/LoginView'
+import { redirect } from 'next/navigation'
+import { auth } from '@/auth'
+import { LoginView } from '@/view/login'
 
-const LoginPage = () => <LoginView />
+const LoginPage = async () => {
+  const session = await auth()
+  if (session) redirect('/')
+  return <LoginView />
+}
 
 export default LoginPage

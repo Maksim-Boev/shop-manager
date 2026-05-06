@@ -1,18 +1,10 @@
 import { ReceiptIcon, PackageIcon, UsersIcon, TrendingUpIcon } from 'lucide-react'
-import { KpiCard } from './components/KpiCard'
-import { RevenueChart } from './components/RevenueChart'
-import { TopShops } from './components/TopShops'
-import { ActivityFeed } from './components/ActivityFeed'
-import { AlertsPanel } from './components/AlertsPanel'
-import type { IDashboardKpis, IRevenueByHour, ITopShop, IActivityEvent, IAlert } from '@pkg/db'
-
-interface IDashboardViewProps {
-  kpis: IDashboardKpis
-  revenueByHour: IRevenueByHour[]
-  topShops: ITopShop[]
-  activity: IActivityEvent[]
-  alerts: IAlert[]
-}
+import { KpiCard } from './components/kpi-card'
+import { RevenueChart } from './components/revenue-chart'
+import { TopShops } from './components/top-shops'
+import { ActivityFeed } from './components/activity-feed'
+import { AlertsPanel } from './components/alerts-panel'
+import type { IDashboardViewProps } from './types'
 
 const DashboardView = ({ kpis, revenueByHour, topShops, activity, alerts }: IDashboardViewProps) => {
   const today = new Date().toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', weekday: 'short' })

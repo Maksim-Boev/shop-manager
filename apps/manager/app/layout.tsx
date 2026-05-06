@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
+import { cookies } from 'next/headers'
+import { auth } from '@/auth'
+import { DashboardShell } from '@/components/layout/DashboardShell'
 import "./globals.css"
 
 const geistSans = Geist({
@@ -17,12 +20,24 @@ export const metadata: Metadata = {
   description: "Управление магазином",
 }
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => (
-  <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
-    <body suppressHydrationWarning className="antialiased">
-      {children}
-    </body>
-  </html>
-)
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await auth()
+  const cookieStore = await cookies()
+  const defaultCompact = cookieStore.get('sidebar_compact')?.value === 'true'
+
+  return (
+    <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body suppressHydrationWarning className="antialiased">
+        {session ? (
+          <DashboardShell user={session.user} defaultCompact={defaultCompact}>
+            {children}
+          </DashboardShell>
+        ) : (
+          children
+        )}
+      </body>
+    </html>
+  )
+}
 
 export default RootLayout

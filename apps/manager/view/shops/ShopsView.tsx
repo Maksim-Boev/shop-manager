@@ -2,10 +2,10 @@
 
 import { useState, useMemo } from 'react'
 import { Button } from '@pkg/ui'
-import { ShopsFilter } from './components/ShopsFilter'
-import { ShopsGrid } from './components/ShopsGrid'
-import { ShopsTable } from './components/ShopsTable'
-import { AddShopModal } from './components/AddShopModal'
+import { ShopsFilter } from './components/shops-filter'
+import { ShopsGrid } from './components/shops-grid'
+import { ShopsTable } from './components/shops-table'
+import { AddShopModal } from './components/add-shop-modal'
 import type { IShopsViewProps, TViewMode, TStatusFilter } from './types'
 
 const ShopsView = ({ shops, userRole }: IShopsViewProps) => {
