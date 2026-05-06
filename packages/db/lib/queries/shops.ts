@@ -4,6 +4,8 @@ export interface IShopWithStats {
   id: string
   name: string
   address: string | null
+  region: string | null
+  openingHours: string | null
   status: 'ACTIVE' | 'ARCHIVED'
   revenueToday: number
   stockTotal: number
@@ -23,6 +25,8 @@ export const getShopsWithStats = async (companyId: string): Promise<IShopWithSta
         id: true,
         name: true,
         address: true,
+        region: true,
+        openingHours: true,
         status: true,
         _count: { select: { managers: true } },
       },
@@ -79,6 +83,8 @@ export const getShopsWithStats = async (companyId: string): Promise<IShopWithSta
     id: s.id,
     name: s.name,
     address: s.address,
+    region: s.region,
+    openingHours: s.openingHours,
     status: s.status,
     revenueToday: revenueMap.get(s.id) ?? 0,
     stockTotal: stockMap.get(s.id) ?? 0,

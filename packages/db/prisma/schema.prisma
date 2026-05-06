@@ -265,6 +265,10 @@ model Store {
   type                StoreType
   name                String
   address             String?
+  region              String?
+  openingHours        String?
+  phone               String?
+  area                Int?
   enableFiscalReports Boolean     @default(false)
   status              StoreStatus @default(ACTIVE)
   createdAt           DateTime    @default(now())

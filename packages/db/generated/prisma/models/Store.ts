@@ -20,8 +20,18 @@ export type StoreModel = runtime.Types.Result.DefaultSelection<Prisma.$StorePayl
 
 export type AggregateStore = {
   _count: StoreCountAggregateOutputType | null
+  _avg: StoreAvgAggregateOutputType | null
+  _sum: StoreSumAggregateOutputType | null
   _min: StoreMinAggregateOutputType | null
   _max: StoreMaxAggregateOutputType | null
+}
+
+export type StoreAvgAggregateOutputType = {
+  area: number | null
+}
+
+export type StoreSumAggregateOutputType = {
+  area: number | null
 }
 
 export type StoreMinAggregateOutputType = {
@@ -30,6 +40,10 @@ export type StoreMinAggregateOutputType = {
   type: $Enums.StoreType | null
   name: string | null
   address: string | null
+  region: string | null
+  openingHours: string | null
+  phone: string | null
+  area: number | null
   enableFiscalReports: boolean | null
   status: $Enums.StoreStatus | null
   createdAt: Date | null
@@ -42,6 +56,10 @@ export type StoreMaxAggregateOutputType = {
   type: $Enums.StoreType | null
   name: string | null
   address: string | null
+  region: string | null
+  openingHours: string | null
+  phone: string | null
+  area: number | null
   enableFiscalReports: boolean | null
   status: $Enums.StoreStatus | null
   createdAt: Date | null
@@ -54,6 +72,10 @@ export type StoreCountAggregateOutputType = {
   type: number
   name: number
   address: number
+  region: number
+  openingHours: number
+  phone: number
+  area: number
   enableFiscalReports: number
   status: number
   createdAt: number
@@ -62,12 +84,24 @@ export type StoreCountAggregateOutputType = {
 }
 
 
+export type StoreAvgAggregateInputType = {
+  area?: true
+}
+
+export type StoreSumAggregateInputType = {
+  area?: true
+}
+
 export type StoreMinAggregateInputType = {
   id?: true
   companyId?: true
   type?: true
   name?: true
   address?: true
+  region?: true
+  openingHours?: true
+  phone?: true
+  area?: true
   enableFiscalReports?: true
   status?: true
   createdAt?: true
@@ -80,6 +114,10 @@ export type StoreMaxAggregateInputType = {
   type?: true
   name?: true
   address?: true
+  region?: true
+  openingHours?: true
+  phone?: true
+  area?: true
   enableFiscalReports?: true
   status?: true
   createdAt?: true
@@ -92,6 +130,10 @@ export type StoreCountAggregateInputType = {
   type?: true
   name?: true
   address?: true
+  region?: true
+  openingHours?: true
+  phone?: true
+  area?: true
   enableFiscalReports?: true
   status?: true
   createdAt?: true
@@ -137,6 +179,18 @@ export type StoreAggregateArgs<ExtArgs extends runtime.Types.Extensions.Internal
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: StoreAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: StoreSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: StoreMinAggregateInputType
@@ -167,6 +221,8 @@ export type StoreGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   _count?: StoreCountAggregateInputType | true
+  _avg?: StoreAvgAggregateInputType
+  _sum?: StoreSumAggregateInputType
   _min?: StoreMinAggregateInputType
   _max?: StoreMaxAggregateInputType
 }
@@ -177,11 +233,17 @@ export type StoreGroupByOutputType = {
   type: $Enums.StoreType
   name: string
   address: string | null
+  region: string | null
+  openingHours: string | null
+  phone: string | null
+  area: number | null
   enableFiscalReports: boolean
   status: $Enums.StoreStatus
   createdAt: Date
   updatedAt: Date
   _count: StoreCountAggregateOutputType | null
+  _avg: StoreAvgAggregateOutputType | null
+  _sum: StoreSumAggregateOutputType | null
   _min: StoreMinAggregateOutputType | null
   _max: StoreMaxAggregateOutputType | null
 }
@@ -210,6 +272,10 @@ export type StoreWhereInput = {
   type?: Prisma.EnumStoreTypeFilter<"Store"> | $Enums.StoreType
   name?: Prisma.StringFilter<"Store"> | string
   address?: Prisma.StringNullableFilter<"Store"> | string | null
+  region?: Prisma.StringNullableFilter<"Store"> | string | null
+  openingHours?: Prisma.StringNullableFilter<"Store"> | string | null
+  phone?: Prisma.StringNullableFilter<"Store"> | string | null
+  area?: Prisma.IntNullableFilter<"Store"> | number | null
   enableFiscalReports?: Prisma.BoolFilter<"Store"> | boolean
   status?: Prisma.EnumStoreStatusFilter<"Store"> | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
@@ -229,6 +295,10 @@ export type StoreOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  region?: Prisma.SortOrderInput | Prisma.SortOrder
+  openingHours?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  area?: Prisma.SortOrderInput | Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -251,6 +321,10 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumStoreTypeFilter<"Store"> | $Enums.StoreType
   name?: Prisma.StringFilter<"Store"> | string
   address?: Prisma.StringNullableFilter<"Store"> | string | null
+  region?: Prisma.StringNullableFilter<"Store"> | string | null
+  openingHours?: Prisma.StringNullableFilter<"Store"> | string | null
+  phone?: Prisma.StringNullableFilter<"Store"> | string | null
+  area?: Prisma.IntNullableFilter<"Store"> | number | null
   enableFiscalReports?: Prisma.BoolFilter<"Store"> | boolean
   status?: Prisma.EnumStoreStatusFilter<"Store"> | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
@@ -270,13 +344,19 @@ export type StoreOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  region?: Prisma.SortOrderInput | Prisma.SortOrder
+  openingHours?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  area?: Prisma.SortOrderInput | Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.StoreCountOrderByAggregateInput
+  _avg?: Prisma.StoreAvgOrderByAggregateInput
   _max?: Prisma.StoreMaxOrderByAggregateInput
   _min?: Prisma.StoreMinOrderByAggregateInput
+  _sum?: Prisma.StoreSumOrderByAggregateInput
 }
 
 export type StoreScalarWhereWithAggregatesInput = {
@@ -288,6 +368,10 @@ export type StoreScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumStoreTypeWithAggregatesFilter<"Store"> | $Enums.StoreType
   name?: Prisma.StringWithAggregatesFilter<"Store"> | string
   address?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  region?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  openingHours?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  phone?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  area?: Prisma.IntNullableWithAggregatesFilter<"Store"> | number | null
   enableFiscalReports?: Prisma.BoolWithAggregatesFilter<"Store"> | boolean
   status?: Prisma.EnumStoreStatusWithAggregatesFilter<"Store"> | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
@@ -299,6 +383,10 @@ export type StoreCreateInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -318,6 +406,10 @@ export type StoreUncheckedCreateInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -335,6 +427,10 @@ export type StoreUpdateInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -354,6 +450,10 @@ export type StoreUncheckedUpdateInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -372,6 +472,10 @@ export type StoreCreateManyInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -383,6 +487,10 @@ export type StoreUpdateManyMutationInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -395,6 +503,10 @@ export type StoreUncheckedUpdateManyInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -422,10 +534,18 @@ export type StoreCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  region?: Prisma.SortOrder
+  openingHours?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  area?: Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type StoreAvgOrderByAggregateInput = {
+  area?: Prisma.SortOrder
 }
 
 export type StoreMaxOrderByAggregateInput = {
@@ -434,6 +554,10 @@ export type StoreMaxOrderByAggregateInput = {
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  region?: Prisma.SortOrder
+  openingHours?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  area?: Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -446,10 +570,18 @@ export type StoreMinOrderByAggregateInput = {
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  region?: Prisma.SortOrder
+  openingHours?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  area?: Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type StoreSumOrderByAggregateInput = {
+  area?: Prisma.SortOrder
 }
 
 export type StoreCreateNestedManyWithoutCompanyInput = {
@@ -595,6 +727,10 @@ export type StoreCreateWithoutCompanyInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -612,6 +748,10 @@ export type StoreUncheckedCreateWithoutCompanyInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -659,6 +799,10 @@ export type StoreScalarWhereInput = {
   type?: Prisma.EnumStoreTypeFilter<"Store"> | $Enums.StoreType
   name?: Prisma.StringFilter<"Store"> | string
   address?: Prisma.StringNullableFilter<"Store"> | string | null
+  region?: Prisma.StringNullableFilter<"Store"> | string | null
+  openingHours?: Prisma.StringNullableFilter<"Store"> | string | null
+  phone?: Prisma.StringNullableFilter<"Store"> | string | null
+  area?: Prisma.IntNullableFilter<"Store"> | number | null
   enableFiscalReports?: Prisma.BoolFilter<"Store"> | boolean
   status?: Prisma.EnumStoreStatusFilter<"Store"> | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
@@ -670,6 +814,10 @@ export type StoreCreateWithoutManagersInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -688,6 +836,10 @@ export type StoreUncheckedCreateWithoutManagersInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -720,6 +872,10 @@ export type StoreUpdateWithoutManagersInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -738,6 +894,10 @@ export type StoreUncheckedUpdateWithoutManagersInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -754,6 +914,10 @@ export type StoreCreateWithoutStoreProductsInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -772,6 +936,10 @@ export type StoreUncheckedCreateWithoutStoreProductsInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -804,6 +972,10 @@ export type StoreUpdateWithoutStoreProductsInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -822,6 +994,10 @@ export type StoreUncheckedUpdateWithoutStoreProductsInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -838,6 +1014,10 @@ export type StoreCreateWithoutTransfersOutInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -856,6 +1036,10 @@ export type StoreUncheckedCreateWithoutTransfersOutInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -877,6 +1061,10 @@ export type StoreCreateWithoutTransfersInInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -895,6 +1083,10 @@ export type StoreUncheckedCreateWithoutTransfersInInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -927,6 +1119,10 @@ export type StoreUpdateWithoutTransfersOutInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -945,6 +1141,10 @@ export type StoreUncheckedUpdateWithoutTransfersOutInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -972,6 +1172,10 @@ export type StoreUpdateWithoutTransfersInInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -990,6 +1194,10 @@ export type StoreUncheckedUpdateWithoutTransfersInInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1006,6 +1214,10 @@ export type StoreCreateWithoutOrderCounterInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -1024,6 +1236,10 @@ export type StoreUncheckedCreateWithoutOrderCounterInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -1056,6 +1272,10 @@ export type StoreUpdateWithoutOrderCounterInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1074,6 +1294,10 @@ export type StoreUncheckedUpdateWithoutOrderCounterInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1090,6 +1314,10 @@ export type StoreCreateWithoutPromotionStoresInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -1108,6 +1336,10 @@ export type StoreUncheckedCreateWithoutPromotionStoresInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -1140,6 +1372,10 @@ export type StoreUpdateWithoutPromotionStoresInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1158,6 +1394,10 @@ export type StoreUncheckedUpdateWithoutPromotionStoresInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1174,6 +1414,10 @@ export type StoreCreateManyCompanyInput = {
   type: $Enums.StoreType
   name: string
   address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
   enableFiscalReports?: boolean
   status?: $Enums.StoreStatus
   createdAt?: Date | string
@@ -1185,6 +1429,10 @@ export type StoreUpdateWithoutCompanyInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1202,6 +1450,10 @@ export type StoreUncheckedUpdateWithoutCompanyInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1219,6 +1471,10 @@ export type StoreUncheckedUpdateManyWithoutCompanyInput = {
   type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1298,6 +1554,10 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   type?: boolean
   name?: boolean
   address?: boolean
+  region?: boolean
+  openingHours?: boolean
+  phone?: boolean
+  area?: boolean
   enableFiscalReports?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1318,6 +1578,10 @@ export type StoreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   type?: boolean
   name?: boolean
   address?: boolean
+  region?: boolean
+  openingHours?: boolean
+  phone?: boolean
+  area?: boolean
   enableFiscalReports?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1331,6 +1595,10 @@ export type StoreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   type?: boolean
   name?: boolean
   address?: boolean
+  region?: boolean
+  openingHours?: boolean
+  phone?: boolean
+  area?: boolean
   enableFiscalReports?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1344,13 +1612,17 @@ export type StoreSelectScalar = {
   type?: boolean
   name?: boolean
   address?: boolean
+  region?: boolean
+  openingHours?: boolean
+  phone?: boolean
+  area?: boolean
   enableFiscalReports?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "type" | "name" | "address" | "enableFiscalReports" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
+export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "type" | "name" | "address" | "region" | "openingHours" | "phone" | "area" | "enableFiscalReports" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
 export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   managers?: boolean | Prisma.Store$managersArgs<ExtArgs>
@@ -1385,6 +1657,10 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     type: $Enums.StoreType
     name: string
     address: string | null
+    region: string | null
+    openingHours: string | null
+    phone: string | null
+    area: number | null
     enableFiscalReports: boolean
     status: $Enums.StoreStatus
     createdAt: Date
@@ -1824,6 +2100,10 @@ export interface StoreFieldRefs {
   readonly type: Prisma.FieldRef<"Store", 'StoreType'>
   readonly name: Prisma.FieldRef<"Store", 'String'>
   readonly address: Prisma.FieldRef<"Store", 'String'>
+  readonly region: Prisma.FieldRef<"Store", 'String'>
+  readonly openingHours: Prisma.FieldRef<"Store", 'String'>
+  readonly phone: Prisma.FieldRef<"Store", 'String'>
+  readonly area: Prisma.FieldRef<"Store", 'Int'>
   readonly enableFiscalReports: Prisma.FieldRef<"Store", 'Boolean'>
   readonly status: Prisma.FieldRef<"Store", 'StoreStatus'>
   readonly createdAt: Prisma.FieldRef<"Store", 'DateTime'>
