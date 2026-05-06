@@ -61,3 +61,23 @@ export {
 // Queries — Shops
 export type { IShopWithStats } from './lib/queries/shops'
 export { getShopsWithStats } from './lib/queries/shops'
+
+// Queries — Shop Detail
+export type {
+  IShopOverview,
+  ILowStockItem,
+  IShiftMember,
+  IStoreProductRow,
+  IShopStaffMember,
+  IAvailableUser,
+  IClosedShift,
+  IShopFinance,
+} from './lib/queries/shop-detail'
+
+export {
+  getShopOverview,
+  getShopStock,
+  getShopStaff,
+  getAvailableStaffForShop,
+  getShopFinance,
+} from './lib/queries/shop-detail'

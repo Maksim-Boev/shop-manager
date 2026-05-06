@@ -1,0 +1,146 @@
+'use client'
+
+import { useState, useTransition } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import {
+  MapPinIcon, ClockIcon, PhoneIcon, ChevronRightIcon,
+} from 'lucide-react'
+import {
+  Button, Dialog, DialogContent, DialogHeader,
+  DialogTitle, DialogDescription, DialogFooter,
+} from '@pkg/ui'
+import { cn } from '@pkg/ui/cn'
+import { archiveShop } from '@/actions/shop'
+import type { IShopHeaderProps } from './types'
+import type { TTabKey } from '../../types'
+
+const TAB_LABELS: Record<TTabKey, string> = {
+  overview: 'Огляд',
+  stock: 'Склад',
+  staff: 'Персонал',
+  finance: 'Фінанси',
+}
+
+const ShopHeader = ({ shop, userRole, activeTab, tabs, onTabChange }: IShopHeaderProps) => {
+  const router = useRouter()
+  const [archiveOpen, setArchiveOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
+
+  const canArchive =
+    (userRole === 'ADMIN' || userRole === 'SUPER_ADMIN') && shop.status === 'ACTIVE'
+
+  const handleArchive = () => {
+    startTransition(async () => {
+      await archiveShop(shop.id)
+      setArchiveOpen(false)
+      router.refresh()
+    })
+  }
+
+  return (
+    <div className="space-y-4">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-1.5 text-sm text-slate-500">
+        <Link href="/shops" className="hover:text-slate-900 transition-colors">
+          Магазини
+        </Link>
+        <ChevronRightIcon className="size-3.5" />
+        <span className="text-slate-900 font-medium">{shop.name}</span>
+      </div>
+
+      {/* Title + actions */}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <h1 className="text-[22px] font-bold text-slate-900 tracking-tight">{shop.name}</h1>
+            {shop.status === 'ARCHIVED' ? (
+              <span className="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-slate-100 text-slate-600">
+                Архів
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-emerald-100 text-emerald-700">
+                Активний
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-4 mt-1.5 flex-wrap">
+            {shop.address && (
+              <span className="text-sm text-slate-500 flex items-center gap-1.5">
+                <MapPinIcon className="size-3.5 shrink-0" />
+                {shop.address}
+              </span>
+            )}
+            {shop.openingHours && (
+              <span className="text-sm text-slate-500 flex items-center gap-1.5">
+                <ClockIcon className="size-3.5 shrink-0" />
+                {shop.openingHours}
+              </span>
+            )}
+            {shop.phone && (
+              <span className="text-sm text-slate-500 flex items-center gap-1.5">
+                <PhoneIcon className="size-3.5 shrink-0" />
+                {shop.phone}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {canArchive && (
+          <Button variant="outline" size="sm" onClick={() => setArchiveOpen(true)}>
+            Архівувати
+          </Button>
+        )}
+      </div>
+
+      {/* Tab nav */}
+      <div className="flex gap-0 border-b border-slate-200">
+        {tabs.map(tab => (
+          <button
+            key={tab}
+            onClick={() => onTabChange(tab)}
+            className={cn(
+              'px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px',
+              activeTab === tab
+                ? 'border-indigo-600 text-indigo-700'
+                : 'border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300',
+            )}
+          >
+            {TAB_LABELS[tab]}
+          </button>
+        ))}
+      </div>
+
+      {/* Archive Dialog */}
+      <Dialog open={archiveOpen} onOpenChange={setArchiveOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Архівувати магазин?</DialogTitle>
+            <DialogDescription>
+              Магазин «{shop.name}» буде переведено до архіву. Відновлення доступне в
+              Налаштуваннях.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setArchiveOpen(false)}
+              disabled={isPending}
+            >
+              Скасувати
+            </Button>
+            <Button
+              onClick={handleArchive}
+              disabled={isPending}
+              className="bg-rose-600 text-white hover:bg-rose-700"
+            >
+              {isPending ? 'Архівується…' : 'Архівувати'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  )
+}
+
+export { ShopHeader }
