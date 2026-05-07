@@ -46,12 +46,12 @@ const NavItem = ({ item, compact, active }: { item: TNavItemDef; compact: boolea
       'group relative w-full flex items-center py-2.5 rounded-lg text-sm font-medium transition-all',
       compact ? 'justify-center px-2' : 'gap-3 px-3',
       active
-        ? 'bg-indigo-50 text-indigo-700'
-        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+        ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300'
+        : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
     )}
   >
     {active && (
-      <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-indigo-600 rounded-r" />
+      <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-indigo-600 dark:bg-indigo-400 rounded-r" />
     )}
     <item.icon className="size-[18px] shrink-0" />
     {!compact && <span className="truncate">{item.label}</span>}
@@ -65,8 +65,8 @@ const NavSection = ({
 }) => (
   <>
     <div className={cn('pt-5 pb-1', compact ? 'text-center' : 'px-3')}>
-      {!compact && <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{label}</p>}
-      {compact && <div className="h-px bg-slate-100 mx-2" />}
+      {!compact && <p className="text-[10px] font-bold text-sidebar-foreground/50 uppercase tracking-wider">{label}</p>}
+      {compact && <div className="h-px bg-sidebar-border mx-2" />}
     </div>
     {items.map(i => (
       <NavItem key={i.href} item={i} compact={compact} active={isActive(pathname, i.href)} />
@@ -87,11 +87,11 @@ const Sidebar = ({ compact, onToggle, user }: ISidebarProps) => {
 
   return (
     <aside className={cn(
-      'shrink-0 bg-white border-r border-slate-200 flex flex-col h-screen transition-all duration-200',
+      'shrink-0 bg-sidebar text-sidebar-foreground border-r border-sidebar-border flex flex-col h-screen transition-all duration-200',
       compact ? 'w-17' : 'w-58',
     )}>
       {/* Brand / toggle */}
-      <div className={cn('h-16 flex items-center border-b border-slate-100', compact ? 'justify-center' : 'px-5')}>
+      <div className={cn('h-16 flex items-center border-b border-sidebar-border', compact ? 'justify-center' : 'px-5')}>
         <div className="flex items-center gap-2">
           <button
             onClick={onToggle}
@@ -104,8 +104,8 @@ const Sidebar = ({ compact, onToggle, user }: ISidebarProps) => {
           </button>
           {!compact && (
             <div>
-              <div className="font-bold text-slate-900 tracking-tight text-[15px] leading-tight">ShopManager</div>
-              <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Retail OS</div>
+              <div className="font-bold text-sidebar-foreground tracking-tight text-[15px] leading-tight">ShopManager</div>
+              <div className="text-[10px] text-sidebar-foreground/50 font-medium uppercase tracking-wider">Retail OS</div>
             </div>
           )}
         </div>
@@ -121,11 +121,11 @@ const Sidebar = ({ compact, onToggle, user }: ISidebarProps) => {
       </nav>
 
       {/* User */}
-      <div className={cn('border-t border-slate-100', compact ? 'p-2' : 'p-3')}>
+      <div className={cn('border-t border-sidebar-border', compact ? 'p-2' : 'p-3')}>
         {compact ? (
           <div className="flex flex-col items-center gap-1">
             <Avatar>
-              <AvatarFallback className="bg-indigo-100 text-indigo-700 text-xs font-semibold">
+              <AvatarFallback className="bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300 text-xs font-semibold">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -134,7 +134,7 @@ const Sidebar = ({ compact, onToggle, user }: ISidebarProps) => {
               size="icon-sm"
               onClick={() => logoutAction()}
               title="Вийти"
-              className="text-slate-400 hover:text-rose-600"
+              className="text-sidebar-foreground/50 hover:text-rose-500"
             >
               <LogOutIcon />
             </Button>
@@ -142,22 +142,22 @@ const Sidebar = ({ compact, onToggle, user }: ISidebarProps) => {
         ) : (
           <div className="flex items-center gap-3 p-2 rounded-lg">
             <Avatar>
-              <AvatarFallback className="bg-indigo-100 text-indigo-700 text-xs font-semibold">
+              <AvatarFallback className="bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300 text-xs font-semibold">
                 {initials}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-slate-900 truncate">
+              <div className="text-sm font-medium text-sidebar-foreground truncate">
                 {user.firstName} {user.lastName}
               </div>
-              <div className="text-xs text-slate-500 truncate">{roleLabel}</div>
+              <div className="text-xs text-sidebar-foreground/60 truncate">{roleLabel}</div>
             </div>
             <Button
               variant="ghost"
               size="icon-sm"
               onClick={() => logoutAction()}
               title="Вийти"
-              className="text-slate-400 hover:text-rose-600 shrink-0"
+              className="text-sidebar-foreground/50 hover:text-rose-500 shrink-0"
             >
               <LogOutIcon />
             </Button>

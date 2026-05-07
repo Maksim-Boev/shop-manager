@@ -29,8 +29,8 @@ const ShopCard = ({ shop }: IShopCardProps) => {
 
   return (
     <div className={cn(
-      'bg-white rounded-2xl border border-slate-200/80 shadow-[0_1px_2px_rgba(15,23,42,0.04)]',
-      'hover:shadow-md hover:border-slate-300 transition-all overflow-hidden group cursor-pointer flex flex-col',
+      'bg-white dark:bg-card rounded-2xl border border-slate-200/80 dark:border-border shadow-[0_1px_2px_rgba(15,23,42,0.04)]',
+      'hover:shadow-md hover:border-slate-300 dark:hover:border-border/60 transition-all overflow-hidden group cursor-pointer flex flex-col',
       isArchived && 'opacity-60',
     )}>
       {/* Gradient header */}
@@ -90,11 +90,11 @@ const ShopCard = ({ shop }: IShopCardProps) => {
       {/* Content */}
       <div className="p-5 pt-8 flex-1 flex flex-col">
         <div>
-          <h3 className="font-bold text-slate-900 group-hover:text-indigo-700 transition-colors text-[15px]">
+          <h3 className="font-bold text-slate-900 dark:text-foreground group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors text-[15px]">
             {shop.name}
           </h3>
           {shop.address && (
-            <p className="text-xs text-slate-500 flex items-center gap-1 mt-1">
+            <p className="text-xs text-slate-500 dark:text-muted-foreground flex items-center gap-1 mt-1">
               <MapPinIcon className="size-3 shrink-0" />
               {shop.address}
             </p>
@@ -103,7 +103,7 @@ const ShopCard = ({ shop }: IShopCardProps) => {
 
         {/* Stock alert banner */}
         {totalStockAlerts > 0 && (
-          <div className="mt-3 bg-amber-50 text-amber-800 p-2.5 rounded-lg text-xs flex items-start gap-2 border border-amber-100">
+          <div className="mt-3 bg-amber-50 text-amber-800 dark:bg-amber-500/10 dark:text-amber-300 p-2.5 rounded-lg text-xs flex items-start gap-2 border border-amber-100 dark:border-amber-500/20">
             <AlertTriangleIcon className="size-3.5 mt-0.5 shrink-0" />
             <span className="font-medium">
               {shop.outOfStockCount > 0 && `${shop.outOfStockCount} SKU немає в наявності`}
@@ -114,28 +114,28 @@ const ShopCard = ({ shop }: IShopCardProps) => {
         )}
 
         {/* KPIs */}
-        <div className="grid grid-cols-2 gap-4 my-4 pt-4 border-t border-slate-100">
+        <div className="grid grid-cols-2 gap-4 my-4 pt-4 border-t border-slate-100 dark:border-border">
           <div>
-            <div className="text-[10px] text-slate-400 uppercase tracking-wide font-bold">Виручка</div>
-            <div className="text-lg font-bold text-slate-900 mt-0.5 tabular-nums">
+            <div className="text-[10px] text-slate-400 dark:text-muted-foreground uppercase tracking-wide font-bold">Виручка</div>
+            <div className="text-lg font-bold text-slate-900 dark:text-foreground mt-0.5 tabular-nums">
               ₴ {Number(shop.revenueToday).toLocaleString('uk-UA')}
             </div>
           </div>
           <div>
-            <div className="text-[10px] text-slate-400 uppercase tracking-wide font-bold">Залишки</div>
-            <div className="text-lg font-bold text-slate-900 mt-0.5 tabular-nums">
+            <div className="text-[10px] text-slate-400 dark:text-muted-foreground uppercase tracking-wide font-bold">Залишки</div>
+            <div className="text-lg font-bold text-slate-900 dark:text-foreground mt-0.5 tabular-nums">
               {Number(shop.stockTotal).toLocaleString('uk-UA')} од.
             </div>
             {totalStockAlerts > 0 ? (
-              <div className="text-[11px] text-amber-600 font-semibold mt-0.5">{totalStockAlerts} SKU нижче норми</div>
+              <div className="text-[11px] text-amber-600 dark:text-amber-400 font-semibold mt-0.5">{totalStockAlerts} SKU нижче норми</div>
             ) : (
-              <div className="text-[11px] text-slate-400 mt-0.5">Все в нормі</div>
+              <div className="text-[11px] text-slate-400 dark:text-muted-foreground mt-0.5">Все в нормі</div>
             )}
           </div>
         </div>
 
         {/* Manager / staff row */}
-        <div className="flex items-center justify-between bg-slate-50 px-3 py-2.5 rounded-lg">
+        <div className="flex items-center justify-between bg-slate-50 dark:bg-muted/40 px-3 py-2.5 rounded-lg">
           {shop.managersCount > 0 ? (
             <div className="flex items-center gap-2.5 min-w-0">
               <div
@@ -145,28 +145,28 @@ const ShopCard = ({ shop }: IShopCardProps) => {
                 <UsersIcon className="size-3.5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-semibold text-slate-900 truncate">
+                <div className="text-xs font-semibold text-slate-900 dark:text-foreground truncate">
                   {shop.managersCount} {shop.managersCount === 1 ? 'менеджер' : 'менеджери'}
                 </div>
-                <div className="text-[10px] text-slate-500">Персонал</div>
+                <div className="text-[10px] text-slate-500 dark:text-muted-foreground">Персонал</div>
               </div>
             </div>
           ) : (
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 rounded-full bg-rose-100 text-rose-500 dark:bg-rose-500/15 dark:text-rose-300 flex items-center justify-center shrink-0">
                 <UsersIcon className="size-3.5" />
               </div>
               <div>
-                <div className="text-xs font-semibold text-rose-700">Не призначено</div>
-                <div className="text-[10px] text-slate-500">Менеджер</div>
+                <div className="text-xs font-semibold text-rose-700 dark:text-rose-300">Не призначено</div>
+                <div className="text-[10px] text-slate-500 dark:text-muted-foreground">Менеджер</div>
               </div>
             </div>
           )}
           <div className={cn(
             'text-[10px] font-semibold px-2 py-1 rounded-md border shrink-0',
             isOpen
-              ? 'text-emerald-700 bg-emerald-50 border-emerald-200'
-              : 'text-slate-500 bg-white border-slate-200',
+              ? 'text-emerald-700 bg-emerald-50 border-emerald-200 dark:text-emerald-300 dark:bg-emerald-500/10 dark:border-emerald-500/20'
+              : 'text-slate-500 bg-white border-slate-200 dark:text-muted-foreground dark:bg-card dark:border-border',
           )}>
             {isOpen ? 'Зміна відкрита' : 'Зміна закрита'}
           </div>
@@ -177,7 +177,7 @@ const ShopCard = ({ shop }: IShopCardProps) => {
           <Button variant="outline" size="sm" asChild>
             <Link href={`/shops/${shop.id}?tab=stock`}>Склад</Link>
           </Button>
-          <Button size="sm" asChild className="bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border-0 shadow-none">
+          <Button size="sm" asChild className="bg-indigo-50 text-indigo-700 hover:bg-indigo-100 dark:bg-indigo-500/15 dark:text-indigo-300 dark:hover:bg-indigo-500/25 border-0 shadow-none">
             <Link href={`/shops/${shop.id}`}>Деталі</Link>
           </Button>
         </div>

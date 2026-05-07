@@ -32,8 +32,8 @@ const ShopsView = ({ shops, userRole }: IShopsViewProps) => {
     <div className="space-y-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-[22px] font-bold text-slate-900 tracking-tight">Магазини</h1>
-          <p className="text-sm text-slate-500 mt-0.5">{shops.length} магазинів у мережі</p>
+          <h1 className="text-[22px] font-bold text-slate-900 dark:text-foreground tracking-tight">Магазини</h1>
+          <p className="text-sm text-slate-500 dark:text-muted-foreground mt-0.5">{shops.length} магазинів у мережі</p>
         </div>
         {canAddShop && (
           <>

@@ -24,12 +24,16 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth()
   const cookieStore = await cookies()
   const defaultCompact = cookieStore.get('sidebar_compact')?.value === 'true'
+  const theme = cookieStore.get('theme')?.value === 'dark' ? 'dark' : 'light'
 
   return (
-    <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="ru"
+      className={`${geistSans.variable} ${geistMono.variable}${theme === 'dark' ? ' dark' : ''}`}
+    >
       <body suppressHydrationWarning className="antialiased">
         {session ? (
-          <DashboardShell user={session.user} defaultCompact={defaultCompact}>
+          <DashboardShell user={session.user} defaultCompact={defaultCompact} defaultTheme={theme}>
             {children}
           </DashboardShell>
         ) : (

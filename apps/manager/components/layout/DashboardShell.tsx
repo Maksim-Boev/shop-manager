@@ -3,15 +3,17 @@
 import { useState } from 'react'
 import { Sidebar } from '@/components/layout/sidebar'
 import { TopBar } from '@/components/layout/topbar'
+import type { TTheme } from '@/components/layout/theme-toggle'
 import type { AuthUser } from '@pkg/db'
 
 interface IDashboardShellProps {
   children: React.ReactNode
   user: AuthUser
   defaultCompact: boolean
+  defaultTheme: TTheme
 }
 
-const DashboardShell = ({ children, user, defaultCompact }: IDashboardShellProps) => {
+const DashboardShell = ({ children, user, defaultCompact, defaultTheme }: IDashboardShellProps) => {
   const [compact, setCompact] = useState(defaultCompact)
 
   const handleToggle = () => {
@@ -21,10 +23,10 @@ const DashboardShell = ({ children, user, defaultCompact }: IDashboardShellProps
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar compact={compact} onToggle={handleToggle} user={user} />
       <div className="flex flex-1 flex-col overflow-hidden">
-        <TopBar user={user} />
+        <TopBar user={user} defaultTheme={defaultTheme} />
         <main className="flex-1 overflow-y-auto p-8">
           {children}
         </main>

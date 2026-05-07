@@ -16,7 +16,7 @@ const ShopsFilter = ({
 }: IShopsFilterProps) => (
   <div className="flex items-center gap-3 flex-wrap">
     <div className="relative flex-1 min-w-48">
-      <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 pointer-events-none" />
+      <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 dark:text-muted-foreground pointer-events-none" />
       <Input
         type="text"
         placeholder="Пошук за назвою або адресою…"
@@ -26,7 +26,7 @@ const ShopsFilter = ({
       />
     </div>
 
-    <div className="flex gap-1 p-1 bg-slate-100 rounded-lg">
+    <div className="flex gap-1 p-1 bg-slate-100 dark:bg-muted/40 rounded-lg">
       {STATUS_OPTIONS.map(o => (
         <button
           key={o.value}
@@ -34,8 +34,8 @@ const ShopsFilter = ({
           className={cn(
             'px-3 py-1 text-xs font-medium rounded-md transition-colors',
             statusFilter === o.value
-              ? 'bg-white shadow-sm text-slate-900'
-              : 'text-slate-500 hover:text-slate-700',
+              ? 'bg-white shadow-sm text-slate-900 dark:bg-card dark:text-foreground'
+              : 'text-slate-500 hover:text-slate-700 dark:text-muted-foreground dark:hover:text-foreground',
           )}
         >
           {o.label}
@@ -43,13 +43,13 @@ const ShopsFilter = ({
       ))}
     </div>
 
-    <div className="flex gap-1 p-1 bg-slate-100 rounded-lg">
+    <div className="flex gap-1 p-1 bg-slate-100 dark:bg-muted/40 rounded-lg">
       <Button
         variant="ghost"
         size="icon-sm"
         onClick={() => onViewMode('grid')}
         title="Сітка"
-        className={cn(viewMode === 'grid' && 'bg-white shadow-sm text-slate-900')}
+        className={cn(viewMode === 'grid' && 'bg-white shadow-sm text-slate-900 dark:bg-card dark:text-foreground')}
       >
         <LayoutGridIcon className="size-4" />
       </Button>
@@ -58,7 +58,7 @@ const ShopsFilter = ({
         size="icon-sm"
         onClick={() => onViewMode('table')}
         title="Таблиця"
-        className={cn(viewMode === 'table' && 'bg-white shadow-sm text-slate-900')}
+        className={cn(viewMode === 'table' && 'bg-white shadow-sm text-slate-900 dark:bg-card dark:text-foreground')}
       >
         <TableIcon className="size-4" />
       </Button>

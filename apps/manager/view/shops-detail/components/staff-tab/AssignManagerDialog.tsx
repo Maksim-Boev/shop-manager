@@ -55,7 +55,7 @@ const AssignManagerDialog = ({
         </DialogHeader>
 
         {availableUsers.length === 0 ? (
-          <p className="text-sm text-slate-500 py-4 text-center">
+          <p className="text-sm text-slate-500 dark:text-muted-foreground py-4 text-center">
             Немає доступних співробітників для призначення
           </p>
         ) : (
@@ -73,7 +73,7 @@ const AssignManagerDialog = ({
           </Select>
         )}
 
-        {error && <p className="text-sm text-rose-600">{error}</p>}
+        {error && <p className="text-sm text-rose-600 dark:text-rose-400">{error}</p>}
 
         <div className="flex justify-end gap-2">
           <Button variant="ghost" onClick={() => handleClose(false)} disabled={isPending}>
