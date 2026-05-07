@@ -5,10 +5,11 @@ import { ShopHeader } from './components/shop-header'
 import { OverviewTab } from './components/overview-tab'
 import { StockTab } from './components/stock-tab'
 import { StaffTab } from './components/staff-tab'
+import { ScheduleTab } from './components/schedule-tab'
 import { FinanceTab } from './components/finance-tab'
 import type { IShopDetailViewProps, TTabKey } from './types'
 
-const TABS: TTabKey[] = ['overview', 'stock', 'staff', 'finance']
+const TABS: TTabKey[] = ['overview', 'stock', 'staff', 'schedule', 'finance']
 
 const ShopDetailView = ({ shop, activeTab, tabData, userRole }: IShopDetailViewProps) => {
   const router = useRouter()
@@ -42,6 +43,13 @@ const ShopDetailView = ({ shop, activeTab, tabData, userRole }: IShopDetailViewP
           weekStartIso={tabData.weekStartIso}
           shopId={shop.id}
           userRole={userRole}
+        />
+      )}
+      {tabData.tab === 'schedule' && (
+        <ScheduleTab
+          shopId={shop.id}
+          weeklySchedule={tabData.data.weeklySchedule}
+          exceptions={tabData.data.exceptions}
         />
       )}
       {tabData.tab === 'finance' && (

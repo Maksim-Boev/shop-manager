@@ -1,10 +1,11 @@
 import Link from 'next/link'
-import { ActivityIcon, ChevronRightIcon } from 'lucide-react'
+import { ChevronRightIcon } from 'lucide-react'
 import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
   Badge, Button,
 } from '@pkg/ui'
 import { cn } from '@pkg/ui/cn'
+import { getShopOpenStatus, formatWeeklySchedule } from '@pkg/db/utils/shop-status'
 import type { IShopsTableProps } from './types'
 
 const ShopsTable = ({ shops }: IShopsTableProps) => {
@@ -22,16 +23,19 @@ const ShopsTable = ({ shops }: IShopsTableProps) => {
         <TableRow>
           <TableHead>Назва</TableHead>
           <TableHead>Статус</TableHead>
+          <TableHead>Графік</TableHead>
           <TableHead className="text-right">Виручка</TableHead>
           <TableHead className="text-right">Залишки</TableHead>
           <TableHead className="text-right">Менеджери</TableHead>
-          <TableHead className="text-center">Зміна</TableHead>
+          <TableHead className="text-center">Стан</TableHead>
           <TableHead />
         </TableRow>
       </TableHeader>
       <TableBody>
         {shops.map(shop => {
           const hasStockAlert = shop.outOfStockCount > 0 || shop.lowStockCount > 0
+          const workingNow = shop.status !== 'ARCHIVED' && getShopOpenStatus(shop.weeklySchedule, shop.scheduleExceptions) === 'open'
+          const scheduleSummary = formatWeeklySchedule(shop.weeklySchedule)
           return (
             <TableRow key={shop.id}>
               <TableCell>
@@ -52,6 +56,9 @@ const ShopsTable = ({ shops }: IShopsTableProps) => {
                   {shop.status === 'ARCHIVED' ? 'Архів' : 'Активний'}
                 </Badge>
               </TableCell>
+              <TableCell className="text-xs text-slate-600 dark:text-muted-foreground whitespace-nowrap">
+                {scheduleSummary ?? <span className="text-slate-400 dark:text-muted-foreground">—</span>}
+              </TableCell>
               <TableCell className="text-right tabular-nums font-medium text-slate-900">
                 ₴ {Number(shop.revenueToday).toLocaleString('uk-UA')}
               </TableCell>
@@ -65,10 +72,25 @@ const ShopsTable = ({ shops }: IShopsTableProps) => {
               </TableCell>
               <TableCell className="text-right text-slate-700">{shop.managersCount}</TableCell>
               <TableCell className="text-center">
-                <ActivityIcon className={cn(
-                  'size-4 mx-auto',
-                  shop.hasOpenShift ? 'text-emerald-500' : 'text-slate-300',
-                )} />
+                {shop.status === 'ARCHIVED' ? (
+                  <span className="text-slate-400 dark:text-muted-foreground">—</span>
+                ) : workingNow ? (
+                  <Badge
+                    variant="outline"
+                    className="border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300 gap-1.5"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Відкритий
+                  </Badge>
+                ) : (
+                  <Badge
+                    variant="outline"
+                    className="border-slate-200 bg-white text-slate-600 dark:border-border dark:bg-card dark:text-muted-foreground gap-1.5"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                    Зачинений
+                  </Badge>
+                )}
               </TableCell>
               <TableCell className="text-right">
                 <Button variant="link" size="sm" asChild>

@@ -21,7 +21,6 @@ const AddShopModal = ({ open, onOpenChange }: IAddShopModalProps) => {
   const [region, setRegion] = useState('')
   const [phone, setPhone] = useState('')
   const [area, setArea] = useState('')
-  const [openingHours, setOpeningHours] = useState('')
   const [error, setError] = useState<string | null>(null)
 
   const reset = () => {
@@ -30,7 +29,6 @@ const AddShopModal = ({ open, onOpenChange }: IAddShopModalProps) => {
     setRegion('')
     setPhone('')
     setArea('')
-    setOpeningHours('')
     setError(null)
   }
 
@@ -48,7 +46,6 @@ const AddShopModal = ({ open, onOpenChange }: IAddShopModalProps) => {
           name: name.trim(),
           address: address.trim() || undefined,
           region: region || undefined,
-          openingHours: openingHours.trim() || undefined,
           phone: phone.trim() || undefined,
           area: area ? Number(area) : undefined,
         })

@@ -38,6 +38,11 @@ export type ManagerStore = Prisma.ManagerStoreModel
  */
 export type Store = Prisma.StoreModel
 /**
+ * Model StoreScheduleException
+ * 
+ */
+export type StoreScheduleException = Prisma.StoreScheduleExceptionModel
+/**
  * Model TaxRate
  * 
  */

@@ -267,7 +267,7 @@ model Store {
   name                String
   address             String?
   region              String?
-  openingHours        String?
+  weeklySchedule      Json?
   phone               String?
   area                Int?
   enableFiscalReports Boolean     @default(false)
@@ -275,15 +275,32 @@ model Store {
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt
 
-  managers        ManagerStore[]
-  storeProducts   StoreProduct[]
-  transfersOut    StockTransfer[] @relation("StockTransferSource")
-  transfersIn     StockTransfer[] @relation("StockTransferDestination")
-  orderCounter    StoreOrderCounter?
-  promotionStores PromotionStore[]
-  scheduledShifts ScheduledShift[]
+  managers           ManagerStore[]
+  storeProducts      StoreProduct[]
+  transfersOut       StockTransfer[] @relation("StockTransferSource")
+  transfersIn        StockTransfer[] @relation("StockTransferDestination")
+  orderCounter       StoreOrderCounter?
+  promotionStores    PromotionStore[]
+  scheduledShifts    ScheduledShift[]
+  scheduleExceptions StoreScheduleException[]
 
   @@index([companyId, status])
+}
+
+model StoreScheduleException {
+  id      String  @id @default(cuid())
+  storeId String
+  store   Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  month   Int
+  day     Int
+  year    Int?
+  isOpen  Boolean
+  from    String?
+  to      String?
+  note    String?
+
+  @@index([storeId])
+  @@index([storeId, month, day])
 }
 
 model TaxRate {

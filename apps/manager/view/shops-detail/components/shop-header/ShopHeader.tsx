@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import {
-  MapPinIcon, ClockIcon, PhoneIcon,
+  MapPinIcon, PhoneIcon,
 } from 'lucide-react'
 import {
   Button, Dialog, DialogContent, DialogHeader,
@@ -20,6 +20,7 @@ const TAB_LABELS: Record<TTabKey, string> = {
   overview: 'Огляд',
   stock: 'Склад',
   staff: 'Персонал',
+  schedule: 'Графік',
   finance: 'Фінанси',
 }
 
@@ -46,7 +47,9 @@ const ShopHeader = ({ shop, userRole, activeTab, tabs, onTabChange }: IShopHeade
     const id = setInterval(() => setNow(new Date()), 60_000)
     return () => clearInterval(id)
   }, [])
-  const openStatus = shop.status === 'ARCHIVED' ? 'unknown' : getShopOpenStatus(shop.openingHours, now)
+  const openStatus = shop.status === 'ARCHIVED'
+    ? 'unknown'
+    : getShopOpenStatus(shop.weeklySchedule, shop.scheduleExceptions, now)
 
   const handleArchive = () => {
     startTransition(async () => {
@@ -90,12 +93,6 @@ const ShopHeader = ({ shop, userRole, activeTab, tabs, onTabChange }: IShopHeade
               <span className="text-sm text-slate-500 dark:text-muted-foreground flex items-center gap-1.5">
                 <MapPinIcon className="size-3.5 shrink-0" />
                 {shop.address}
-              </span>
-            )}
-            {shop.openingHours && (
-              <span className="text-sm text-slate-500 dark:text-muted-foreground flex items-center gap-1.5">
-                <ClockIcon className="size-3.5 shrink-0" />
-                {shop.openingHours}
               </span>
             )}
             {shop.phone && (

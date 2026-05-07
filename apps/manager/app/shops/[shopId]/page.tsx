@@ -3,12 +3,13 @@ import { auth } from '@/auth'
 import {
   prisma, getShopOverview, getShopStock, getShopStaff,
   getAvailableStaffForShop, getShopFinance,
-  getShopSchedule, getStoreUsersForScheduling,
+  getShopSchedule, getStoreUsersForScheduling, getStoreHoursConfig,
 } from '@pkg/db'
+import type { TWeeklySchedule } from '@pkg/db'
 import { ShopDetailView } from '@/view/shops-detail'
 import type { TTabKey, TTabData, TRange } from '@/view/shops-detail'
 
-const VALID_TABS: TTabKey[] = ['overview', 'stock', 'staff', 'finance']
+const VALID_TABS: TTabKey[] = ['overview', 'stock', 'staff', 'schedule', 'finance']
 
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/
 
@@ -37,14 +38,26 @@ const ShopDetailPage = async ({ params, searchParams }: IProps) => {
 
   const companyId = session.user.companyId ?? ''
 
-  const shop = await prisma.store.findFirst({
+  const shopRaw = await prisma.store.findFirst({
     where: { id: shopId, companyId, type: 'SHOP' },
     select: {
       id: true, name: true, address: true, region: true,
-      openingHours: true, phone: true, status: true,
+      weeklySchedule: true, phone: true, status: true,
+      scheduleExceptions: {
+        select: {
+          id: true, month: true, day: true, year: true,
+          isOpen: true, from: true, to: true, note: true,
+        },
+        orderBy: [{ month: 'asc' }, { day: 'asc' }, { year: 'asc' }],
+      },
     },
   })
-  if (!shop) notFound()
+  if (!shopRaw) notFound()
+
+  const shop = {
+    ...shopRaw,
+    weeklySchedule: shopRaw.weeklySchedule as TWeeklySchedule | null,
+  }
 
   const activeTab: TTabKey = VALID_TABS.includes(rawTab as TTabKey)
     ? (rawTab as TTabKey)
@@ -76,6 +89,9 @@ const ShopDetailPage = async ({ params, searchParams }: IProps) => {
       scheduledShifts, storeUsers,
       weekStartIso: fmtDateIso(weekStart),
     }
+  } else if (activeTab === 'schedule') {
+    const data = await getStoreHoursConfig(shopId, companyId)
+    tabData = { tab: 'schedule', data }
   } else {
     const data = await getShopFinance(shopId, companyId, range)
     tabData = { tab: 'finance', data, range }

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { MapPinIcon, StoreIcon, AlertTriangleIcon, UsersIcon } from 'lucide-react'
 import { Button } from '@pkg/ui'
 import { cn } from '@pkg/ui/cn'
+import { getShopOpenStatus, formatWeeklySchedule } from '@pkg/db/utils/shop-status'
 import type { IShopCardProps } from './types'
 
 const ACCENT_KEYS = ['indigo', 'emerald', 'amber', 'sky', 'violet', 'teal'] as const
@@ -24,8 +25,12 @@ const getAccent = (id: string) => {
 const ShopCard = ({ shop }: IShopCardProps) => {
   const accent = getAccent(shop.id)
   const isArchived = shop.status === 'ARCHIVED'
-  const isOpen = !isArchived && shop.hasOpenShift
+  const openStatus = isArchived
+    ? 'unknown'
+    : getShopOpenStatus(shop.weeklySchedule, shop.scheduleExceptions)
+  const isOpen = openStatus === 'open'
   const totalStockAlerts = shop.outOfStockCount + shop.lowStockCount
+  const scheduleSummary = formatWeeklySchedule(shop.weeklySchedule)
 
   return (
     <div className={cn(
@@ -67,13 +72,13 @@ const ShopCard = ({ shop }: IShopCardProps) => {
         </div>
 
         {/* Region + hours */}
-        {(shop.region || shop.openingHours) && (
+        {(shop.region || scheduleSummary) && (
           <div className="absolute bottom-3 left-4 text-white">
             {shop.region && (
               <div className="text-[10px] uppercase tracking-wider opacity-80 font-semibold">{shop.region}</div>
             )}
-            {shop.openingHours && (
-              <div className="text-xs opacity-90 mt-0.5">{shop.openingHours}</div>
+            {scheduleSummary && (
+              <div className="text-xs opacity-90 mt-0.5">{scheduleSummary}</div>
             )}
           </div>
         )}

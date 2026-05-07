@@ -4,9 +4,10 @@ import { cn } from '@pkg/ui/cn'
 import type { TViewMode, TStatusFilter, IShopsFilterProps } from './types'
 
 const STATUS_OPTIONS: { label: string; value: TStatusFilter }[] = [
-  { label: 'Всі',        value: 'ALL' },
-  { label: 'Активні',    value: 'ACTIVE' },
-  { label: 'Архівовані', value: 'ARCHIVED' },
+  { label: 'Всі',             value: 'ALL' },
+  { label: 'Активні',         value: 'ACTIVE' },
+  { label: 'Працюють зараз',  value: 'OPEN_NOW' },
+  { label: 'Архівовані',      value: 'ARCHIVED' },
 ]
 
 const ShopsFilter = ({

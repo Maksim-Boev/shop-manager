@@ -1,6 +1,7 @@
 import { prisma } from '../prisma'
 import type { UserRole } from '../auth'
 import type { ProductUnit } from '@/generated/prisma/enums'
+import type { TWeeklySchedule } from '../utils/shop-status'
 
 // ── Interfaces ─────────────────────────────────────────────────────────────
 
@@ -398,4 +399,44 @@ export const getStoreUsersForScheduling = async (
     select: { id: true, firstName: true, lastName: true, role: true },
     orderBy: [{ firstName: 'asc' }, { lastName: 'asc' }],
   })
+}
+
+// ── Store hours config ──────────────────────────────────────────────────────
+
+export interface IStoreScheduleException {
+  id: string
+  month: number
+  day: number
+  year: number | null
+  isOpen: boolean
+  from: string | null
+  to: string | null
+  note: string | null
+}
+
+export interface IStoreHoursConfig {
+  weeklySchedule: TWeeklySchedule | null
+  exceptions: IStoreScheduleException[]
+}
+
+export const getStoreHoursConfig = async (
+  shopId: string,
+  companyId: string,
+): Promise<IStoreHoursConfig> => {
+  const store = await prisma.store.findFirst({
+    where: { id: shopId, companyId },
+    select: {
+      weeklySchedule: true,
+      scheduleExceptions: {
+        select: { id: true, month: true, day: true, year: true, isOpen: true, from: true, to: true, note: true },
+        orderBy: [{ month: 'asc' }, { day: 'asc' }, { year: 'asc' }],
+      },
+    },
+  })
+  if (!store) throw new Error('Магазин не знайдено')
+
+  return {
+    weeklySchedule: store.weeklySchedule as TWeeklySchedule | null,
+    exceptions: store.scheduleExceptions,
+  }
 }

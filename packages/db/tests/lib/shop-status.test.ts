@@ -1,82 +1,81 @@
 import { describe, it, expect } from 'vitest'
-import { parseOpeningHours, getShopOpenStatus } from '../../lib/utils/shop-status'
+import { getShopOpenStatus } from '../../lib/utils/shop-status'
+import type { TWeeklySchedule, IScheduleException } from '../../lib/utils/shop-status'
 
-describe('parseOpeningHours', () => {
-  it('parses standard hyphen', () => {
-    expect(parseOpeningHours('08:00-22:00')).toEqual({
-      startMinutes: 480, endMinutes: 1320,
-    })
-  })
-
-  it('parses en-dash with spaces (seed format)', () => {
-    expect(parseOpeningHours('08:00 – 22:00')).toEqual({
-      startMinutes: 480, endMinutes: 1320,
-    })
-  })
-
-  it('parses em-dash and varied whitespace', () => {
-    expect(parseOpeningHours('  09:30  —  18:45  ')).toEqual({
-      startMinutes: 570, endMinutes: 1125,
-    })
-  })
-
-  it('accepts 24:00 as upper bound', () => {
-    expect(parseOpeningHours('00:00-24:00')).toEqual({
-      startMinutes: 0, endMinutes: 1440,
-    })
-  })
-
-  it('returns null for null/undefined/empty', () => {
-    expect(parseOpeningHours(null)).toBeNull()
-    expect(parseOpeningHours(undefined)).toBeNull()
-    expect(parseOpeningHours('')).toBeNull()
-  })
-
-  it('returns null for malformed input', () => {
-    expect(parseOpeningHours('garbage')).toBeNull()
-    expect(parseOpeningHours('8-22')).toBeNull()
-    expect(parseOpeningHours('08:00 to 22:00')).toBeNull()
-  })
-
-  it('returns null when end <= start (через полночь не поддерживаем)', () => {
-    expect(parseOpeningHours('22:00-06:00')).toBeNull()
-    expect(parseOpeningHours('10:00-10:00')).toBeNull()
-  })
-
-  it('returns null for invalid time components', () => {
-    expect(parseOpeningHours('25:00-26:00')).toBeNull()
-    expect(parseOpeningHours('10:60-12:00')).toBeNull()
-    expect(parseOpeningHours('24:30-22:00')).toBeNull()
-  })
+const makeAllOpen = (from: string, to: string): TWeeklySchedule => ({
+  days: ([0, 1, 2, 3, 4, 5, 6] as const).map(day => ({ day, isOpen: true, from, to })),
 })
 
+const at = (isoDate: string, h: number, m = 0): Date => {
+  const d = new Date(`${isoDate}T00:00:00`)
+  d.setHours(h, m, 0, 0)
+  return d
+}
+
+// 2026-05-04 = Monday (getDay()=1, isoDay=0)
+const MON = '2026-05-04'
+// 2026-05-10 = Sunday (getDay()=0, isoDay=6)
+const SUN = '2026-05-10'
+
 describe('getShopOpenStatus', () => {
-  const at = (h: number, m = 0) => {
-    const d = new Date()
-    d.setHours(h, m, 0, 0)
-    return d
-  }
-
-  it('returns "open" within working hours', () => {
-    expect(getShopOpenStatus('08:00-22:00', at(10))).toBe('open')
-    expect(getShopOpenStatus('08:00-22:00', at(8, 0))).toBe('open')
-    expect(getShopOpenStatus('08:00-22:00', at(21, 59))).toBe('open')
+  it('returns unknown when weeklySchedule is null', () => {
+    expect(getShopOpenStatus(null, [], new Date())).toBe('unknown')
   })
 
-  it('returns "closed" outside working hours', () => {
-    expect(getShopOpenStatus('08:00-22:00', at(7, 59))).toBe('closed')
-    expect(getShopOpenStatus('08:00-22:00', at(22, 0))).toBe('closed')
-    expect(getShopOpenStatus('08:00-22:00', at(3))).toBe('closed')
+  it('returns open within working hours', () => {
+    const s = makeAllOpen('09:00', '21:00')
+    expect(getShopOpenStatus(s, [], at(MON, 10))).toBe('open')
+    expect(getShopOpenStatus(s, [], at(MON, 9, 0))).toBe('open')
+    expect(getShopOpenStatus(s, [], at(MON, 20, 59))).toBe('open')
   })
 
-  it('returns "unknown" for unparseable input', () => {
-    expect(getShopOpenStatus(null)).toBe('unknown')
-    expect(getShopOpenStatus('garbage')).toBe('unknown')
-    expect(getShopOpenStatus('22:00-06:00')).toBe('unknown')
+  it('returns closed outside working hours', () => {
+    const s = makeAllOpen('09:00', '21:00')
+    expect(getShopOpenStatus(s, [], at(MON, 8, 59))).toBe('closed')
+    expect(getShopOpenStatus(s, [], at(MON, 21, 0))).toBe('closed')
   })
 
-  it('handles seed-format with en-dash', () => {
-    expect(getShopOpenStatus('08:00 – 22:00', at(15))).toBe('open')
-    expect(getShopOpenStatus('08:00 – 22:00', at(23))).toBe('closed')
+  it('returns closed on a day marked isOpen=false', () => {
+    const s: TWeeklySchedule = {
+      days: ([0, 1, 2, 3, 4, 5, 6] as const).map(day => ({
+        day,
+        isOpen: day !== 6,
+        ...(day !== 6 && { from: '09:00', to: '21:00' }),
+      })),
+    }
+    expect(getShopOpenStatus(s, [], at(SUN, 12))).toBe('closed')
+  })
+
+  it('exact-year exception overrides weekly — closed', () => {
+    const s = makeAllOpen('09:00', '21:00')
+    const exc: IScheduleException = { year: 2026, month: 5, day: 4, isOpen: false, from: null, to: null }
+    expect(getShopOpenStatus(s, [exc], at(MON, 12))).toBe('closed')
+  })
+
+  it('annual exception overrides weekly — short hours open', () => {
+    const s = makeAllOpen('09:00', '21:00')
+    const exc: IScheduleException = { year: null, month: 5, day: 4, isOpen: true, from: '10:00', to: '14:00' }
+    expect(getShopOpenStatus(s, [exc], at(MON, 12))).toBe('open')
+    expect(getShopOpenStatus(s, [exc], at(MON, 14))).toBe('closed')
+    expect(getShopOpenStatus(s, [exc], at(MON, 9))).toBe('closed')
+  })
+
+  it('annual exception overrides weekly — closed', () => {
+    const s = makeAllOpen('09:00', '21:00')
+    const exc: IScheduleException = { year: null, month: 5, day: 4, isOpen: false, from: null, to: null }
+    expect(getShopOpenStatus(s, [exc], at(MON, 12))).toBe('closed')
+  })
+
+  it('exact exception takes priority over annual', () => {
+    const s = makeAllOpen('09:00', '21:00')
+    const annual: IScheduleException = { year: null, month: 5, day: 4, isOpen: true, from: '10:00', to: '14:00' }
+    const exact: IScheduleException = { year: 2026, month: 5, day: 4, isOpen: false, from: null, to: null }
+    expect(getShopOpenStatus(s, [annual, exact], at(MON, 12))).toBe('closed')
+  })
+
+  it('exception for different day does not affect current day', () => {
+    const s = makeAllOpen('09:00', '21:00')
+    const exc: IScheduleException = { year: 2026, month: 5, day: 5, isOpen: false, from: null, to: null }
+    expect(getShopOpenStatus(s, [exc], at(MON, 12))).toBe('open')
   })
 })

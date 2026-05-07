@@ -9,7 +9,6 @@ const CreateShopSchema = z.object({
   name: z.string().min(1, "Назва обов'язкова").max(255),
   address: z.string().max(500).optional(),
   region: z.string().max(100).optional(),
-  openingHours: z.string().max(100).optional(),
   phone: z.string().max(30).optional(),
   area: z.coerce.number().int().positive().optional(),
 })
@@ -36,7 +35,6 @@ export const createShop = async (input: unknown): Promise<{ id: string }> => {
       name: data.name,
       address: data.address ?? null,
       region: data.region ?? null,
-      openingHours: data.openingHours ?? null,
       phone: data.phone ?? null,
       area: data.area ?? null,
     },

@@ -388,6 +388,7 @@ export const ModelName = {
   User: 'User',
   ManagerStore: 'ManagerStore',
   Store: 'Store',
+  StoreScheduleException: 'StoreScheduleException',
   TaxRate: 'TaxRate',
   Category: 'Category',
   Subcategory: 'Subcategory',
@@ -443,7 +444,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "managerStore" | "store" | "taxRate" | "category" | "subcategory" | "tag" | "product" | "productTag" | "productBarcode" | "storeProduct" | "priceHistory" | "stockTransfer" | "stockTransferItem" | "inventoryAudit" | "inventoryAuditItem" | "manualAdjustment" | "stockMovement" | "supplier" | "purchaseOrder" | "purchaseOrderItem" | "goodsReceipt" | "goodsReceiptItem" | "storeOrderCounter" | "order" | "orderItem" | "orderItemDiscount" | "promotion" | "promotionTarget" | "promotionStore" | "customer" | "customerContact" | "tier" | "tierRule" | "customerDiscountRule" | "pointsTransaction" | "shift" | "scheduledShift" | "shiftReport" | "return" | "returnItem" | "userSalaryRate" | "salaryPayout"
+    modelProps: "company" | "user" | "managerStore" | "store" | "storeScheduleException" | "taxRate" | "category" | "subcategory" | "tag" | "product" | "productTag" | "productBarcode" | "storeProduct" | "priceHistory" | "stockTransfer" | "stockTransferItem" | "inventoryAudit" | "inventoryAuditItem" | "manualAdjustment" | "stockMovement" | "supplier" | "purchaseOrder" | "purchaseOrderItem" | "goodsReceipt" | "goodsReceiptItem" | "storeOrderCounter" | "order" | "orderItem" | "orderItemDiscount" | "promotion" | "promotionTarget" | "promotionStore" | "customer" | "customerContact" | "tier" | "tierRule" | "customerDiscountRule" | "pointsTransaction" | "shift" | "scheduledShift" | "shiftReport" | "return" | "returnItem" | "userSalaryRate" | "salaryPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -740,6 +741,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.StoreCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.StoreCountAggregateOutputType> | number
+        }
+      }
+    }
+    StoreScheduleException: {
+      payload: Prisma.$StoreScheduleExceptionPayload<ExtArgs>
+      fields: Prisma.StoreScheduleExceptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StoreScheduleExceptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StoreScheduleExceptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload>
+        }
+        findFirst: {
+          args: Prisma.StoreScheduleExceptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StoreScheduleExceptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload>
+        }
+        findMany: {
+          args: Prisma.StoreScheduleExceptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload>[]
+        }
+        create: {
+          args: Prisma.StoreScheduleExceptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload>
+        }
+        createMany: {
+          args: Prisma.StoreScheduleExceptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StoreScheduleExceptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload>[]
+        }
+        delete: {
+          args: Prisma.StoreScheduleExceptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload>
+        }
+        update: {
+          args: Prisma.StoreScheduleExceptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.StoreScheduleExceptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StoreScheduleExceptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StoreScheduleExceptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.StoreScheduleExceptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreScheduleExceptionPayload>
+        }
+        aggregate: {
+          args: Prisma.StoreScheduleExceptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStoreScheduleException>
+        }
+        groupBy: {
+          args: Prisma.StoreScheduleExceptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreScheduleExceptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StoreScheduleExceptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreScheduleExceptionCountAggregateOutputType> | number
         }
       }
     }
@@ -3793,7 +3868,7 @@ export const StoreScalarFieldEnum = {
   name: 'name',
   address: 'address',
   region: 'region',
-  openingHours: 'openingHours',
+  weeklySchedule: 'weeklySchedule',
   phone: 'phone',
   area: 'area',
   enableFiscalReports: 'enableFiscalReports',
@@ -3803,6 +3878,21 @@ export const StoreScalarFieldEnum = {
 } as const
 
 export type StoreScalarFieldEnum = (typeof StoreScalarFieldEnum)[keyof typeof StoreScalarFieldEnum]
+
+
+export const StoreScheduleExceptionScalarFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  month: 'month',
+  day: 'day',
+  year: 'year',
+  isOpen: 'isOpen',
+  from: 'from',
+  to: 'to',
+  note: 'note'
+} as const
+
+export type StoreScheduleExceptionScalarFieldEnum = (typeof StoreScheduleExceptionScalarFieldEnum)[keyof typeof StoreScheduleExceptionScalarFieldEnum]
 
 
 export const TaxRateScalarFieldEnum = {
@@ -4537,6 +4627,20 @@ export type ListEnumStoreTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -4694,20 +4798,6 @@ export type EnumDeliveryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'DeliveryType[]'
  */
 export type ListEnumDeliveryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryType[]'>
-    
-
-
-/**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -5047,6 +5137,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   managerStore?: Prisma.ManagerStoreOmit
   store?: Prisma.StoreOmit
+  storeScheduleException?: Prisma.StoreScheduleExceptionOmit
   taxRate?: Prisma.TaxRateOmit
   category?: Prisma.CategoryOmit
   subcategory?: Prisma.SubcategoryOmit

@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { Button } from '@pkg/ui'
+import { getShopOpenStatus } from '@pkg/db/utils/shop-status'
 import { ShopsFilter } from './components/shops-filter'
 import { ShopsGrid } from './components/shops-grid'
 import { ShopsTable } from './components/shops-table'
@@ -21,7 +22,12 @@ const ShopsView = ({ shops, userRole }: IShopsViewProps) => {
         s.name.toLowerCase().includes(q) ||
         (s.address?.toLowerCase().includes(q) ?? false)
       const matchesStatus =
-        statusFilter === 'ALL' || s.status === statusFilter
+        statusFilter === 'ALL'
+          ? true
+          : statusFilter === 'OPEN_NOW'
+            ? s.status === 'ACTIVE' &&
+              getShopOpenStatus(s.weeklySchedule, s.scheduleExceptions) === 'open'
+            : s.status === statusFilter
       return matchesSearch && matchesStatus
     })
   }, [shops, search, statusFilter])

@@ -1,10 +1,11 @@
 import type {
   IShopOverview, IStoreProductRow, IShopStaffMember, IAvailableUser, IShopFinance,
-  IScheduledShiftRow, IStoreUserOption,
+  IScheduledShiftRow, IStoreUserOption, IStoreScheduleException, IStoreHoursConfig,
+  TWeeklySchedule,
 } from '@pkg/db'
 import type { UserRole } from '@pkg/db/browser'
 
-export type TTabKey = 'overview' | 'stock' | 'staff' | 'finance'
+export type TTabKey = 'overview' | 'stock' | 'staff' | 'schedule' | 'finance'
 export type TRange = 'week' | 'month'
 
 export interface IShopBasic {
@@ -12,7 +13,8 @@ export interface IShopBasic {
   name: string
   address: string | null
   region: string | null
-  openingHours: string | null
+  weeklySchedule: TWeeklySchedule | null
+  scheduleExceptions: IStoreScheduleException[]
   phone: string | null
   status: 'ACTIVE' | 'ARCHIVED'
 }
@@ -28,6 +30,7 @@ export type TTabData =
       storeUsers: IStoreUserOption[]
       weekStartIso: string
     }
+  | { tab: 'schedule'; data: IStoreHoursConfig }
   | { tab: 'finance'; data: IShopFinance; range: TRange }
 
 export interface IShopDetailViewProps {

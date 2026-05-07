@@ -42,8 +42,8 @@ export { verifyCredentials, hashPassword } from './lib/auth'
 export type { AuthUser, JwtClaims, UserRole } from './lib/auth'
 
 // Utils
-export type { TShopOpenStatus, IOpeningHours } from './lib/utils/shop-status'
-export { parseOpeningHours, getShopOpenStatus } from './lib/utils/shop-status'
+export type { TShopOpenStatus, TWeeklySchedule, IScheduleException } from './lib/utils/shop-status'
+export { getShopOpenStatus } from './lib/utils/shop-status'
 
 // Queries — Dashboard
 export type {
@@ -78,6 +78,8 @@ export type {
   IShopFinance,
   IScheduledShiftRow,
   IStoreUserOption,
+  IStoreScheduleException,
+  IStoreHoursConfig,
 } from './lib/queries/shop-detail'
 
 export {
@@ -88,6 +90,7 @@ export {
   getShopFinance,
   getShopSchedule,
   getStoreUsersForScheduling,
+  getStoreHoursConfig,
 } from './lib/queries/shop-detail'
 
 // Queries — Staff

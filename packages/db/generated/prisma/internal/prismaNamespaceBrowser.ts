@@ -55,6 +55,7 @@ export const ModelName = {
   User: 'User',
   ManagerStore: 'ManagerStore',
   Store: 'Store',
+  StoreScheduleException: 'StoreScheduleException',
   TaxRate: 'TaxRate',
   Category: 'Category',
   Subcategory: 'Subcategory',
@@ -164,7 +165,7 @@ export const StoreScalarFieldEnum = {
   name: 'name',
   address: 'address',
   region: 'region',
-  openingHours: 'openingHours',
+  weeklySchedule: 'weeklySchedule',
   phone: 'phone',
   area: 'area',
   enableFiscalReports: 'enableFiscalReports',
@@ -174,6 +175,21 @@ export const StoreScalarFieldEnum = {
 } as const
 
 export type StoreScalarFieldEnum = (typeof StoreScalarFieldEnum)[keyof typeof StoreScalarFieldEnum]
+
+
+export const StoreScheduleExceptionScalarFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  month: 'month',
+  day: 'day',
+  year: 'year',
+  isOpen: 'isOpen',
+  from: 'from',
+  to: 'to',
+  note: 'note'
+} as const
+
+export type StoreScheduleExceptionScalarFieldEnum = (typeof StoreScheduleExceptionScalarFieldEnum)[keyof typeof StoreScheduleExceptionScalarFieldEnum]
 
 
 export const TaxRateScalarFieldEnum = {

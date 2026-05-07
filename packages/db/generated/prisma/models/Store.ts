@@ -41,7 +41,6 @@ export type StoreMinAggregateOutputType = {
   name: string | null
   address: string | null
   region: string | null
-  openingHours: string | null
   phone: string | null
   area: number | null
   enableFiscalReports: boolean | null
@@ -57,7 +56,6 @@ export type StoreMaxAggregateOutputType = {
   name: string | null
   address: string | null
   region: string | null
-  openingHours: string | null
   phone: string | null
   area: number | null
   enableFiscalReports: boolean | null
@@ -73,7 +71,7 @@ export type StoreCountAggregateOutputType = {
   name: number
   address: number
   region: number
-  openingHours: number
+  weeklySchedule: number
   phone: number
   area: number
   enableFiscalReports: number
@@ -99,7 +97,6 @@ export type StoreMinAggregateInputType = {
   name?: true
   address?: true
   region?: true
-  openingHours?: true
   phone?: true
   area?: true
   enableFiscalReports?: true
@@ -115,7 +112,6 @@ export type StoreMaxAggregateInputType = {
   name?: true
   address?: true
   region?: true
-  openingHours?: true
   phone?: true
   area?: true
   enableFiscalReports?: true
@@ -131,7 +127,7 @@ export type StoreCountAggregateInputType = {
   name?: true
   address?: true
   region?: true
-  openingHours?: true
+  weeklySchedule?: true
   phone?: true
   area?: true
   enableFiscalReports?: true
@@ -234,7 +230,7 @@ export type StoreGroupByOutputType = {
   name: string
   address: string | null
   region: string | null
-  openingHours: string | null
+  weeklySchedule: runtime.JsonValue | null
   phone: string | null
   area: number | null
   enableFiscalReports: boolean
@@ -273,7 +269,7 @@ export type StoreWhereInput = {
   name?: Prisma.StringFilter<"Store"> | string
   address?: Prisma.StringNullableFilter<"Store"> | string | null
   region?: Prisma.StringNullableFilter<"Store"> | string | null
-  openingHours?: Prisma.StringNullableFilter<"Store"> | string | null
+  weeklySchedule?: Prisma.JsonNullableFilter<"Store">
   phone?: Prisma.StringNullableFilter<"Store"> | string | null
   area?: Prisma.IntNullableFilter<"Store"> | number | null
   enableFiscalReports?: Prisma.BoolFilter<"Store"> | boolean
@@ -288,6 +284,7 @@ export type StoreWhereInput = {
   orderCounter?: Prisma.XOR<Prisma.StoreOrderCounterNullableScalarRelationFilter, Prisma.StoreOrderCounterWhereInput> | null
   promotionStores?: Prisma.PromotionStoreListRelationFilter
   scheduledShifts?: Prisma.ScheduledShiftListRelationFilter
+  scheduleExceptions?: Prisma.StoreScheduleExceptionListRelationFilter
 }
 
 export type StoreOrderByWithRelationInput = {
@@ -297,7 +294,7 @@ export type StoreOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   region?: Prisma.SortOrderInput | Prisma.SortOrder
-  openingHours?: Prisma.SortOrderInput | Prisma.SortOrder
+  weeklySchedule?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   area?: Prisma.SortOrderInput | Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
@@ -312,6 +309,7 @@ export type StoreOrderByWithRelationInput = {
   orderCounter?: Prisma.StoreOrderCounterOrderByWithRelationInput
   promotionStores?: Prisma.PromotionStoreOrderByRelationAggregateInput
   scheduledShifts?: Prisma.ScheduledShiftOrderByRelationAggregateInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionOrderByRelationAggregateInput
 }
 
 export type StoreWhereUniqueInput = Prisma.AtLeast<{
@@ -324,7 +322,7 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Store"> | string
   address?: Prisma.StringNullableFilter<"Store"> | string | null
   region?: Prisma.StringNullableFilter<"Store"> | string | null
-  openingHours?: Prisma.StringNullableFilter<"Store"> | string | null
+  weeklySchedule?: Prisma.JsonNullableFilter<"Store">
   phone?: Prisma.StringNullableFilter<"Store"> | string | null
   area?: Prisma.IntNullableFilter<"Store"> | number | null
   enableFiscalReports?: Prisma.BoolFilter<"Store"> | boolean
@@ -339,6 +337,7 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   orderCounter?: Prisma.XOR<Prisma.StoreOrderCounterNullableScalarRelationFilter, Prisma.StoreOrderCounterWhereInput> | null
   promotionStores?: Prisma.PromotionStoreListRelationFilter
   scheduledShifts?: Prisma.ScheduledShiftListRelationFilter
+  scheduleExceptions?: Prisma.StoreScheduleExceptionListRelationFilter
 }, "id">
 
 export type StoreOrderByWithAggregationInput = {
@@ -348,7 +347,7 @@ export type StoreOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   region?: Prisma.SortOrderInput | Prisma.SortOrder
-  openingHours?: Prisma.SortOrderInput | Prisma.SortOrder
+  weeklySchedule?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   area?: Prisma.SortOrderInput | Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
@@ -372,7 +371,7 @@ export type StoreScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Store"> | string
   address?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
   region?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
-  openingHours?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  weeklySchedule?: Prisma.JsonNullableWithAggregatesFilter<"Store">
   phone?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
   area?: Prisma.IntNullableWithAggregatesFilter<"Store"> | number | null
   enableFiscalReports?: Prisma.BoolWithAggregatesFilter<"Store"> | boolean
@@ -387,7 +386,7 @@ export type StoreCreateInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -402,6 +401,7 @@ export type StoreCreateInput = {
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateInput = {
@@ -411,7 +411,7 @@ export type StoreUncheckedCreateInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -425,6 +425,7 @@ export type StoreUncheckedCreateInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUpdateInput = {
@@ -433,7 +434,7 @@ export type StoreUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -448,6 +449,7 @@ export type StoreUpdateInput = {
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateInput = {
@@ -457,7 +459,7 @@ export type StoreUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -471,6 +473,7 @@ export type StoreUncheckedUpdateInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateManyInput = {
@@ -480,7 +483,7 @@ export type StoreCreateManyInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -495,7 +498,7 @@ export type StoreUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -511,7 +514,7 @@ export type StoreUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -542,7 +545,7 @@ export type StoreCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
   region?: Prisma.SortOrder
-  openingHours?: Prisma.SortOrder
+  weeklySchedule?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   area?: Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
@@ -562,7 +565,6 @@ export type StoreMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
   region?: Prisma.SortOrder
-  openingHours?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   area?: Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
@@ -578,7 +580,6 @@ export type StoreMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
   region?: Prisma.SortOrder
-  openingHours?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   area?: Prisma.SortOrder
   enableFiscalReports?: Prisma.SortOrder
@@ -657,6 +658,20 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type EnumStoreStatusFieldUpdateOperationsInput = {
   set?: $Enums.StoreStatus
+}
+
+export type StoreCreateNestedOneWithoutScheduleExceptionsInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutScheduleExceptionsInput, Prisma.StoreUncheckedCreateWithoutScheduleExceptionsInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutScheduleExceptionsInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutScheduleExceptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutScheduleExceptionsInput, Prisma.StoreUncheckedCreateWithoutScheduleExceptionsInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutScheduleExceptionsInput
+  upsert?: Prisma.StoreUpsertWithoutScheduleExceptionsInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutScheduleExceptionsInput, Prisma.StoreUpdateWithoutScheduleExceptionsInput>, Prisma.StoreUncheckedUpdateWithoutScheduleExceptionsInput>
 }
 
 export type StoreCreateNestedOneWithoutStoreProductsInput = {
@@ -749,7 +764,7 @@ export type StoreCreateWithoutCompanyInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -763,6 +778,7 @@ export type StoreCreateWithoutCompanyInput = {
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutCompanyInput = {
@@ -771,7 +787,7 @@ export type StoreUncheckedCreateWithoutCompanyInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -785,6 +801,7 @@ export type StoreUncheckedCreateWithoutCompanyInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutCompanyInput = {
@@ -823,7 +840,7 @@ export type StoreScalarWhereInput = {
   name?: Prisma.StringFilter<"Store"> | string
   address?: Prisma.StringNullableFilter<"Store"> | string | null
   region?: Prisma.StringNullableFilter<"Store"> | string | null
-  openingHours?: Prisma.StringNullableFilter<"Store"> | string | null
+  weeklySchedule?: Prisma.JsonNullableFilter<"Store">
   phone?: Prisma.StringNullableFilter<"Store"> | string | null
   area?: Prisma.IntNullableFilter<"Store"> | number | null
   enableFiscalReports?: Prisma.BoolFilter<"Store"> | boolean
@@ -838,7 +855,7 @@ export type StoreCreateWithoutManagersInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -852,6 +869,7 @@ export type StoreCreateWithoutManagersInput = {
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutManagersInput = {
@@ -861,7 +879,7 @@ export type StoreUncheckedCreateWithoutManagersInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -874,6 +892,7 @@ export type StoreUncheckedCreateWithoutManagersInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutManagersInput = {
@@ -898,7 +917,7 @@ export type StoreUpdateWithoutManagersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -912,6 +931,7 @@ export type StoreUpdateWithoutManagersInput = {
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutManagersInput = {
@@ -921,13 +941,122 @@ export type StoreUncheckedUpdateWithoutManagersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  storeProducts?: Prisma.StoreProductUncheckedUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
+  orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
+  promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutScheduleExceptionsInput = {
+  id?: string
+  type: $Enums.StoreType
+  name: string
+  address?: string | null
+  region?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  phone?: string | null
+  area?: number | null
+  enableFiscalReports?: boolean
+  status?: $Enums.StoreStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company: Prisma.CompanyCreateNestedOneWithoutStoresInput
+  managers?: Prisma.ManagerStoreCreateNestedManyWithoutStoreInput
+  storeProducts?: Prisma.StoreProductCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
+  orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
+  promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutScheduleExceptionsInput = {
+  id?: string
+  companyId: string
+  type: $Enums.StoreType
+  name: string
+  address?: string | null
+  region?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  phone?: string | null
+  area?: number | null
+  enableFiscalReports?: boolean
+  status?: $Enums.StoreStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  managers?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutStoreInput
+  storeProducts?: Prisma.StoreProductUncheckedCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
+  orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
+  promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutScheduleExceptionsInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutScheduleExceptionsInput, Prisma.StoreUncheckedCreateWithoutScheduleExceptionsInput>
+}
+
+export type StoreUpsertWithoutScheduleExceptionsInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutScheduleExceptionsInput, Prisma.StoreUncheckedUpdateWithoutScheduleExceptionsInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutScheduleExceptionsInput, Prisma.StoreUncheckedCreateWithoutScheduleExceptionsInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutScheduleExceptionsInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutScheduleExceptionsInput, Prisma.StoreUncheckedUpdateWithoutScheduleExceptionsInput>
+}
+
+export type StoreUpdateWithoutScheduleExceptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneRequiredWithoutStoresNestedInput
+  managers?: Prisma.ManagerStoreUpdateManyWithoutStoreNestedInput
+  storeProducts?: Prisma.StoreProductUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
+  orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
+  promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutScheduleExceptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managers?: Prisma.ManagerStoreUncheckedUpdateManyWithoutStoreNestedInput
   storeProducts?: Prisma.StoreProductUncheckedUpdateManyWithoutStoreNestedInput
   transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
@@ -942,7 +1071,7 @@ export type StoreCreateWithoutStoreProductsInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -956,6 +1085,7 @@ export type StoreCreateWithoutStoreProductsInput = {
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutStoreProductsInput = {
@@ -965,7 +1095,7 @@ export type StoreUncheckedCreateWithoutStoreProductsInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -978,6 +1108,7 @@ export type StoreUncheckedCreateWithoutStoreProductsInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutStoreProductsInput = {
@@ -1002,7 +1133,7 @@ export type StoreUpdateWithoutStoreProductsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1016,6 +1147,7 @@ export type StoreUpdateWithoutStoreProductsInput = {
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutStoreProductsInput = {
@@ -1025,7 +1157,7 @@ export type StoreUncheckedUpdateWithoutStoreProductsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1038,6 +1170,7 @@ export type StoreUncheckedUpdateWithoutStoreProductsInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutTransfersOutInput = {
@@ -1046,7 +1179,7 @@ export type StoreCreateWithoutTransfersOutInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1060,6 +1193,7 @@ export type StoreCreateWithoutTransfersOutInput = {
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutTransfersOutInput = {
@@ -1069,7 +1203,7 @@ export type StoreUncheckedCreateWithoutTransfersOutInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1082,6 +1216,7 @@ export type StoreUncheckedCreateWithoutTransfersOutInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutTransfersOutInput = {
@@ -1095,7 +1230,7 @@ export type StoreCreateWithoutTransfersInInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1109,6 +1244,7 @@ export type StoreCreateWithoutTransfersInInput = {
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutTransfersInInput = {
@@ -1118,7 +1254,7 @@ export type StoreUncheckedCreateWithoutTransfersInInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1131,6 +1267,7 @@ export type StoreUncheckedCreateWithoutTransfersInInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutTransfersInInput = {
@@ -1155,7 +1292,7 @@ export type StoreUpdateWithoutTransfersOutInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1169,6 +1306,7 @@ export type StoreUpdateWithoutTransfersOutInput = {
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutTransfersOutInput = {
@@ -1178,7 +1316,7 @@ export type StoreUncheckedUpdateWithoutTransfersOutInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1191,6 +1329,7 @@ export type StoreUncheckedUpdateWithoutTransfersOutInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUpsertWithoutTransfersInInput = {
@@ -1210,7 +1349,7 @@ export type StoreUpdateWithoutTransfersInInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1224,6 +1363,7 @@ export type StoreUpdateWithoutTransfersInInput = {
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutTransfersInInput = {
@@ -1233,7 +1373,7 @@ export type StoreUncheckedUpdateWithoutTransfersInInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1246,6 +1386,7 @@ export type StoreUncheckedUpdateWithoutTransfersInInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutOrderCounterInput = {
@@ -1254,7 +1395,7 @@ export type StoreCreateWithoutOrderCounterInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1268,6 +1409,7 @@ export type StoreCreateWithoutOrderCounterInput = {
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutOrderCounterInput = {
@@ -1277,7 +1419,7 @@ export type StoreUncheckedCreateWithoutOrderCounterInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1290,6 +1432,7 @@ export type StoreUncheckedCreateWithoutOrderCounterInput = {
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutOrderCounterInput = {
@@ -1314,7 +1457,7 @@ export type StoreUpdateWithoutOrderCounterInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1328,6 +1471,7 @@ export type StoreUpdateWithoutOrderCounterInput = {
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutOrderCounterInput = {
@@ -1337,7 +1481,7 @@ export type StoreUncheckedUpdateWithoutOrderCounterInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1350,6 +1494,7 @@ export type StoreUncheckedUpdateWithoutOrderCounterInput = {
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutPromotionStoresInput = {
@@ -1358,7 +1503,7 @@ export type StoreCreateWithoutPromotionStoresInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1372,6 +1517,7 @@ export type StoreCreateWithoutPromotionStoresInput = {
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutPromotionStoresInput = {
@@ -1381,7 +1527,7 @@ export type StoreUncheckedCreateWithoutPromotionStoresInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1394,6 +1540,7 @@ export type StoreUncheckedCreateWithoutPromotionStoresInput = {
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutPromotionStoresInput = {
@@ -1418,7 +1565,7 @@ export type StoreUpdateWithoutPromotionStoresInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1432,6 +1579,7 @@ export type StoreUpdateWithoutPromotionStoresInput = {
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutPromotionStoresInput = {
@@ -1441,7 +1589,7 @@ export type StoreUncheckedUpdateWithoutPromotionStoresInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1454,6 +1602,7 @@ export type StoreUncheckedUpdateWithoutPromotionStoresInput = {
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutScheduledShiftsInput = {
@@ -1462,7 +1611,7 @@ export type StoreCreateWithoutScheduledShiftsInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1476,6 +1625,7 @@ export type StoreCreateWithoutScheduledShiftsInput = {
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutScheduledShiftsInput = {
@@ -1485,7 +1635,7 @@ export type StoreUncheckedCreateWithoutScheduledShiftsInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1498,6 +1648,7 @@ export type StoreUncheckedCreateWithoutScheduledShiftsInput = {
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutScheduledShiftsInput = {
@@ -1522,7 +1673,7 @@ export type StoreUpdateWithoutScheduledShiftsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1536,6 +1687,7 @@ export type StoreUpdateWithoutScheduledShiftsInput = {
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutScheduledShiftsInput = {
@@ -1545,7 +1697,7 @@ export type StoreUncheckedUpdateWithoutScheduledShiftsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1558,6 +1710,7 @@ export type StoreUncheckedUpdateWithoutScheduledShiftsInput = {
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateManyCompanyInput = {
@@ -1566,7 +1719,7 @@ export type StoreCreateManyCompanyInput = {
   name: string
   address?: string | null
   region?: string | null
-  openingHours?: string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: string | null
   area?: number | null
   enableFiscalReports?: boolean
@@ -1581,7 +1734,7 @@ export type StoreUpdateWithoutCompanyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1595,6 +1748,7 @@ export type StoreUpdateWithoutCompanyInput = {
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutCompanyInput = {
@@ -1603,7 +1757,7 @@ export type StoreUncheckedUpdateWithoutCompanyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1617,6 +1771,7 @@ export type StoreUncheckedUpdateWithoutCompanyInput = {
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
   scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
+  scheduleExceptions?: Prisma.StoreScheduleExceptionUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateManyWithoutCompanyInput = {
@@ -1625,7 +1780,7 @@ export type StoreUncheckedUpdateManyWithoutCompanyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklySchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1646,6 +1801,7 @@ export type StoreCountOutputType = {
   transfersIn: number
   promotionStores: number
   scheduledShifts: number
+  scheduleExceptions: number
 }
 
 export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1655,6 +1811,7 @@ export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   transfersIn?: boolean | StoreCountOutputTypeCountTransfersInArgs
   promotionStores?: boolean | StoreCountOutputTypeCountPromotionStoresArgs
   scheduledShifts?: boolean | StoreCountOutputTypeCountScheduledShiftsArgs
+  scheduleExceptions?: boolean | StoreCountOutputTypeCountScheduleExceptionsArgs
 }
 
 /**
@@ -1709,6 +1866,13 @@ export type StoreCountOutputTypeCountScheduledShiftsArgs<ExtArgs extends runtime
   where?: Prisma.ScheduledShiftWhereInput
 }
 
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountScheduleExceptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StoreScheduleExceptionWhereInput
+}
+
 
 export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1717,7 +1881,7 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   name?: boolean
   address?: boolean
   region?: boolean
-  openingHours?: boolean
+  weeklySchedule?: boolean
   phone?: boolean
   area?: boolean
   enableFiscalReports?: boolean
@@ -1732,6 +1896,7 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   orderCounter?: boolean | Prisma.Store$orderCounterArgs<ExtArgs>
   promotionStores?: boolean | Prisma.Store$promotionStoresArgs<ExtArgs>
   scheduledShifts?: boolean | Prisma.Store$scheduledShiftsArgs<ExtArgs>
+  scheduleExceptions?: boolean | Prisma.Store$scheduleExceptionsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["store"]>
 
@@ -1742,7 +1907,7 @@ export type StoreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   address?: boolean
   region?: boolean
-  openingHours?: boolean
+  weeklySchedule?: boolean
   phone?: boolean
   area?: boolean
   enableFiscalReports?: boolean
@@ -1759,7 +1924,7 @@ export type StoreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   address?: boolean
   region?: boolean
-  openingHours?: boolean
+  weeklySchedule?: boolean
   phone?: boolean
   area?: boolean
   enableFiscalReports?: boolean
@@ -1776,7 +1941,7 @@ export type StoreSelectScalar = {
   name?: boolean
   address?: boolean
   region?: boolean
-  openingHours?: boolean
+  weeklySchedule?: boolean
   phone?: boolean
   area?: boolean
   enableFiscalReports?: boolean
@@ -1785,7 +1950,7 @@ export type StoreSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "type" | "name" | "address" | "region" | "openingHours" | "phone" | "area" | "enableFiscalReports" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
+export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "type" | "name" | "address" | "region" | "weeklySchedule" | "phone" | "area" | "enableFiscalReports" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
 export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   managers?: boolean | Prisma.Store$managersArgs<ExtArgs>
@@ -1795,6 +1960,7 @@ export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   orderCounter?: boolean | Prisma.Store$orderCounterArgs<ExtArgs>
   promotionStores?: boolean | Prisma.Store$promotionStoresArgs<ExtArgs>
   scheduledShifts?: boolean | Prisma.Store$scheduledShiftsArgs<ExtArgs>
+  scheduleExceptions?: boolean | Prisma.Store$scheduleExceptionsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StoreIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1815,6 +1981,7 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     orderCounter: Prisma.$StoreOrderCounterPayload<ExtArgs> | null
     promotionStores: Prisma.$PromotionStorePayload<ExtArgs>[]
     scheduledShifts: Prisma.$ScheduledShiftPayload<ExtArgs>[]
+    scheduleExceptions: Prisma.$StoreScheduleExceptionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1823,7 +1990,7 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     name: string
     address: string | null
     region: string | null
-    openingHours: string | null
+    weeklySchedule: runtime.JsonValue | null
     phone: string | null
     area: number | null
     enableFiscalReports: boolean
@@ -2232,6 +2399,7 @@ export interface Prisma__StoreClient<T, Null = never, ExtArgs extends runtime.Ty
   orderCounter<T extends Prisma.Store$orderCounterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$orderCounterArgs<ExtArgs>>): Prisma.Prisma__StoreOrderCounterClient<runtime.Types.Result.GetResult<Prisma.$StoreOrderCounterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   promotionStores<T extends Prisma.Store$promotionStoresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$promotionStoresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PromotionStorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   scheduledShifts<T extends Prisma.Store$scheduledShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$scheduledShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScheduledShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  scheduleExceptions<T extends Prisma.Store$scheduleExceptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$scheduleExceptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoreScheduleExceptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2267,7 +2435,7 @@ export interface StoreFieldRefs {
   readonly name: Prisma.FieldRef<"Store", 'String'>
   readonly address: Prisma.FieldRef<"Store", 'String'>
   readonly region: Prisma.FieldRef<"Store", 'String'>
-  readonly openingHours: Prisma.FieldRef<"Store", 'String'>
+  readonly weeklySchedule: Prisma.FieldRef<"Store", 'Json'>
   readonly phone: Prisma.FieldRef<"Store", 'String'>
   readonly area: Prisma.FieldRef<"Store", 'Int'>
   readonly enableFiscalReports: Prisma.FieldRef<"Store", 'Boolean'>
@@ -2835,6 +3003,30 @@ export type Store$scheduledShiftsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.ScheduledShiftScalarFieldEnum | Prisma.ScheduledShiftScalarFieldEnum[]
+}
+
+/**
+ * Store.scheduleExceptions
+ */
+export type Store$scheduleExceptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StoreScheduleException
+   */
+  select?: Prisma.StoreScheduleExceptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StoreScheduleException
+   */
+  omit?: Prisma.StoreScheduleExceptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StoreScheduleExceptionInclude<ExtArgs> | null
+  where?: Prisma.StoreScheduleExceptionWhereInput
+  orderBy?: Prisma.StoreScheduleExceptionOrderByWithRelationInput | Prisma.StoreScheduleExceptionOrderByWithRelationInput[]
+  cursor?: Prisma.StoreScheduleExceptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StoreScheduleExceptionScalarFieldEnum | Prisma.StoreScheduleExceptionScalarFieldEnum[]
 }
 
 /**

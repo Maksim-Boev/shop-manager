@@ -1,11 +1,13 @@
 import { prisma } from '../prisma'
+import type { TWeeklySchedule, IScheduleException } from '../utils/shop-status'
 
 export interface IShopWithStats {
   id: string
   name: string
   address: string | null
   region: string | null
-  openingHours: string | null
+  weeklySchedule: TWeeklySchedule | null
+  scheduleExceptions: IScheduleException[]
   status: 'ACTIVE' | 'ARCHIVED'
   revenueToday: number
   stockTotal: number
@@ -26,9 +28,12 @@ export const getShopsWithStats = async (companyId: string): Promise<IShopWithSta
         name: true,
         address: true,
         region: true,
-        openingHours: true,
+        weeklySchedule: true,
         status: true,
         _count: { select: { managers: true } },
+        scheduleExceptions: {
+          select: { month: true, day: true, year: true, isOpen: true, from: true, to: true },
+        },
       },
       orderBy: { name: 'asc' },
     }),
@@ -50,19 +55,13 @@ export const getShopsWithStats = async (companyId: string): Promise<IShopWithSta
 
     prisma.storeProduct.groupBy({
       by: ['storeId'],
-      where: {
-        store: { companyId, type: 'SHOP' },
-        stock: 0,
-      },
+      where: { store: { companyId, type: 'SHOP' }, stock: 0 },
       _count: { storeId: true },
     }),
 
     prisma.storeProduct.groupBy({
       by: ['storeId'],
-      where: {
-        store: { companyId, type: 'SHOP' },
-        stock: { gt: 0, lt: 10 },
-      },
+      where: { store: { companyId, type: 'SHOP' }, stock: { gt: 0, lt: 10 } },
       _count: { storeId: true },
     }),
 
@@ -84,7 +83,8 @@ export const getShopsWithStats = async (companyId: string): Promise<IShopWithSta
     name: s.name,
     address: s.address,
     region: s.region,
-    openingHours: s.openingHours,
+    weeklySchedule: s.weeklySchedule as TWeeklySchedule | null,
+    scheduleExceptions: s.scheduleExceptions,
     status: s.status,
     revenueToday: revenueMap.get(s.id) ?? 0,
     stockTotal: stockMap.get(s.id) ?? 0,
