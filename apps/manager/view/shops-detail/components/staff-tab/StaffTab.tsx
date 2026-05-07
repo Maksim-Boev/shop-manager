@@ -7,6 +7,7 @@ import { Button } from '@pkg/ui'
 import { cn } from '@pkg/ui/cn'
 import { removeManager } from '@/actions/shop'
 import { AssignManagerDialog } from './AssignManagerDialog'
+import { ScheduleGrid } from './schedule-grid'
 import type { IStaffTabProps } from './types'
 
 const ROLE_LABELS: Record<string, string> = {
@@ -32,13 +33,17 @@ const getAccentClass = (id: string) => {
   return ACCENT_BG[ACCENT_KEYS[hash % ACCENT_KEYS.length]]
 }
 
-const StaffTab = ({ members, availableUsers, shopId, userRole }: IStaffTabProps) => {
+const StaffTab = ({
+  members, availableUsers, scheduledShifts, storeUsers, weekStartIso,
+  shopId, userRole,
+}: IStaffTabProps) => {
   const router = useRouter()
   const [assignOpen, setAssignOpen] = useState(false)
   const [removingId, setRemovingId] = useState<string | null>(null)
   const [, startTransition] = useTransition()
 
   const canManage = userRole === 'ADMIN' || userRole === 'SUPER_ADMIN'
+  const canSchedule = canManage || userRole === 'MANAGER'
 
   const handleRemove = (userId: string) => {
     setRemovingId(userId)
@@ -53,7 +58,25 @@ const StaffTab = ({ members, availableUsers, shopId, userRole }: IStaffTabProps)
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      <ScheduleGrid
+        shopId={shopId}
+        shifts={scheduledShifts}
+        storeUsers={storeUsers}
+        weekStartIso={weekStartIso}
+        canManage={canSchedule}
+        userRole={userRole}
+      />
+
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-sm font-bold text-slate-700 dark:text-foreground/90 uppercase tracking-wide">
+            Менеджери магазину
+          </h2>
+          <p className="text-xs text-slate-500 dark:text-muted-foreground mt-0.5">
+            Закріплені керуючі
+          </p>
+        </div>
       {members.length === 0 ? (
         <div className="bg-white dark:bg-card rounded-xl border border-slate-200 dark:border-border p-12 flex flex-col items-center justify-center text-slate-400 dark:text-muted-foreground">
           <UserPlusIcon className="size-10 mb-3" />
@@ -134,12 +157,13 @@ const StaffTab = ({ members, availableUsers, shopId, userRole }: IStaffTabProps)
         </>
       )}
 
-      <AssignManagerDialog
-        shopId={shopId}
-        availableUsers={availableUsers}
-        open={assignOpen}
-        onOpenChange={setAssignOpen}
-      />
+        <AssignManagerDialog
+          shopId={shopId}
+          availableUsers={availableUsers}
+          open={assignOpen}
+          onOpenChange={setAssignOpen}
+        />
+      </div>
     </div>
   )
 }

@@ -89,6 +89,7 @@ export const ModelName = {
   CustomerDiscountRule: 'CustomerDiscountRule',
   PointsTransaction: 'PointsTransaction',
   Shift: 'Shift',
+  ScheduledShift: 'ScheduledShift',
   ShiftReport: 'ShiftReport',
   Return: 'Return',
   ReturnItem: 'ReturnItem',
@@ -625,10 +626,27 @@ export const ShiftScalarFieldEnum = {
   openingCash: 'openingCash',
   closingCash: 'closingCash',
   expectedCash: 'expectedCash',
-  variance: 'variance'
+  variance: 'variance',
+  scheduledShiftId: 'scheduledShiftId'
 } as const
 
 export type ShiftScalarFieldEnum = (typeof ShiftScalarFieldEnum)[keyof typeof ShiftScalarFieldEnum]
+
+
+export const ScheduledShiftScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  storeId: 'storeId',
+  userId: 'userId',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  notes: 'notes',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScheduledShiftScalarFieldEnum = (typeof ScheduledShiftScalarFieldEnum)[keyof typeof ScheduledShiftScalarFieldEnum]
 
 
 export const ShiftReportScalarFieldEnum = {

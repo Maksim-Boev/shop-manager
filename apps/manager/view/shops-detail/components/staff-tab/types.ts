@@ -1,9 +1,14 @@
-import type { IShopStaffMember, IAvailableUser } from '@pkg/db'
+import type {
+  IShopStaffMember, IAvailableUser, IScheduledShiftRow, IStoreUserOption,
+} from '@pkg/db'
 import type { UserRole } from '@pkg/db/browser'
 
 export interface IStaffTabProps {
   members: IShopStaffMember[]
   availableUsers: IAvailableUser[]
+  scheduledShifts: IScheduledShiftRow[]
+  storeUsers: IStoreUserOption[]
+  weekStartIso: string
   shopId: string
   userRole: UserRole
 }

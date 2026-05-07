@@ -422,6 +422,7 @@ export const ModelName = {
   CustomerDiscountRule: 'CustomerDiscountRule',
   PointsTransaction: 'PointsTransaction',
   Shift: 'Shift',
+  ScheduledShift: 'ScheduledShift',
   ShiftReport: 'ShiftReport',
   Return: 'Return',
   ReturnItem: 'ReturnItem',
@@ -442,7 +443,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "managerStore" | "store" | "taxRate" | "category" | "subcategory" | "tag" | "product" | "productTag" | "productBarcode" | "storeProduct" | "priceHistory" | "stockTransfer" | "stockTransferItem" | "inventoryAudit" | "inventoryAuditItem" | "manualAdjustment" | "stockMovement" | "supplier" | "purchaseOrder" | "purchaseOrderItem" | "goodsReceipt" | "goodsReceiptItem" | "storeOrderCounter" | "order" | "orderItem" | "orderItemDiscount" | "promotion" | "promotionTarget" | "promotionStore" | "customer" | "customerContact" | "tier" | "tierRule" | "customerDiscountRule" | "pointsTransaction" | "shift" | "shiftReport" | "return" | "returnItem" | "userSalaryRate" | "salaryPayout"
+    modelProps: "company" | "user" | "managerStore" | "store" | "taxRate" | "category" | "subcategory" | "tag" | "product" | "productTag" | "productBarcode" | "storeProduct" | "priceHistory" | "stockTransfer" | "stockTransferItem" | "inventoryAudit" | "inventoryAuditItem" | "manualAdjustment" | "stockMovement" | "supplier" | "purchaseOrder" | "purchaseOrderItem" | "goodsReceipt" | "goodsReceiptItem" | "storeOrderCounter" | "order" | "orderItem" | "orderItemDiscount" | "promotion" | "promotionTarget" | "promotionStore" | "customer" | "customerContact" | "tier" | "tierRule" | "customerDiscountRule" | "pointsTransaction" | "shift" | "scheduledShift" | "shiftReport" | "return" | "returnItem" | "userSalaryRate" | "salaryPayout"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3258,6 +3259,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ScheduledShift: {
+      payload: Prisma.$ScheduledShiftPayload<ExtArgs>
+      fields: Prisma.ScheduledShiftFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ScheduledShiftFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ScheduledShiftFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload>
+        }
+        findFirst: {
+          args: Prisma.ScheduledShiftFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ScheduledShiftFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload>
+        }
+        findMany: {
+          args: Prisma.ScheduledShiftFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload>[]
+        }
+        create: {
+          args: Prisma.ScheduledShiftCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload>
+        }
+        createMany: {
+          args: Prisma.ScheduledShiftCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ScheduledShiftCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload>[]
+        }
+        delete: {
+          args: Prisma.ScheduledShiftDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload>
+        }
+        update: {
+          args: Prisma.ScheduledShiftUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload>
+        }
+        deleteMany: {
+          args: Prisma.ScheduledShiftDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ScheduledShiftUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ScheduledShiftUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload>[]
+        }
+        upsert: {
+          args: Prisma.ScheduledShiftUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledShiftPayload>
+        }
+        aggregate: {
+          args: Prisma.ScheduledShiftAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateScheduledShift>
+        }
+        groupBy: {
+          args: Prisma.ScheduledShiftGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduledShiftGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ScheduledShiftCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduledShiftCountAggregateOutputType> | number
+        }
+      }
+    }
     ShiftReport: {
       payload: Prisma.$ShiftReportPayload<ExtArgs>
       fields: Prisma.ShiftReportFieldRefs
@@ -4180,10 +4255,27 @@ export const ShiftScalarFieldEnum = {
   openingCash: 'openingCash',
   closingCash: 'closingCash',
   expectedCash: 'expectedCash',
-  variance: 'variance'
+  variance: 'variance',
+  scheduledShiftId: 'scheduledShiftId'
 } as const
 
 export type ShiftScalarFieldEnum = (typeof ShiftScalarFieldEnum)[keyof typeof ShiftScalarFieldEnum]
+
+
+export const ScheduledShiftScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  storeId: 'storeId',
+  userId: 'userId',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  notes: 'notes',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScheduledShiftScalarFieldEnum = (typeof ScheduledShiftScalarFieldEnum)[keyof typeof ScheduledShiftScalarFieldEnum]
 
 
 export const ShiftReportScalarFieldEnum = {
@@ -4989,6 +5081,7 @@ export type GlobalOmitConfig = {
   customerDiscountRule?: Prisma.CustomerDiscountRuleOmit
   pointsTransaction?: Prisma.PointsTransactionOmit
   shift?: Prisma.ShiftOmit
+  scheduledShift?: Prisma.ScheduledShiftOmit
   shiftReport?: Prisma.ShiftReportOmit
   return?: Prisma.ReturnOmit
   returnItem?: Prisma.ReturnItemOmit

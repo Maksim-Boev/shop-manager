@@ -40,6 +40,7 @@ afterEach(async () => {
   await prisma.return.deleteMany({ where: { companyId: { in: ids } } })
   await prisma.order.deleteMany({ where: { companyId: { in: ids } } })
   await prisma.shift.deleteMany({ where: { companyId: { in: ids } } })
+  await prisma.scheduledShift.deleteMany({ where: { companyId: { in: ids } } })
   await prisma.inventoryAudit.deleteMany({ where: { companyId: { in: ids } } })
   await prisma.manualAdjustment.deleteMany({ where: { companyId: { in: ids } } })
   await prisma.goodsReceipt.deleteMany({ where: { purchaseOrder: { companyId: { in: ids } } } })

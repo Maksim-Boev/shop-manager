@@ -52,6 +52,7 @@ export type ShiftMinAggregateOutputType = {
   closingCash: runtime.Decimal | null
   expectedCash: runtime.Decimal | null
   variance: runtime.Decimal | null
+  scheduledShiftId: string | null
 }
 
 export type ShiftMaxAggregateOutputType = {
@@ -66,6 +67,7 @@ export type ShiftMaxAggregateOutputType = {
   closingCash: runtime.Decimal | null
   expectedCash: runtime.Decimal | null
   variance: runtime.Decimal | null
+  scheduledShiftId: string | null
 }
 
 export type ShiftCountAggregateOutputType = {
@@ -80,6 +82,7 @@ export type ShiftCountAggregateOutputType = {
   closingCash: number
   expectedCash: number
   variance: number
+  scheduledShiftId: number
   _all: number
 }
 
@@ -110,6 +113,7 @@ export type ShiftMinAggregateInputType = {
   closingCash?: true
   expectedCash?: true
   variance?: true
+  scheduledShiftId?: true
 }
 
 export type ShiftMaxAggregateInputType = {
@@ -124,6 +128,7 @@ export type ShiftMaxAggregateInputType = {
   closingCash?: true
   expectedCash?: true
   variance?: true
+  scheduledShiftId?: true
 }
 
 export type ShiftCountAggregateInputType = {
@@ -138,6 +143,7 @@ export type ShiftCountAggregateInputType = {
   closingCash?: true
   expectedCash?: true
   variance?: true
+  scheduledShiftId?: true
   _all?: true
 }
 
@@ -239,6 +245,7 @@ export type ShiftGroupByOutputType = {
   closingCash: runtime.Decimal | null
   expectedCash: runtime.Decimal | null
   variance: runtime.Decimal | null
+  scheduledShiftId: string | null
   _count: ShiftCountAggregateOutputType | null
   _avg: ShiftAvgAggregateOutputType | null
   _sum: ShiftSumAggregateOutputType | null
@@ -276,6 +283,8 @@ export type ShiftWhereInput = {
   closingCash?: Prisma.DecimalNullableFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: Prisma.DecimalNullableFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: Prisma.DecimalNullableFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: Prisma.StringNullableFilter<"Shift"> | string | null
+  scheduledShift?: Prisma.XOR<Prisma.ScheduledShiftNullableScalarRelationFilter, Prisma.ScheduledShiftWhereInput> | null
   reports?: Prisma.ShiftReportListRelationFilter
 }
 
@@ -291,6 +300,8 @@ export type ShiftOrderByWithRelationInput = {
   closingCash?: Prisma.SortOrderInput | Prisma.SortOrder
   expectedCash?: Prisma.SortOrderInput | Prisma.SortOrder
   variance?: Prisma.SortOrderInput | Prisma.SortOrder
+  scheduledShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
+  scheduledShift?: Prisma.ScheduledShiftOrderByWithRelationInput
   reports?: Prisma.ShiftReportOrderByRelationAggregateInput
 }
 
@@ -309,6 +320,8 @@ export type ShiftWhereUniqueInput = Prisma.AtLeast<{
   closingCash?: Prisma.DecimalNullableFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: Prisma.DecimalNullableFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: Prisma.DecimalNullableFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: Prisma.StringNullableFilter<"Shift"> | string | null
+  scheduledShift?: Prisma.XOR<Prisma.ScheduledShiftNullableScalarRelationFilter, Prisma.ScheduledShiftWhereInput> | null
   reports?: Prisma.ShiftReportListRelationFilter
 }, "id">
 
@@ -324,6 +337,7 @@ export type ShiftOrderByWithAggregationInput = {
   closingCash?: Prisma.SortOrderInput | Prisma.SortOrder
   expectedCash?: Prisma.SortOrderInput | Prisma.SortOrder
   variance?: Prisma.SortOrderInput | Prisma.SortOrder
+  scheduledShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ShiftCountOrderByAggregateInput
   _avg?: Prisma.ShiftAvgOrderByAggregateInput
   _max?: Prisma.ShiftMaxOrderByAggregateInput
@@ -346,6 +360,7 @@ export type ShiftScalarWhereWithAggregatesInput = {
   closingCash?: Prisma.DecimalNullableWithAggregatesFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: Prisma.DecimalNullableWithAggregatesFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: Prisma.DecimalNullableWithAggregatesFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: Prisma.StringNullableWithAggregatesFilter<"Shift"> | string | null
 }
 
 export type ShiftCreateInput = {
@@ -360,6 +375,7 @@ export type ShiftCreateInput = {
   closingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShift?: Prisma.ScheduledShiftCreateNestedOneWithoutShiftsInput
   reports?: Prisma.ShiftReportCreateNestedManyWithoutShiftInput
 }
 
@@ -375,6 +391,7 @@ export type ShiftUncheckedCreateInput = {
   closingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: string | null
   reports?: Prisma.ShiftReportUncheckedCreateNestedManyWithoutShiftInput
 }
 
@@ -390,6 +407,7 @@ export type ShiftUpdateInput = {
   closingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShift?: Prisma.ScheduledShiftUpdateOneWithoutShiftsNestedInput
   reports?: Prisma.ShiftReportUpdateManyWithoutShiftNestedInput
 }
 
@@ -405,6 +423,7 @@ export type ShiftUncheckedUpdateInput = {
   closingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reports?: Prisma.ShiftReportUncheckedUpdateManyWithoutShiftNestedInput
 }
 
@@ -420,6 +439,7 @@ export type ShiftCreateManyInput = {
   closingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: string | null
 }
 
 export type ShiftUpdateManyMutationInput = {
@@ -448,6 +468,7 @@ export type ShiftUncheckedUpdateManyInput = {
   closingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ShiftCountOrderByAggregateInput = {
@@ -462,6 +483,7 @@ export type ShiftCountOrderByAggregateInput = {
   closingCash?: Prisma.SortOrder
   expectedCash?: Prisma.SortOrder
   variance?: Prisma.SortOrder
+  scheduledShiftId?: Prisma.SortOrder
 }
 
 export type ShiftAvgOrderByAggregateInput = {
@@ -483,6 +505,7 @@ export type ShiftMaxOrderByAggregateInput = {
   closingCash?: Prisma.SortOrder
   expectedCash?: Prisma.SortOrder
   variance?: Prisma.SortOrder
+  scheduledShiftId?: Prisma.SortOrder
 }
 
 export type ShiftMinOrderByAggregateInput = {
@@ -497,6 +520,7 @@ export type ShiftMinOrderByAggregateInput = {
   closingCash?: Prisma.SortOrder
   expectedCash?: Prisma.SortOrder
   variance?: Prisma.SortOrder
+  scheduledShiftId?: Prisma.SortOrder
 }
 
 export type ShiftSumOrderByAggregateInput = {
@@ -506,6 +530,16 @@ export type ShiftSumOrderByAggregateInput = {
   variance?: Prisma.SortOrder
 }
 
+export type ShiftListRelationFilter = {
+  every?: Prisma.ShiftWhereInput
+  some?: Prisma.ShiftWhereInput
+  none?: Prisma.ShiftWhereInput
+}
+
+export type ShiftOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type ShiftScalarRelationFilter = {
   is?: Prisma.ShiftWhereInput
   isNot?: Prisma.ShiftWhereInput
@@ -513,6 +547,48 @@ export type ShiftScalarRelationFilter = {
 
 export type EnumShiftStatusFieldUpdateOperationsInput = {
   set?: $Enums.ShiftStatus
+}
+
+export type ShiftCreateNestedManyWithoutScheduledShiftInput = {
+  create?: Prisma.XOR<Prisma.ShiftCreateWithoutScheduledShiftInput, Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput> | Prisma.ShiftCreateWithoutScheduledShiftInput[] | Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput[]
+  connectOrCreate?: Prisma.ShiftCreateOrConnectWithoutScheduledShiftInput | Prisma.ShiftCreateOrConnectWithoutScheduledShiftInput[]
+  createMany?: Prisma.ShiftCreateManyScheduledShiftInputEnvelope
+  connect?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+}
+
+export type ShiftUncheckedCreateNestedManyWithoutScheduledShiftInput = {
+  create?: Prisma.XOR<Prisma.ShiftCreateWithoutScheduledShiftInput, Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput> | Prisma.ShiftCreateWithoutScheduledShiftInput[] | Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput[]
+  connectOrCreate?: Prisma.ShiftCreateOrConnectWithoutScheduledShiftInput | Prisma.ShiftCreateOrConnectWithoutScheduledShiftInput[]
+  createMany?: Prisma.ShiftCreateManyScheduledShiftInputEnvelope
+  connect?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+}
+
+export type ShiftUpdateManyWithoutScheduledShiftNestedInput = {
+  create?: Prisma.XOR<Prisma.ShiftCreateWithoutScheduledShiftInput, Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput> | Prisma.ShiftCreateWithoutScheduledShiftInput[] | Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput[]
+  connectOrCreate?: Prisma.ShiftCreateOrConnectWithoutScheduledShiftInput | Prisma.ShiftCreateOrConnectWithoutScheduledShiftInput[]
+  upsert?: Prisma.ShiftUpsertWithWhereUniqueWithoutScheduledShiftInput | Prisma.ShiftUpsertWithWhereUniqueWithoutScheduledShiftInput[]
+  createMany?: Prisma.ShiftCreateManyScheduledShiftInputEnvelope
+  set?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+  disconnect?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+  delete?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+  connect?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+  update?: Prisma.ShiftUpdateWithWhereUniqueWithoutScheduledShiftInput | Prisma.ShiftUpdateWithWhereUniqueWithoutScheduledShiftInput[]
+  updateMany?: Prisma.ShiftUpdateManyWithWhereWithoutScheduledShiftInput | Prisma.ShiftUpdateManyWithWhereWithoutScheduledShiftInput[]
+  deleteMany?: Prisma.ShiftScalarWhereInput | Prisma.ShiftScalarWhereInput[]
+}
+
+export type ShiftUncheckedUpdateManyWithoutScheduledShiftNestedInput = {
+  create?: Prisma.XOR<Prisma.ShiftCreateWithoutScheduledShiftInput, Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput> | Prisma.ShiftCreateWithoutScheduledShiftInput[] | Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput[]
+  connectOrCreate?: Prisma.ShiftCreateOrConnectWithoutScheduledShiftInput | Prisma.ShiftCreateOrConnectWithoutScheduledShiftInput[]
+  upsert?: Prisma.ShiftUpsertWithWhereUniqueWithoutScheduledShiftInput | Prisma.ShiftUpsertWithWhereUniqueWithoutScheduledShiftInput[]
+  createMany?: Prisma.ShiftCreateManyScheduledShiftInputEnvelope
+  set?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+  disconnect?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+  delete?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+  connect?: Prisma.ShiftWhereUniqueInput | Prisma.ShiftWhereUniqueInput[]
+  update?: Prisma.ShiftUpdateWithWhereUniqueWithoutScheduledShiftInput | Prisma.ShiftUpdateWithWhereUniqueWithoutScheduledShiftInput[]
+  updateMany?: Prisma.ShiftUpdateManyWithWhereWithoutScheduledShiftInput | Prisma.ShiftUpdateManyWithWhereWithoutScheduledShiftInput[]
+  deleteMany?: Prisma.ShiftScalarWhereInput | Prisma.ShiftScalarWhereInput[]
 }
 
 export type ShiftCreateNestedOneWithoutReportsInput = {
@@ -529,6 +605,80 @@ export type ShiftUpdateOneRequiredWithoutReportsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ShiftUpdateToOneWithWhereWithoutReportsInput, Prisma.ShiftUpdateWithoutReportsInput>, Prisma.ShiftUncheckedUpdateWithoutReportsInput>
 }
 
+export type ShiftCreateWithoutScheduledShiftInput = {
+  id?: string
+  companyId: string
+  storeId: string
+  cashierUserId: string
+  status?: $Enums.ShiftStatus
+  openedAt?: Date | string
+  closedAt?: Date | string | null
+  openingCash: runtime.Decimal | runtime.DecimalJsLike | number | string
+  closingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expectedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  variance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reports?: Prisma.ShiftReportCreateNestedManyWithoutShiftInput
+}
+
+export type ShiftUncheckedCreateWithoutScheduledShiftInput = {
+  id?: string
+  companyId: string
+  storeId: string
+  cashierUserId: string
+  status?: $Enums.ShiftStatus
+  openedAt?: Date | string
+  closedAt?: Date | string | null
+  openingCash: runtime.Decimal | runtime.DecimalJsLike | number | string
+  closingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expectedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  variance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reports?: Prisma.ShiftReportUncheckedCreateNestedManyWithoutShiftInput
+}
+
+export type ShiftCreateOrConnectWithoutScheduledShiftInput = {
+  where: Prisma.ShiftWhereUniqueInput
+  create: Prisma.XOR<Prisma.ShiftCreateWithoutScheduledShiftInput, Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput>
+}
+
+export type ShiftCreateManyScheduledShiftInputEnvelope = {
+  data: Prisma.ShiftCreateManyScheduledShiftInput | Prisma.ShiftCreateManyScheduledShiftInput[]
+  skipDuplicates?: boolean
+}
+
+export type ShiftUpsertWithWhereUniqueWithoutScheduledShiftInput = {
+  where: Prisma.ShiftWhereUniqueInput
+  update: Prisma.XOR<Prisma.ShiftUpdateWithoutScheduledShiftInput, Prisma.ShiftUncheckedUpdateWithoutScheduledShiftInput>
+  create: Prisma.XOR<Prisma.ShiftCreateWithoutScheduledShiftInput, Prisma.ShiftUncheckedCreateWithoutScheduledShiftInput>
+}
+
+export type ShiftUpdateWithWhereUniqueWithoutScheduledShiftInput = {
+  where: Prisma.ShiftWhereUniqueInput
+  data: Prisma.XOR<Prisma.ShiftUpdateWithoutScheduledShiftInput, Prisma.ShiftUncheckedUpdateWithoutScheduledShiftInput>
+}
+
+export type ShiftUpdateManyWithWhereWithoutScheduledShiftInput = {
+  where: Prisma.ShiftScalarWhereInput
+  data: Prisma.XOR<Prisma.ShiftUpdateManyMutationInput, Prisma.ShiftUncheckedUpdateManyWithoutScheduledShiftInput>
+}
+
+export type ShiftScalarWhereInput = {
+  AND?: Prisma.ShiftScalarWhereInput | Prisma.ShiftScalarWhereInput[]
+  OR?: Prisma.ShiftScalarWhereInput[]
+  NOT?: Prisma.ShiftScalarWhereInput | Prisma.ShiftScalarWhereInput[]
+  id?: Prisma.StringFilter<"Shift"> | string
+  companyId?: Prisma.StringFilter<"Shift"> | string
+  storeId?: Prisma.StringFilter<"Shift"> | string
+  cashierUserId?: Prisma.StringFilter<"Shift"> | string
+  status?: Prisma.EnumShiftStatusFilter<"Shift"> | $Enums.ShiftStatus
+  openedAt?: Prisma.DateTimeFilter<"Shift"> | Date | string
+  closedAt?: Prisma.DateTimeNullableFilter<"Shift"> | Date | string | null
+  openingCash?: Prisma.DecimalFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  closingCash?: Prisma.DecimalNullableFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expectedCash?: Prisma.DecimalNullableFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  variance?: Prisma.DecimalNullableFilter<"Shift"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: Prisma.StringNullableFilter<"Shift"> | string | null
+}
+
 export type ShiftCreateWithoutReportsInput = {
   id?: string
   companyId: string
@@ -541,6 +691,7 @@ export type ShiftCreateWithoutReportsInput = {
   closingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShift?: Prisma.ScheduledShiftCreateNestedOneWithoutShiftsInput
 }
 
 export type ShiftUncheckedCreateWithoutReportsInput = {
@@ -555,6 +706,7 @@ export type ShiftUncheckedCreateWithoutReportsInput = {
   closingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: string | null
 }
 
 export type ShiftCreateOrConnectWithoutReportsInput = {
@@ -585,9 +737,69 @@ export type ShiftUpdateWithoutReportsInput = {
   closingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   expectedCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   variance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShift?: Prisma.ScheduledShiftUpdateOneWithoutShiftsNestedInput
 }
 
 export type ShiftUncheckedUpdateWithoutReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  storeId?: Prisma.StringFieldUpdateOperationsInput | string
+  cashierUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+  openedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  openingCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  closingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expectedCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  variance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ShiftCreateManyScheduledShiftInput = {
+  id?: string
+  companyId: string
+  storeId: string
+  cashierUserId: string
+  status?: $Enums.ShiftStatus
+  openedAt?: Date | string
+  closedAt?: Date | string | null
+  openingCash: runtime.Decimal | runtime.DecimalJsLike | number | string
+  closingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expectedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  variance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+}
+
+export type ShiftUpdateWithoutScheduledShiftInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  storeId?: Prisma.StringFieldUpdateOperationsInput | string
+  cashierUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+  openedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  openingCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  closingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expectedCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  variance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reports?: Prisma.ShiftReportUpdateManyWithoutShiftNestedInput
+}
+
+export type ShiftUncheckedUpdateWithoutScheduledShiftInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  storeId?: Prisma.StringFieldUpdateOperationsInput | string
+  cashierUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+  openedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  openingCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  closingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expectedCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  variance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reports?: Prisma.ShiftReportUncheckedUpdateManyWithoutShiftNestedInput
+}
+
+export type ShiftUncheckedUpdateManyWithoutScheduledShiftInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -644,6 +856,8 @@ export type ShiftSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   closingCash?: boolean
   expectedCash?: boolean
   variance?: boolean
+  scheduledShiftId?: boolean
+  scheduledShift?: boolean | Prisma.Shift$scheduledShiftArgs<ExtArgs>
   reports?: boolean | Prisma.Shift$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.ShiftCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shift"]>
@@ -660,6 +874,8 @@ export type ShiftSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   closingCash?: boolean
   expectedCash?: boolean
   variance?: boolean
+  scheduledShiftId?: boolean
+  scheduledShift?: boolean | Prisma.Shift$scheduledShiftArgs<ExtArgs>
 }, ExtArgs["result"]["shift"]>
 
 export type ShiftSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -674,6 +890,8 @@ export type ShiftSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   closingCash?: boolean
   expectedCash?: boolean
   variance?: boolean
+  scheduledShiftId?: boolean
+  scheduledShift?: boolean | Prisma.Shift$scheduledShiftArgs<ExtArgs>
 }, ExtArgs["result"]["shift"]>
 
 export type ShiftSelectScalar = {
@@ -688,19 +906,26 @@ export type ShiftSelectScalar = {
   closingCash?: boolean
   expectedCash?: boolean
   variance?: boolean
+  scheduledShiftId?: boolean
 }
 
-export type ShiftOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "storeId" | "cashierUserId" | "status" | "openedAt" | "closedAt" | "openingCash" | "closingCash" | "expectedCash" | "variance", ExtArgs["result"]["shift"]>
+export type ShiftOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "storeId" | "cashierUserId" | "status" | "openedAt" | "closedAt" | "openingCash" | "closingCash" | "expectedCash" | "variance" | "scheduledShiftId", ExtArgs["result"]["shift"]>
 export type ShiftInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  scheduledShift?: boolean | Prisma.Shift$scheduledShiftArgs<ExtArgs>
   reports?: boolean | Prisma.Shift$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.ShiftCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type ShiftIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type ShiftIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ShiftIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  scheduledShift?: boolean | Prisma.Shift$scheduledShiftArgs<ExtArgs>
+}
+export type ShiftIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  scheduledShift?: boolean | Prisma.Shift$scheduledShiftArgs<ExtArgs>
+}
 
 export type $ShiftPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Shift"
   objects: {
+    scheduledShift: Prisma.$ScheduledShiftPayload<ExtArgs> | null
     reports: Prisma.$ShiftReportPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -715,6 +940,7 @@ export type $ShiftPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     closingCash: runtime.Decimal | null
     expectedCash: runtime.Decimal | null
     variance: runtime.Decimal | null
+    scheduledShiftId: string | null
   }, ExtArgs["result"]["shift"]>
   composites: {}
 }
@@ -1109,6 +1335,7 @@ readonly fields: ShiftFieldRefs;
  */
 export interface Prisma__ShiftClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  scheduledShift<T extends Prisma.Shift$scheduledShiftArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shift$scheduledShiftArgs<ExtArgs>>): Prisma.Prisma__ScheduledShiftClient<runtime.Types.Result.GetResult<Prisma.$ScheduledShiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   reports<T extends Prisma.Shift$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shift$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShiftReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1150,6 +1377,7 @@ export interface ShiftFieldRefs {
   readonly closingCash: Prisma.FieldRef<"Shift", 'Decimal'>
   readonly expectedCash: Prisma.FieldRef<"Shift", 'Decimal'>
   readonly variance: Prisma.FieldRef<"Shift", 'Decimal'>
+  readonly scheduledShiftId: Prisma.FieldRef<"Shift", 'String'>
 }
     
 
@@ -1404,6 +1632,10 @@ export type ShiftCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    */
   data: Prisma.ShiftCreateManyInput | Prisma.ShiftCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ShiftIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1474,6 +1706,10 @@ export type ShiftUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many Shifts to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ShiftIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1540,6 +1776,25 @@ export type ShiftDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Shifts to delete.
    */
   limit?: number
+}
+
+/**
+ * Shift.scheduledShift
+ */
+export type Shift$scheduledShiftArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScheduledShift
+   */
+  select?: Prisma.ScheduledShiftSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScheduledShift
+   */
+  omit?: Prisma.ScheduledShiftOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScheduledShiftInclude<ExtArgs> | null
+  where?: Prisma.ScheduledShiftWhereInput
 }
 
 /**

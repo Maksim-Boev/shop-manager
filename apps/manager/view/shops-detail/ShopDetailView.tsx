@@ -37,6 +37,9 @@ const ShopDetailView = ({ shop, activeTab, tabData, userRole }: IShopDetailViewP
         <StaffTab
           members={tabData.data}
           availableUsers={tabData.availableUsers}
+          scheduledShifts={tabData.scheduledShifts}
+          storeUsers={tabData.storeUsers}
+          weekStartIso={tabData.weekStartIso}
           shopId={shop.id}
           userRole={userRole}
         />

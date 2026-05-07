@@ -77,6 +77,24 @@ export interface IShopFinance {
   closedShifts: IClosedShift[]
 }
 
+export interface IScheduledShiftRow {
+  id: string
+  userId: string
+  firstName: string
+  lastName: string
+  role: UserRole
+  startsAtIso: string
+  endsAtIso: string
+  notes: string | null
+}
+
+export interface IStoreUserOption {
+  id: string
+  firstName: string
+  lastName: string
+  role: UserRole
+}
+
 // ── getShopOverview ─────────────────────────────────────────────────────────
 
 export const getShopOverview = async (
@@ -328,4 +346,56 @@ export const getShopFinance = async (
       }
     }),
   }
+}
+
+// ── getShopSchedule ─────────────────────────────────────────────────────────
+
+export const getShopSchedule = async (
+  shopId: string,
+  companyId: string,
+  weekStart: Date,
+): Promise<IScheduledShiftRow[]> => {
+  const weekEnd = new Date(weekStart.getTime() + 7 * 86_400_000)
+
+  const rows = await prisma.scheduledShift.findMany({
+    where: {
+      companyId,
+      storeId: shopId,
+      startsAt: { gte: weekStart, lt: weekEnd },
+    },
+    orderBy: { startsAt: 'asc' },
+    select: {
+      id: true,
+      userId: true,
+      startsAt: true,
+      endsAt: true,
+      notes: true,
+      user: {
+        select: { firstName: true, lastName: true, role: true },
+      },
+    },
+  })
+
+  return rows.map(r => ({
+    id: r.id,
+    userId: r.userId,
+    firstName: r.user.firstName,
+    lastName: r.user.lastName,
+    role: r.user.role,
+    startsAtIso: r.startsAt.toISOString(),
+    endsAtIso: r.endsAt.toISOString(),
+    notes: r.notes,
+  }))
+}
+
+// ── getStoreUsersForScheduling ──────────────────────────────────────────────
+
+export const getStoreUsersForScheduling = async (
+  companyId: string,
+): Promise<IStoreUserOption[]> => {
+  return prisma.user.findMany({
+    where: { companyId, status: 'ACTIVE' },
+    select: { id: true, firstName: true, lastName: true, role: true },
+    orderBy: [{ firstName: 'asc' }, { lastName: 'asc' }],
+  })
 }

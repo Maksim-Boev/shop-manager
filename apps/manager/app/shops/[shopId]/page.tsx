@@ -3,15 +3,29 @@ import { auth } from '@/auth'
 import {
   prisma, getShopOverview, getShopStock, getShopStaff,
   getAvailableStaffForShop, getShopFinance,
+  getShopSchedule, getStoreUsersForScheduling,
 } from '@pkg/db'
 import { ShopDetailView } from '@/view/shops-detail'
 import type { TTabKey, TTabData, TRange } from '@/view/shops-detail'
 
 const VALID_TABS: TTabKey[] = ['overview', 'stock', 'staff', 'finance']
 
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/
+
+const getMondayOfWeek = (d: Date): Date => {
+  const dow = d.getDay()
+  const offset = dow === 0 ? -6 : 1 - dow
+  const monday = new Date(d.getFullYear(), d.getMonth(), d.getDate() + offset)
+  return monday
+}
+
+const pad = (n: number) => n.toString().padStart(2, '0')
+const fmtDateIso = (d: Date) =>
+  `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+
 interface IProps {
   params: Promise<{ shopId: string }>
-  searchParams: Promise<{ tab?: string; range?: string }>
+  searchParams: Promise<{ tab?: string; range?: string; weekStart?: string }>
 }
 
 const ShopDetailPage = async ({ params, searchParams }: IProps) => {
@@ -19,7 +33,7 @@ const ShopDetailPage = async ({ params, searchParams }: IProps) => {
   if (!session) redirect('/login')
 
   const { shopId } = await params
-  const { tab: rawTab, range: rawRange } = await searchParams
+  const { tab: rawTab, range: rawRange, weekStart: rawWeekStart } = await searchParams
 
   const companyId = session.user.companyId ?? ''
 
@@ -47,11 +61,21 @@ const ShopDetailPage = async ({ params, searchParams }: IProps) => {
     const data = await getShopStock(shopId, companyId)
     tabData = { tab: 'stock', data }
   } else if (activeTab === 'staff') {
-    const [data, availableUsers] = await Promise.all([
+    const weekStart = rawWeekStart && ISO_DATE_RE.test(rawWeekStart)
+      ? new Date(`${rawWeekStart}T00:00:00`)
+      : getMondayOfWeek(new Date())
+
+    const [data, availableUsers, scheduledShifts, storeUsers] = await Promise.all([
       getShopStaff(shopId, companyId),
       getAvailableStaffForShop(shopId, companyId),
+      getShopSchedule(shopId, companyId, weekStart),
+      getStoreUsersForScheduling(companyId),
     ])
-    tabData = { tab: 'staff', data, availableUsers }
+    tabData = {
+      tab: 'staff', data, availableUsers,
+      scheduledShifts, storeUsers,
+      weekStartIso: fmtDateIso(weekStart),
+    }
   } else {
     const data = await getShopFinance(shopId, companyId, range)
     tabData = { tab: 'finance', data, range }

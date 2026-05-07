@@ -4,7 +4,10 @@ import {
   createTestCompany, createTestStore, createTestUser,
   createTestCategory, createTestTaxRate, createTestProduct,
 } from '../helpers'
-import { getShopStock, getShopStaff, getAvailableStaffForShop } from '../../lib/queries/shop-detail'
+import {
+  getShopStock, getShopStaff, getAvailableStaffForShop,
+  getShopSchedule, getStoreUsersForScheduling,
+} from '../../lib/queries/shop-detail'
 
 describe('getShopStock', () => {
   let companyId: string
@@ -118,5 +121,101 @@ describe('getAvailableStaffForShop', () => {
     const users = await getAvailableStaffForShop(shopId, companyId)
     expect(users.every(u => u.role === 'MANAGER' || u.role === 'ADMIN')).toBe(true)
     expect(users.some(u => u.id === admin.id)).toBe(true)
+  })
+})
+
+describe('getShopSchedule', () => {
+  let companyId: string
+  let shopId: string
+  let userId: string
+  let actorId: string
+
+  const monday = (() => {
+    const d = new Date()
+    const dow = d.getDay()
+    const off = dow === 0 ? -6 : 1 - dow
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate() + off)
+  })()
+
+  beforeEach(async () => {
+    const company = await createTestCompany()
+    companyId = company.id
+    const shop = await createTestStore(companyId, { type: 'SHOP' })
+    shopId = shop.id
+    const u = await createTestUser(companyId, { role: 'CASHIER' })
+    userId = u.id
+    const admin = await createTestUser(companyId, { role: 'ADMIN' })
+    actorId = admin.id
+  })
+
+  it('returns shifts within the week, sorted by startsAt', async () => {
+    const day1Start = new Date(monday); day1Start.setHours(9, 0, 0, 0)
+    const day1End   = new Date(monday); day1End.setHours(17, 0, 0, 0)
+    const day3Start = new Date(monday); day3Start.setDate(monday.getDate() + 2); day3Start.setHours(10, 0, 0, 0)
+    const day3End   = new Date(monday); day3End.setDate(monday.getDate() + 2); day3End.setHours(18, 0, 0, 0)
+
+    await prisma.scheduledShift.createMany({
+      data: [
+        { companyId, storeId: shopId, userId, startsAt: day3Start, endsAt: day3End, createdByUserId: actorId },
+        { companyId, storeId: shopId, userId, startsAt: day1Start, endsAt: day1End, createdByUserId: actorId },
+      ],
+    })
+
+    const rows = await getShopSchedule(shopId, companyId, monday)
+    expect(rows.length).toBe(2)
+    expect(new Date(rows[0].startsAtIso).getTime()).toBeLessThan(new Date(rows[1].startsAtIso).getTime())
+  })
+
+  it('excludes shifts outside the week', async () => {
+    const lastWeek = new Date(monday); lastWeek.setDate(monday.getDate() - 3); lastWeek.setHours(9, 0, 0, 0)
+    const lastWeekEnd = new Date(lastWeek); lastWeekEnd.setHours(17, 0, 0, 0)
+
+    await prisma.scheduledShift.create({
+      data: { companyId, storeId: shopId, userId, startsAt: lastWeek, endsAt: lastWeekEnd, createdByUserId: actorId },
+    })
+
+    const rows = await getShopSchedule(shopId, companyId, monday)
+    expect(rows.length).toBe(0)
+  })
+
+  it('isolates shifts by companyId (IDOR)', async () => {
+    const start = new Date(monday); start.setHours(9, 0, 0, 0)
+    const end   = new Date(monday); end.setHours(17, 0, 0, 0)
+    await prisma.scheduledShift.create({
+      data: { companyId, storeId: shopId, userId, startsAt: start, endsAt: end, createdByUserId: actorId },
+    })
+
+    const rows = await getShopSchedule(shopId, 'other-company', monday)
+    expect(rows).toEqual([])
+  })
+})
+
+describe('getStoreUsersForScheduling', () => {
+  let companyId: string
+
+  beforeEach(async () => {
+    const company = await createTestCompany()
+    companyId = company.id
+  })
+
+  it('returns all ACTIVE users of the company including CASHIER', async () => {
+    const cashier = await createTestUser(companyId, { role: 'CASHIER' })
+    const manager = await createTestUser(companyId, { role: 'MANAGER' })
+    await createTestUser(companyId, { role: 'ADMIN' })
+
+    const users = await getStoreUsersForScheduling(companyId)
+    const ids = users.map(u => u.id)
+    expect(ids).toContain(cashier.id)
+    expect(ids).toContain(manager.id)
+    expect(users.every(u => ['CASHIER', 'MANAGER', 'ADMIN', 'SUPER_ADMIN'].includes(u.role))).toBe(true)
+  })
+
+  it('isolates by company', async () => {
+    const otherCompany = await createTestCompany({ name: 'Other' })
+    await createTestUser(otherCompany.id, { role: 'CASHIER' })
+    await createTestUser(companyId, { role: 'CASHIER' })
+
+    const users = await getStoreUsersForScheduling(companyId)
+    expect(users.length).toBe(1)
   })
 })

@@ -241,9 +241,10 @@ model User {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
-  managedStores ManagerStore[]
-  salaryRates   UserSalaryRate[]
-  salaryPayouts SalaryPayout[]
+  managedStores   ManagerStore[]
+  salaryRates     UserSalaryRate[]
+  salaryPayouts   SalaryPayout[]
+  scheduledShifts ScheduledShift[]
 
   @@index([companyId, role])
 }
@@ -280,6 +281,7 @@ model Store {
   transfersIn     StockTransfer[] @relation("StockTransferDestination")
   orderCounter    StoreOrderCounter?
   promotionStores PromotionStore[]
+  scheduledShifts ScheduledShift[]
 
   @@index([companyId, status])
 }
@@ -803,23 +805,47 @@ model PointsTransaction {
 }
 
 model Shift {
-  id            String      @id @default(cuid())
-  companyId     String
-  storeId       String
-  cashierUserId String
-  status        ShiftStatus @default(OPEN)
-  openedAt      DateTime    @default(now())
-  closedAt      DateTime?
-  openingCash   Decimal     @db.Decimal(14, 2)
-  closingCash   Decimal?    @db.Decimal(14, 2)
-  expectedCash  Decimal?    @db.Decimal(14, 2)
-  variance      Decimal?    @db.Decimal(14, 2)
+  id               String      @id @default(cuid())
+  companyId        String
+  storeId          String
+  cashierUserId    String
+  status           ShiftStatus @default(OPEN)
+  openedAt         DateTime    @default(now())
+  closedAt         DateTime?
+  openingCash      Decimal     @db.Decimal(14, 2)
+  closingCash      Decimal?    @db.Decimal(14, 2)
+  expectedCash     Decimal?    @db.Decimal(14, 2)
+  variance         Decimal?    @db.Decimal(14, 2)
+  scheduledShiftId String?
+  scheduledShift   ScheduledShift? @relation(fields: [scheduledShiftId], references: [id], onDelete: SetNull)
 
   reports ShiftReport[]
 
   @@index([companyId, cashierUserId, status])
   @@index([storeId, status])
+  @@index([scheduledShiftId])
   // UNIQUE (companyId, cashierUserId) WHERE status='OPEN' — добавляется raw SQL
+}
+
+model ScheduledShift {
+  id              String   @id @default(cuid())
+  companyId       String
+  storeId         String
+  store           Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startsAt        DateTime
+  endsAt          DateTime
+  notes           String?
+  createdByUserId String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  shifts Shift[]
+
+  @@index([companyId, storeId, startsAt])
+  @@index([companyId, userId, startsAt])
+  // CHECK (endsAt > startsAt), CHECK (endsAt - startsAt <= 24h) — добавляется raw SQL
 }
 
 model ShiftReport {

@@ -36,7 +36,7 @@ const SHOPS = [
     name: 'Novus Одеса-Марина',
     address: 'вул. Катерининська, 14',
     region: 'Одеса',
-    openingHours: '08:00 – 22:00',
+    openingHours: '00:00 – 24:00',
   },
 ]
 

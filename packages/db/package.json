@@ -16,7 +16,8 @@
   },
   "exports": {
     ".": "./index.ts",
-    "./browser": "./generated/prisma/browser.ts"
+    "./browser": "./generated/prisma/browser.ts",
+    "./utils/shop-status": "./lib/utils/shop-status.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

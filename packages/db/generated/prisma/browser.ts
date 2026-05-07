@@ -208,6 +208,11 @@ export type PointsTransaction = Prisma.PointsTransactionModel
  */
 export type Shift = Prisma.ShiftModel
 /**
+ * Model ScheduledShift
+ * 
+ */
+export type ScheduledShift = Prisma.ScheduledShiftModel
+/**
  * Model ShiftReport
  * 
  */

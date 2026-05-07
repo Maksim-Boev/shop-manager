@@ -287,6 +287,7 @@ export type StoreWhereInput = {
   transfersIn?: Prisma.StockTransferListRelationFilter
   orderCounter?: Prisma.XOR<Prisma.StoreOrderCounterNullableScalarRelationFilter, Prisma.StoreOrderCounterWhereInput> | null
   promotionStores?: Prisma.PromotionStoreListRelationFilter
+  scheduledShifts?: Prisma.ScheduledShiftListRelationFilter
 }
 
 export type StoreOrderByWithRelationInput = {
@@ -310,6 +311,7 @@ export type StoreOrderByWithRelationInput = {
   transfersIn?: Prisma.StockTransferOrderByRelationAggregateInput
   orderCounter?: Prisma.StoreOrderCounterOrderByWithRelationInput
   promotionStores?: Prisma.PromotionStoreOrderByRelationAggregateInput
+  scheduledShifts?: Prisma.ScheduledShiftOrderByRelationAggregateInput
 }
 
 export type StoreWhereUniqueInput = Prisma.AtLeast<{
@@ -336,6 +338,7 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   transfersIn?: Prisma.StockTransferListRelationFilter
   orderCounter?: Prisma.XOR<Prisma.StoreOrderCounterNullableScalarRelationFilter, Prisma.StoreOrderCounterWhereInput> | null
   promotionStores?: Prisma.PromotionStoreListRelationFilter
+  scheduledShifts?: Prisma.ScheduledShiftListRelationFilter
 }, "id">
 
 export type StoreOrderByWithAggregationInput = {
@@ -398,6 +401,7 @@ export type StoreCreateInput = {
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateInput = {
@@ -420,6 +424,7 @@ export type StoreUncheckedCreateInput = {
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUpdateInput = {
@@ -442,6 +447,7 @@ export type StoreUpdateInput = {
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateInput = {
@@ -464,6 +470,7 @@ export type StoreUncheckedUpdateInput = {
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateManyInput = {
@@ -722,6 +729,20 @@ export type StoreUpdateOneRequiredWithoutPromotionStoresNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutPromotionStoresInput, Prisma.StoreUpdateWithoutPromotionStoresInput>, Prisma.StoreUncheckedUpdateWithoutPromotionStoresInput>
 }
 
+export type StoreCreateNestedOneWithoutScheduledShiftsInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutScheduledShiftsInput, Prisma.StoreUncheckedCreateWithoutScheduledShiftsInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutScheduledShiftsInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutScheduledShiftsNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutScheduledShiftsInput, Prisma.StoreUncheckedCreateWithoutScheduledShiftsInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutScheduledShiftsInput
+  upsert?: Prisma.StoreUpsertWithoutScheduledShiftsInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutScheduledShiftsInput, Prisma.StoreUpdateWithoutScheduledShiftsInput>, Prisma.StoreUncheckedUpdateWithoutScheduledShiftsInput>
+}
+
 export type StoreCreateWithoutCompanyInput = {
   id?: string
   type: $Enums.StoreType
@@ -741,6 +762,7 @@ export type StoreCreateWithoutCompanyInput = {
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutCompanyInput = {
@@ -762,6 +784,7 @@ export type StoreUncheckedCreateWithoutCompanyInput = {
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutCompanyInput = {
@@ -828,6 +851,7 @@ export type StoreCreateWithoutManagersInput = {
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutManagersInput = {
@@ -849,6 +873,7 @@ export type StoreUncheckedCreateWithoutManagersInput = {
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutManagersInput = {
@@ -886,6 +911,7 @@ export type StoreUpdateWithoutManagersInput = {
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutManagersInput = {
@@ -907,6 +933,7 @@ export type StoreUncheckedUpdateWithoutManagersInput = {
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutStoreProductsInput = {
@@ -928,6 +955,7 @@ export type StoreCreateWithoutStoreProductsInput = {
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutStoreProductsInput = {
@@ -949,6 +977,7 @@ export type StoreUncheckedCreateWithoutStoreProductsInput = {
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutStoreProductsInput = {
@@ -986,6 +1015,7 @@ export type StoreUpdateWithoutStoreProductsInput = {
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutStoreProductsInput = {
@@ -1007,6 +1037,7 @@ export type StoreUncheckedUpdateWithoutStoreProductsInput = {
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutTransfersOutInput = {
@@ -1028,6 +1059,7 @@ export type StoreCreateWithoutTransfersOutInput = {
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutTransfersOutInput = {
@@ -1049,6 +1081,7 @@ export type StoreUncheckedCreateWithoutTransfersOutInput = {
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutTransfersOutInput = {
@@ -1075,6 +1108,7 @@ export type StoreCreateWithoutTransfersInInput = {
   transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutTransfersInInput = {
@@ -1096,6 +1130,7 @@ export type StoreUncheckedCreateWithoutTransfersInInput = {
   transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutTransfersInInput = {
@@ -1133,6 +1168,7 @@ export type StoreUpdateWithoutTransfersOutInput = {
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutTransfersOutInput = {
@@ -1154,6 +1190,7 @@ export type StoreUncheckedUpdateWithoutTransfersOutInput = {
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUpsertWithoutTransfersInInput = {
@@ -1186,6 +1223,7 @@ export type StoreUpdateWithoutTransfersInInput = {
   transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutTransfersInInput = {
@@ -1207,6 +1245,7 @@ export type StoreUncheckedUpdateWithoutTransfersInInput = {
   transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutOrderCounterInput = {
@@ -1228,6 +1267,7 @@ export type StoreCreateWithoutOrderCounterInput = {
   transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutOrderCounterInput = {
@@ -1249,6 +1289,7 @@ export type StoreUncheckedCreateWithoutOrderCounterInput = {
   transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutOrderCounterInput = {
@@ -1286,6 +1327,7 @@ export type StoreUpdateWithoutOrderCounterInput = {
   transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutOrderCounterInput = {
@@ -1307,6 +1349,7 @@ export type StoreUncheckedUpdateWithoutOrderCounterInput = {
   transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutPromotionStoresInput = {
@@ -1328,6 +1371,7 @@ export type StoreCreateWithoutPromotionStoresInput = {
   transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
   transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutPromotionStoresInput = {
@@ -1349,6 +1393,7 @@ export type StoreUncheckedCreateWithoutPromotionStoresInput = {
   transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
   transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutPromotionStoresInput = {
@@ -1386,6 +1431,7 @@ export type StoreUpdateWithoutPromotionStoresInput = {
   transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutPromotionStoresInput = {
@@ -1407,6 +1453,111 @@ export type StoreUncheckedUpdateWithoutPromotionStoresInput = {
   transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutScheduledShiftsInput = {
+  id?: string
+  type: $Enums.StoreType
+  name: string
+  address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
+  enableFiscalReports?: boolean
+  status?: $Enums.StoreStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company: Prisma.CompanyCreateNestedOneWithoutStoresInput
+  managers?: Prisma.ManagerStoreCreateNestedManyWithoutStoreInput
+  storeProducts?: Prisma.StoreProductCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferCreateNestedManyWithoutDestinationStoreInput
+  orderCounter?: Prisma.StoreOrderCounterCreateNestedOneWithoutStoreInput
+  promotionStores?: Prisma.PromotionStoreCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutScheduledShiftsInput = {
+  id?: string
+  companyId: string
+  type: $Enums.StoreType
+  name: string
+  address?: string | null
+  region?: string | null
+  openingHours?: string | null
+  phone?: string | null
+  area?: number | null
+  enableFiscalReports?: boolean
+  status?: $Enums.StoreStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  managers?: Prisma.ManagerStoreUncheckedCreateNestedManyWithoutStoreInput
+  storeProducts?: Prisma.StoreProductUncheckedCreateNestedManyWithoutStoreInput
+  transfersOut?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceStoreInput
+  transfersIn?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationStoreInput
+  orderCounter?: Prisma.StoreOrderCounterUncheckedCreateNestedOneWithoutStoreInput
+  promotionStores?: Prisma.PromotionStoreUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutScheduledShiftsInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutScheduledShiftsInput, Prisma.StoreUncheckedCreateWithoutScheduledShiftsInput>
+}
+
+export type StoreUpsertWithoutScheduledShiftsInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutScheduledShiftsInput, Prisma.StoreUncheckedUpdateWithoutScheduledShiftsInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutScheduledShiftsInput, Prisma.StoreUncheckedCreateWithoutScheduledShiftsInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutScheduledShiftsInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutScheduledShiftsInput, Prisma.StoreUncheckedUpdateWithoutScheduledShiftsInput>
+}
+
+export type StoreUpdateWithoutScheduledShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneRequiredWithoutStoresNestedInput
+  managers?: Prisma.ManagerStoreUpdateManyWithoutStoreNestedInput
+  storeProducts?: Prisma.StoreProductUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
+  orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
+  promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutScheduledShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  enableFiscalReports?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumStoreStatusFieldUpdateOperationsInput | $Enums.StoreStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managers?: Prisma.ManagerStoreUncheckedUpdateManyWithoutStoreNestedInput
+  storeProducts?: Prisma.StoreProductUncheckedUpdateManyWithoutStoreNestedInput
+  transfersOut?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceStoreNestedInput
+  transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
+  orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
+  promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateManyCompanyInput = {
@@ -1443,6 +1594,7 @@ export type StoreUpdateWithoutCompanyInput = {
   transfersIn?: Prisma.StockTransferUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutCompanyInput = {
@@ -1464,6 +1616,7 @@ export type StoreUncheckedUpdateWithoutCompanyInput = {
   transfersIn?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationStoreNestedInput
   orderCounter?: Prisma.StoreOrderCounterUncheckedUpdateOneWithoutStoreNestedInput
   promotionStores?: Prisma.PromotionStoreUncheckedUpdateManyWithoutStoreNestedInput
+  scheduledShifts?: Prisma.ScheduledShiftUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateManyWithoutCompanyInput = {
@@ -1492,6 +1645,7 @@ export type StoreCountOutputType = {
   transfersOut: number
   transfersIn: number
   promotionStores: number
+  scheduledShifts: number
 }
 
 export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1500,6 +1654,7 @@ export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   transfersOut?: boolean | StoreCountOutputTypeCountTransfersOutArgs
   transfersIn?: boolean | StoreCountOutputTypeCountTransfersInArgs
   promotionStores?: boolean | StoreCountOutputTypeCountPromotionStoresArgs
+  scheduledShifts?: boolean | StoreCountOutputTypeCountScheduledShiftsArgs
 }
 
 /**
@@ -1547,6 +1702,13 @@ export type StoreCountOutputTypeCountPromotionStoresArgs<ExtArgs extends runtime
   where?: Prisma.PromotionStoreWhereInput
 }
 
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountScheduledShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScheduledShiftWhereInput
+}
+
 
 export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1569,6 +1731,7 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   transfersIn?: boolean | Prisma.Store$transfersInArgs<ExtArgs>
   orderCounter?: boolean | Prisma.Store$orderCounterArgs<ExtArgs>
   promotionStores?: boolean | Prisma.Store$promotionStoresArgs<ExtArgs>
+  scheduledShifts?: boolean | Prisma.Store$scheduledShiftsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["store"]>
 
@@ -1631,6 +1794,7 @@ export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   transfersIn?: boolean | Prisma.Store$transfersInArgs<ExtArgs>
   orderCounter?: boolean | Prisma.Store$orderCounterArgs<ExtArgs>
   promotionStores?: boolean | Prisma.Store$promotionStoresArgs<ExtArgs>
+  scheduledShifts?: boolean | Prisma.Store$scheduledShiftsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StoreIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1650,6 +1814,7 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     transfersIn: Prisma.$StockTransferPayload<ExtArgs>[]
     orderCounter: Prisma.$StoreOrderCounterPayload<ExtArgs> | null
     promotionStores: Prisma.$PromotionStorePayload<ExtArgs>[]
+    scheduledShifts: Prisma.$ScheduledShiftPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2066,6 +2231,7 @@ export interface Prisma__StoreClient<T, Null = never, ExtArgs extends runtime.Ty
   transfersIn<T extends Prisma.Store$transfersInArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$transfersInArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orderCounter<T extends Prisma.Store$orderCounterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$orderCounterArgs<ExtArgs>>): Prisma.Prisma__StoreOrderCounterClient<runtime.Types.Result.GetResult<Prisma.$StoreOrderCounterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   promotionStores<T extends Prisma.Store$promotionStoresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$promotionStoresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PromotionStorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  scheduledShifts<T extends Prisma.Store$scheduledShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$scheduledShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScheduledShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2645,6 +2811,30 @@ export type Store$promotionStoresArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.PromotionStoreScalarFieldEnum | Prisma.PromotionStoreScalarFieldEnum[]
+}
+
+/**
+ * Store.scheduledShifts
+ */
+export type Store$scheduledShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScheduledShift
+   */
+  select?: Prisma.ScheduledShiftSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScheduledShift
+   */
+  omit?: Prisma.ScheduledShiftOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScheduledShiftInclude<ExtArgs> | null
+  where?: Prisma.ScheduledShiftWhereInput
+  orderBy?: Prisma.ScheduledShiftOrderByWithRelationInput | Prisma.ScheduledShiftOrderByWithRelationInput[]
+  cursor?: Prisma.ScheduledShiftWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScheduledShiftScalarFieldEnum | Prisma.ScheduledShiftScalarFieldEnum[]
 }
 
 /**
