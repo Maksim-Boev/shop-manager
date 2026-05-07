@@ -1,10 +1,9 @@
 'use client'
 
-import { useState, useTransition } from 'react'
-import Link from 'next/link'
+import { useMemo, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import {
-  MapPinIcon, ClockIcon, PhoneIcon, ChevronRightIcon,
+  MapPinIcon, ClockIcon, PhoneIcon,
 } from 'lucide-react'
 import {
   Button, Dialog, DialogContent, DialogHeader,
@@ -12,6 +11,7 @@ import {
 } from '@pkg/ui'
 import { cn } from '@pkg/ui/cn'
 import { archiveShop } from '@/actions/shop'
+import { useBreadcrumb } from '@/components/layout/breadcrumb'
 import type { IShopHeaderProps } from './types'
 import type { TTabKey } from '../../types'
 
@@ -27,6 +27,15 @@ const ShopHeader = ({ shop, userRole, activeTab, tabs, onTabChange }: IShopHeade
   const [archiveOpen, setArchiveOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
 
+  const crumbs = useMemo(
+    () => [
+      { label: 'Магазини', href: '/shops' },
+      { label: shop.name },
+    ],
+    [shop.name],
+  )
+  useBreadcrumb(crumbs)
+
   const canArchive =
     (userRole === 'ADMIN' || userRole === 'SUPER_ADMIN') && shop.status === 'ACTIVE'
 
@@ -40,15 +49,6 @@ const ShopHeader = ({ shop, userRole, activeTab, tabs, onTabChange }: IShopHeade
 
   return (
     <div className="space-y-4">
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-1.5 text-sm text-slate-500 dark:text-muted-foreground">
-        <Link href="/shops" className="hover:text-slate-900 dark:hover:text-foreground transition-colors">
-          Магазини
-        </Link>
-        <ChevronRightIcon className="size-3.5" />
-        <span className="text-slate-900 dark:text-foreground font-medium">{shop.name}</span>
-      </div>
-
       {/* Title + actions */}
       <div className="flex items-start justify-between gap-4">
         <div>
@@ -87,7 +87,7 @@ const ShopHeader = ({ shop, userRole, activeTab, tabs, onTabChange }: IShopHeade
         </div>
 
         {canArchive && (
-          <Button variant="outline-primary" size="sm" onClick={() => setArchiveOpen(true)}>
+          <Button variant="default" size="sm" onClick={() => setArchiveOpen(true)}>
             Архівувати
           </Button>
         )}

@@ -81,3 +81,41 @@ export {
   getAvailableStaffForShop,
   getShopFinance,
 } from './lib/queries/shop-detail'
+
+// Queries — Staff
+export type { IStaffMember } from './lib/queries/staff'
+export { getStaffList } from './lib/queries/staff'
+
+// Services — Staff
+export { setUserStatusImpl } from './lib/services/staff'
+
+// Queries — Warehouse
+export type {
+  IWarehouseStore,
+  IWarehouseStockRow,
+  IPurchaseOrderRow,
+} from './lib/queries/warehouse'
+export {
+  getWarehouseStores,
+  getWarehouseStock,
+  getPendingPurchaseOrders,
+} from './lib/queries/warehouse'
+
+// Queries — Transfers
+export type {
+  ITransferRow,
+  ITransferableStore,
+  IStoreProductOption,
+} from './lib/queries/transfers'
+export {
+  getTransfers,
+  getTransferableStores,
+  getStoreProductsForTransfer,
+} from './lib/queries/transfers'
+
+// Services — Transfer
+export {
+  createTransferImpl,
+  completeTransferImpl,
+  cancelTransferImpl,
+} from './lib/services/transfer'

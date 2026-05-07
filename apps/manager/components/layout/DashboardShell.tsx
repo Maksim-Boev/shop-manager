@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Sidebar } from '@/components/layout/sidebar'
 import { TopBar } from '@/components/layout/topbar'
+import { BreadcrumbProvider } from '@/components/layout/breadcrumb'
 import type { TTheme } from '@/components/layout/theme-toggle'
 import type { AuthUser } from '@pkg/db'
 
@@ -23,15 +24,17 @@ const DashboardShell = ({ children, user, defaultCompact, defaultTheme }: IDashb
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar compact={compact} onToggle={handleToggle} user={user} />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <TopBar user={user} defaultTheme={defaultTheme} />
-        <main className="flex-1 overflow-y-auto p-8">
-          {children}
-        </main>
+    <BreadcrumbProvider>
+      <div className="flex h-screen overflow-hidden bg-background">
+        <Sidebar compact={compact} onToggle={handleToggle} user={user} />
+        <div className="flex flex-1 flex-col overflow-hidden">
+          <TopBar defaultTheme={defaultTheme} />
+          <main className="flex-1 overflow-y-auto p-8">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </BreadcrumbProvider>
   )
 }
 
