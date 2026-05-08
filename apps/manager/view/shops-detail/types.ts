@@ -1,5 +1,6 @@
 import type {
   IShopOverview, IStoreProductRow, IShopStaffMember, IAvailableUser, IShopFinance,
+  IShopMarginData,
   IScheduledShiftRow, IStoreUserOption, IStoreScheduleException, IStoreHoursConfig,
   TWeeklySchedule,
 } from '@pkg/db'
@@ -31,7 +32,7 @@ export type TTabData =
       weekStartIso: string
     }
   | { tab: 'schedule'; data: IStoreHoursConfig }
-  | { tab: 'finance'; data: IShopFinance; range: TRange }
+  | { tab: 'finance'; data: IShopFinance; margin: IShopMarginData; range: TRange }
 
 export interface IShopDetailViewProps {
   shop: IShopBasic

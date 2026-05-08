@@ -53,7 +53,7 @@ const ShopDetailView = ({ shop, activeTab, tabData, userRole }: IShopDetailViewP
         />
       )}
       {tabData.tab === 'finance' && (
-        <FinanceTab data={tabData.data} shopId={shop.id} range={tabData.range} />
+        <FinanceTab data={tabData.data} margin={tabData.margin} shopId={shop.id} range={tabData.range} />
       )}
     </div>
   )

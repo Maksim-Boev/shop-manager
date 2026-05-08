@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { PackageIcon } from 'lucide-react'
+import { PackageIcon, PencilIcon } from 'lucide-react'
 import { cn } from '@pkg/ui/cn'
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@pkg/ui'
+import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, Button } from '@pkg/ui'
 import { StockFilter } from './StockFilter'
+import { EditProductModal } from '../edit-product-modal'
+import type { IEditProductModalProduct } from '../edit-product-modal'
 import type { IStockTabProps } from './types'
 
 const UNIT_LABELS: Record<string, string> = {
@@ -16,6 +18,7 @@ const StockTab = ({ items }: IStockTabProps) => {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('')
   const [onlyLow, setOnlyLow] = useState(false)
+  const [editProduct, setEditProduct] = useState<IEditProductModalProduct | null>(null)
 
   const categories = useMemo(
     () => [...new Set(items.map(i => i.category))].sort(),
@@ -60,7 +63,10 @@ const StockTab = ({ items }: IStockTabProps) => {
             <TableHead className="h-auto px-5 py-3 text-[10px] font-bold text-slate-500 dark:text-muted-foreground uppercase tracking-wider">Категорія</TableHead>
             <TableHead className="h-auto px-5 py-3 text-right text-[10px] font-bold text-slate-500 dark:text-muted-foreground uppercase tracking-wider">Залишок</TableHead>
             <TableHead className="h-auto px-5 py-3 text-right text-[10px] font-bold text-slate-500 dark:text-muted-foreground uppercase tracking-wider">Ціна</TableHead>
+            <TableHead className="h-auto px-5 py-3 text-right text-[10px] font-bold text-slate-500 dark:text-muted-foreground uppercase tracking-wider">Закуп</TableHead>
+            <TableHead className="h-auto px-5 py-3 text-right text-[10px] font-bold text-slate-500 dark:text-muted-foreground uppercase tracking-wider">Маржа</TableHead>
             <TableHead className="h-auto px-5 py-3 text-center text-[10px] font-bold text-slate-500 dark:text-muted-foreground uppercase tracking-wider">Статус</TableHead>
+            <TableHead className="h-auto px-5 py-3 w-12" />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -103,6 +109,25 @@ const StockTab = ({ items }: IStockTabProps) => {
               <TableCell className="px-5 py-3 text-right tabular-nums text-slate-900 dark:text-foreground font-medium">
                 ₴ {item.effectivePrice.toLocaleString('uk-UA', { minimumFractionDigits: 2 })}
               </TableCell>
+              <TableCell className="px-5 py-3 text-right tabular-nums text-slate-700 dark:text-foreground/90">
+                {item.costPrice === null
+                  ? <span className="text-slate-300 dark:text-muted-foreground/60">—</span>
+                  : `₴ ${item.costPrice.toLocaleString('uk-UA', { minimumFractionDigits: 2 })}`}
+              </TableCell>
+              <TableCell
+                className={cn(
+                  'px-5 py-3 text-right tabular-nums font-semibold',
+                  item.marginPct === null
+                    ? 'text-slate-300 dark:text-muted-foreground/60'
+                    : item.marginPct < 0
+                      ? 'text-rose-600 dark:text-rose-400'
+                      : 'text-emerald-600 dark:text-emerald-400',
+                )}
+              >
+                {item.marginPct === null
+                  ? '—'
+                  : `${item.marginPct >= 0 ? '+' : ''}${item.marginPct.toFixed(1)}%`}
+              </TableCell>
               <TableCell className="px-5 py-3 text-center">
                 {item.isAvailable ? (
                   <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
@@ -114,17 +139,41 @@ const StockTab = ({ items }: IStockTabProps) => {
                   </span>
                 )}
               </TableCell>
+              <TableCell className="px-5 py-3 text-right">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() =>
+                    setEditProduct({
+                      id: item.productId,
+                      sku: item.sku,
+                      name: item.name,
+                      unit: item.unit,
+                      basePrice: item.basePrice,
+                      costPrice: item.costPrice,
+                    })
+                  }
+                >
+                  <PencilIcon className="size-3.5" />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
           {filtered.length === 0 && (
             <TableRow className="hover:bg-transparent">
-              <TableCell colSpan={5} className="px-5 py-12 text-center text-sm text-slate-400 dark:text-muted-foreground">
+              <TableCell colSpan={8} className="px-5 py-12 text-center text-sm text-slate-400 dark:text-muted-foreground">
                 Нічого не знайдено
               </TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
+
+      <EditProductModal
+        open={editProduct !== null}
+        onOpenChange={v => { if (!v) setEditProduct(null) }}
+        product={editProduct}
+      />
     </div>
   )
 }

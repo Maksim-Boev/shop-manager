@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation'
 import { auth } from '@/auth'
 import {
   prisma, getShopOverview, getShopStock, getShopStaff,
-  getAvailableStaffForShop, getShopFinance,
+  getAvailableStaffForShop, getShopFinance, getShopMargin,
   getShopSchedule, getStoreUsersForScheduling, getStoreHoursConfig,
 } from '@pkg/db'
 import type { TWeeklySchedule } from '@pkg/db'
@@ -93,8 +93,11 @@ const ShopDetailPage = async ({ params, searchParams }: IProps) => {
     const data = await getStoreHoursConfig(shopId, companyId)
     tabData = { tab: 'schedule', data }
   } else {
-    const data = await getShopFinance(shopId, companyId, range)
-    tabData = { tab: 'finance', data, range }
+    const [data, margin] = await Promise.all([
+      getShopFinance(shopId, companyId, range),
+      getShopMargin(shopId, companyId, range),
+    ])
+    tabData = { tab: 'finance', data, margin, range }
   }
 
   return (

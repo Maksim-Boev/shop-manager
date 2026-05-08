@@ -119,7 +119,7 @@ const ShopCard = ({ shop }: IShopCardProps) => {
         )}
 
         {/* KPIs */}
-        <div className="grid grid-cols-2 gap-4 my-4 pt-4 border-t border-slate-100 dark:border-border">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-4 pt-4 border-t border-slate-100 dark:border-border">
           <div>
             <div className="text-[10px] text-slate-400 dark:text-muted-foreground uppercase tracking-wide font-bold">Виручка</div>
             <div className="text-lg font-bold text-slate-900 dark:text-foreground mt-0.5 tabular-nums">
@@ -127,6 +127,27 @@ const ShopCard = ({ shop }: IShopCardProps) => {
             </div>
           </div>
           <div>
+            <div className="text-[10px] text-slate-400 dark:text-muted-foreground uppercase tracking-wide font-bold">Маржа</div>
+            {shop.realizedMarginPctToday === null ? (
+              <div className="text-lg font-bold text-slate-300 dark:text-muted-foreground/60 mt-0.5">—</div>
+            ) : (
+              <>
+                <div className={cn(
+                  'text-lg font-bold mt-0.5 tabular-nums',
+                  shop.realizedMarginPctToday < 0
+                    ? 'text-rose-600 dark:text-rose-400'
+                    : 'text-emerald-600 dark:text-emerald-400',
+                )}>
+                  {shop.realizedMarginPctToday >= 0 ? '+' : ''}
+                  {shop.realizedMarginPctToday.toFixed(1)}%
+                </div>
+                <div className="text-[11px] text-slate-500 dark:text-muted-foreground mt-0.5 tabular-nums">
+                  ₴ {Number(shop.realizedMarginToday ?? 0).toLocaleString('uk-UA')}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="col-span-2 md:col-span-1">
             <div className="text-[10px] text-slate-400 dark:text-muted-foreground uppercase tracking-wide font-bold">Залишки</div>
             <div className="text-lg font-bold text-slate-900 dark:text-foreground mt-0.5 tabular-nums">
               {Number(shop.stockTotal).toLocaleString('uk-UA')} од.

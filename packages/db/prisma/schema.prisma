@@ -356,6 +356,7 @@ model Product {
   name          String
   unit          ProductUnit
   basePrice     Decimal       @db.Decimal(14, 2)
+  costPrice     Decimal?      @db.Decimal(14, 2)
   taxRateId     String
   taxRate       TaxRate       @relation(fields: [taxRateId], references: [id])
   categoryId    String

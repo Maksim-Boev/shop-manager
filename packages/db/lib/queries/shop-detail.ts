@@ -39,7 +39,10 @@ export interface IStoreProductRow {
   category: string
   unit: ProductUnit
   stock: number
-  effectivePrice: number
+  basePrice: number          // глобальна ціна Product
+  effectivePrice: number     // basePrice з урахуванням priceOverride per-store
+  costPrice: number | null   // глобальна собівартість Product
+  marginPct: number | null   // (basePrice - costPrice) / basePrice × 100
   isAvailable: boolean
 }
 
@@ -76,6 +79,25 @@ export interface IClosedShift {
 export interface IShopFinance {
   revenueByDay: { date: string; revenue: number }[]
   closedShifts: IClosedShift[]
+}
+
+export interface IShopMarginData {
+  realized: {
+    revenue: number
+    cost: number
+    margin: number
+    marginPct: number | null
+    skuWithCostCount: number
+    skuWithoutCostCount: number
+  }
+  stock: {
+    valueAtPrice: number
+    valueAtCost: number
+    margin: number
+    marginPct: number | null
+    skuWithCostCount: number
+    skuWithoutCostCount: number
+  }
 }
 
 export interface IScheduledShiftRow {
@@ -201,7 +223,8 @@ export const getShopStock = async (
       stock: true,
       product: {
         select: {
-          id: true, sku: true, name: true, unit: true, basePrice: true,
+          id: true, sku: true, name: true, unit: true,
+          basePrice: true, costPrice: true,
           category: { select: { name: true } },
         },
       },
@@ -217,16 +240,27 @@ export const getShopStock = async (
       if (ap !== bp) return ap - bp
       return a.product.name.localeCompare(b.product.name, 'uk')
     })
-    .map(sp => ({
-      productId: sp.product.id,
-      sku: sp.product.sku,
-      name: sp.product.name,
-      category: sp.product.category.name,
-      unit: sp.product.unit,
-      stock: Number(sp.stock),
-      effectivePrice: Number(sp.priceOverride ?? sp.product.basePrice),
-      isAvailable: sp.isAvailable,
-    }))
+    .map(sp => {
+      const basePrice = Number(sp.product.basePrice)
+      const costPrice = sp.product.costPrice === null ? null : Number(sp.product.costPrice)
+      const marginPct =
+        costPrice === null || basePrice === 0
+          ? null
+          : ((basePrice - costPrice) / basePrice) * 100
+      return {
+        productId: sp.product.id,
+        sku: sp.product.sku,
+        name: sp.product.name,
+        category: sp.product.category.name,
+        unit: sp.product.unit,
+        stock: Number(sp.stock),
+        basePrice,
+        effectivePrice: Number(sp.priceOverride ?? sp.product.basePrice),
+        costPrice,
+        marginPct,
+        isAvailable: sp.isAvailable,
+      }
+    })
 }
 
 // ── getShopStaff ────────────────────────────────────────────────────────────
@@ -438,5 +472,123 @@ export const getStoreHoursConfig = async (
   return {
     weeklySchedule: store.weeklySchedule as TWeeklySchedule | null,
     exceptions: store.scheduleExceptions,
+  }
+}
+
+// ── getShopMargin ────────────────────────────────────────────────────────────
+
+type TMarginRange = 'week' | 'month'
+
+export const getShopMargin = async (
+  shopId: string,
+  companyId: string,
+  range: TMarginRange,
+): Promise<IShopMarginData> => {
+  const now = new Date()
+  const periodStart = new Date(now)
+  periodStart.setDate(periodStart.getDate() - (range === 'week' ? 6 : 29))
+  periodStart.setHours(0, 0, 0, 0)
+
+  const orderItems = await prisma.orderItem.findMany({
+    where: {
+      order: {
+        companyId,
+        storeId: shopId,
+        state: 'PAID',
+        paidAt: { gte: periodStart },
+      },
+    },
+    select: {
+      productId: true,
+      quantity: true,
+      lineTotal: true,
+    },
+  })
+
+  // Look up costPrice for all products referenced in those order items
+  const productIds = [...new Set(orderItems.map(oi => oi.productId))]
+  const products =
+    productIds.length > 0
+      ? await prisma.product.findMany({
+          where: { id: { in: productIds }, companyId },
+          select: { id: true, costPrice: true },
+        })
+      : []
+  const costPriceMap = new Map(products.map(p => [p.id, p.costPrice]))
+
+  let realizedRevenue = 0
+  let coveredRevenue = 0
+  let realizedCost = 0
+  const realizedSkuWithCost = new Set<string>()
+  const realizedSkuWithoutCost = new Set<string>()
+
+  for (const oi of orderItems) {
+    const lineTotal = Number(oi.lineTotal)
+    realizedRevenue += lineTotal
+    const costPrice = costPriceMap.get(oi.productId) ?? null
+    if (costPrice !== null) {
+      coveredRevenue += lineTotal
+      realizedCost += Number(oi.quantity) * Number(costPrice)
+      realizedSkuWithCost.add(oi.productId)
+    } else {
+      realizedSkuWithoutCost.add(oi.productId)
+    }
+  }
+
+  const realizedMargin = realizedSkuWithCost.size === 0 ? 0 : coveredRevenue - realizedCost
+  const realizedMarginPct =
+    realizedSkuWithCost.size === 0 || realizedRevenue === 0
+      ? null
+      : (realizedMargin / realizedRevenue) * 100
+
+  const storeProducts = await prisma.storeProduct.findMany({
+    where: { storeId: shopId, store: { companyId } },
+    select: {
+      productId: true,
+      stock: true,
+      product: { select: { basePrice: true, costPrice: true } },
+    },
+  })
+
+  let stockValueAtPrice = 0
+  let stockValueAtCost = 0
+  let stockSkuWithCost = 0
+  let stockSkuWithoutCost = 0
+
+  for (const sp of storeProducts) {
+    const stock = Number(sp.stock)
+    const basePrice = Number(sp.product.basePrice)
+    stockValueAtPrice += stock * basePrice
+    if (sp.product.costPrice !== null) {
+      stockValueAtCost += stock * Number(sp.product.costPrice)
+      stockSkuWithCost += 1
+    } else {
+      stockSkuWithoutCost += 1
+    }
+  }
+
+  const stockMargin = stockSkuWithCost === 0 ? 0 : stockValueAtPrice - stockValueAtCost
+  const stockMarginPct =
+    stockSkuWithCost === 0 || stockValueAtPrice === 0
+      ? null
+      : (stockMargin / stockValueAtPrice) * 100
+
+  return {
+    realized: {
+      revenue: realizedRevenue,
+      cost: realizedCost,
+      margin: realizedMargin,
+      marginPct: realizedMarginPct,
+      skuWithCostCount: realizedSkuWithCost.size,
+      skuWithoutCostCount: realizedSkuWithoutCost.size,
+    },
+    stock: {
+      valueAtPrice: stockValueAtPrice,
+      valueAtCost: stockValueAtCost,
+      margin: stockMargin,
+      marginPct: stockMarginPct,
+      skuWithCostCount: stockSkuWithCost,
+      skuWithoutCostCount: stockSkuWithoutCost,
+    },
   }
 }

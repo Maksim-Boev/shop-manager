@@ -201,6 +201,7 @@ const main = async () => {
           name: p.name,
           unit: p.unit,
           basePrice: p.basePrice,
+          costPrice: (Number(p.basePrice) * (0.55 + Math.random() * 0.25)).toFixed(2),
           categoryId: category.id,
           taxRateId: tax.id,
           barcodes: {

@@ -3942,6 +3942,7 @@ export const ProductScalarFieldEnum = {
   name: 'name',
   unit: 'unit',
   basePrice: 'basePrice',
+  costPrice: 'costPrice',
   taxRateId: 'taxRateId',
   categoryId: 'categoryId',
   subcategoryId: 'subcategoryId',

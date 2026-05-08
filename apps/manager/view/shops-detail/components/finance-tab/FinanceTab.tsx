@@ -15,7 +15,42 @@ const fmtDate = (d: string) => d.slice(5).replace('-', '.')
 const fmtMoney = (n: number) =>
   `₴ ${n.toLocaleString('uk-UA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
-const FinanceTab = ({ data, shopId, range }: IFinanceTabProps) => {
+interface IMarginCardProps {
+  title: string
+  pct: number | null
+  abs: number
+  revenue: number
+  skuWith: number
+  skuWithout: number
+  contextLabel: string
+}
+
+const MarginCard = ({ title, pct, abs, revenue, skuWith, skuWithout, contextLabel }: IMarginCardProps) => (
+  <div className="bg-white dark:bg-card rounded-xl border border-slate-200 dark:border-border p-5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+    <div className="flex items-center justify-between">
+      <h3 className="font-semibold text-slate-900 dark:text-foreground text-sm">{title}</h3>
+      <span className="text-[10px] uppercase tracking-wider text-slate-400 dark:text-muted-foreground font-bold">{contextLabel}</span>
+    </div>
+    {pct === null ? (
+      <div className="mt-3 text-2xl font-bold text-slate-300 dark:text-muted-foreground/60">—</div>
+    ) : (
+      <div className={cn(
+        'mt-3 text-2xl font-bold tabular-nums',
+        pct < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400',
+      )}>
+        {pct >= 0 ? '+' : ''}{pct.toFixed(1)}%
+      </div>
+    )}
+    <div className="mt-1 text-xs text-slate-500 dark:text-muted-foreground tabular-nums">
+      {fmtMoney(abs)} з {fmtMoney(revenue)}
+    </div>
+    <div className="mt-2 text-[11px] text-slate-400 dark:text-muted-foreground">
+      {skuWith} з {skuWith + skuWithout} SKU мають закуп
+    </div>
+  </div>
+)
+
+const FinanceTab = ({ data, margin, shopId, range }: IFinanceTabProps) => {
   const router = useRouter()
 
   const setRange = (r: TRange) => {
@@ -26,6 +61,26 @@ const FinanceTab = ({ data, shopId, range }: IFinanceTabProps) => {
 
   return (
     <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <MarginCard
+          title="Реалізована маржа"
+          pct={margin.realized.marginPct}
+          abs={margin.realized.margin}
+          revenue={margin.realized.revenue}
+          skuWith={margin.realized.skuWithCostCount}
+          skuWithout={margin.realized.skuWithoutCostCount}
+          contextLabel={range === 'week' ? 'за тиждень' : 'за місяць'}
+        />
+        <MarginCard
+          title="Маржа на залишках"
+          pct={margin.stock.marginPct}
+          abs={margin.stock.margin}
+          revenue={margin.stock.valueAtPrice}
+          skuWith={margin.stock.skuWithCostCount}
+          skuWithout={margin.stock.skuWithoutCostCount}
+          contextLabel="теоретична"
+        />
+      </div>
       {/* Bar chart */}
       <div className="bg-white dark:bg-card rounded-xl border border-slate-200 dark:border-border p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
         <div className="flex items-center justify-between mb-6">

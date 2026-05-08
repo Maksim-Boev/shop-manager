@@ -6,7 +6,7 @@ import {
 } from '../helpers'
 import {
   getShopStock, getShopStaff, getAvailableStaffForShop,
-  getShopSchedule, getStoreUsersForScheduling,
+  getShopSchedule, getStoreUsersForScheduling, getShopMargin,
 } from '../../lib/queries/shop-detail'
 
 describe('getShopStock', () => {
@@ -40,6 +40,51 @@ describe('getShopStock', () => {
   it('returns empty for wrong companyId (IDOR)', async () => {
     const items = await getShopStock(shopId, 'wrong-company-id')
     expect(items).toEqual([])
+  })
+
+  it('returns costPrice and marginPct when costPrice is set', async () => {
+    const cat = await createTestCategory(companyId)
+    const tax = await createTestTaxRate(companyId)
+    const p = await prisma.product.create({
+      data: {
+        companyId, categoryId: cat.id, taxRateId: tax.id,
+        name: 'P-cost', sku: 'SKU-COST', unit: 'PIECE',
+        basePrice: '200.00', costPrice: '150.00',
+      },
+    })
+    await prisma.storeProduct.create({
+      data: { storeId: shopId, productId: p.id, stock: '5' },
+    })
+
+    const items = await getShopStock(shopId, companyId)
+    const row = items.find(i => i.sku === 'SKU-COST')!
+    expect(row.costPrice).toBe(150)
+    expect(row.marginPct).toBeCloseTo(25, 5)
+  })
+
+  it('returns null cost/marginPct when costPrice is not set', async () => {
+    const items = await getShopStock(shopId, companyId)
+    expect(items[0].costPrice).toBeNull()
+    expect(items[0].marginPct).toBeNull()
+  })
+
+  it('returns negative marginPct when costPrice > basePrice', async () => {
+    const cat = await createTestCategory(companyId)
+    const tax = await createTestTaxRate(companyId)
+    const p = await prisma.product.create({
+      data: {
+        companyId, categoryId: cat.id, taxRateId: tax.id,
+        name: 'Loss', sku: 'SKU-LOSS', unit: 'PIECE',
+        basePrice: '100.00', costPrice: '120.00',
+      },
+    })
+    await prisma.storeProduct.create({
+      data: { storeId: shopId, productId: p.id, stock: '1' },
+    })
+
+    const items = await getShopStock(shopId, companyId)
+    const row = items.find(i => i.sku === 'SKU-LOSS')!
+    expect(row.marginPct).toBeCloseTo(-20, 5)
   })
 
   it('sorts: stock=0 first, then stock<10, then rest', async () => {
@@ -217,5 +262,141 @@ describe('getStoreUsersForScheduling', () => {
 
     const users = await getStoreUsersForScheduling(companyId)
     expect(users.length).toBe(1)
+  })
+})
+
+describe('getShopMargin', () => {
+  let companyId: string
+  let shopId: string
+  let cashierId: string
+  let categoryId: string
+  let taxRateId: string
+
+  beforeEach(async () => {
+    const company = await createTestCompany()
+    companyId = company.id
+    const shop = await createTestStore(companyId, { type: 'SHOP' })
+    shopId = shop.id
+    const cashier = await createTestUser(companyId, { role: 'CASHIER' })
+    cashierId = cashier.id
+    const cat = await createTestCategory(companyId)
+    categoryId = cat.id
+    const tax = await createTestTaxRate(companyId)
+    taxRateId = tax.id
+  })
+
+  const createPaidOrder = async (
+    items: Array<{ productId: string; qty: number; unitPrice: number }>,
+  ) => {
+    const subtotal = items.reduce((s, i) => s + i.qty * i.unitPrice, 0)
+    return prisma.order.create({
+      data: {
+        companyId, storeId: shopId, orderNumber: Math.floor(Math.random() * 1e9),
+        state: 'PAID', cashierUserId: cashierId,
+        deliveryType: 'PICKUP', deliveryStatus: 'NONE',
+        subtotal: subtotal.toFixed(2),
+        discountTotal: '0.00', taxTotal: '0.00',
+        grandTotal: subtotal.toFixed(2),
+        paymentMethod: 'CARD',
+        paidAmount: subtotal.toFixed(2),
+        paidAt: new Date(),
+        items: {
+          create: items.map(i => ({
+            productId: i.productId,
+            productNameSnapshot: 'X',
+            unitSnapshot: 'PIECE',
+            originalUnitPrice: i.unitPrice.toFixed(2),
+            taxRateSnapshot: '0.0000',
+            quantity: i.qty.toFixed(3),
+            lineTotal: (i.qty * i.unitPrice).toFixed(2),
+          })),
+        },
+      },
+    })
+  }
+
+  it('returns realized + stock margin for week range', async () => {
+    const p = await prisma.product.create({
+      data: {
+        companyId, categoryId, taxRateId,
+        name: 'M', sku: 'M1', unit: 'PIECE',
+        basePrice: '200.00', costPrice: '150.00',
+      },
+    })
+    await prisma.storeProduct.create({
+      data: { storeId: shopId, productId: p.id, stock: '10' },
+    })
+    await createPaidOrder([{ productId: p.id, qty: 2, unitPrice: 200 }])
+
+    const data = await getShopMargin(shopId, companyId, 'week')
+    expect(data.realized.revenue).toBe(400)
+    expect(data.realized.cost).toBe(300)
+    expect(data.realized.margin).toBe(100)
+    expect(data.realized.marginPct).toBeCloseTo(25, 5)
+    expect(data.realized.skuWithCostCount).toBe(1)
+    expect(data.realized.skuWithoutCostCount).toBe(0)
+
+    expect(data.stock.valueAtPrice).toBe(2000)
+    expect(data.stock.valueAtCost).toBe(1500)
+    expect(data.stock.margin).toBe(500)
+    expect(data.stock.marginPct).toBeCloseTo(25, 5)
+    expect(data.stock.skuWithCostCount).toBe(1)
+    expect(data.stock.skuWithoutCostCount).toBe(0)
+  })
+
+  it('returns null margin and counts skuWithoutCost when no costPrice set', async () => {
+    const p = await prisma.product.create({
+      data: {
+        companyId, categoryId, taxRateId,
+        name: 'NoCost', sku: 'NC1', unit: 'PIECE',
+        basePrice: '100.00', costPrice: null,
+      },
+    })
+    await prisma.storeProduct.create({
+      data: { storeId: shopId, productId: p.id, stock: '3' },
+    })
+
+    const data = await getShopMargin(shopId, companyId, 'week')
+    expect(data.realized.revenue).toBe(0)
+    expect(data.realized.marginPct).toBeNull()
+    expect(data.stock.valueAtPrice).toBe(300)
+    expect(data.stock.valueAtCost).toBe(0)
+    expect(data.stock.marginPct).toBeNull()
+    expect(data.stock.skuWithoutCostCount).toBe(1)
+  })
+
+  it('partial realized margin: ignores items without costPrice but counts revenue', async () => {
+    const p1 = await prisma.product.create({
+      data: {
+        companyId, categoryId, taxRateId,
+        name: 'P1', sku: 'PM-1', unit: 'PIECE',
+        basePrice: '100.00', costPrice: '60.00',
+      },
+    })
+    const p2 = await prisma.product.create({
+      data: {
+        companyId, categoryId, taxRateId,
+        name: 'P2', sku: 'PM-2', unit: 'PIECE',
+        basePrice: '50.00', costPrice: null,
+      },
+    })
+    await createPaidOrder([
+      { productId: p1.id, qty: 1, unitPrice: 100 },
+      { productId: p2.id, qty: 1, unitPrice: 50 },
+    ])
+
+    const data = await getShopMargin(shopId, companyId, 'week')
+    expect(data.realized.revenue).toBe(150)        // full revenue
+    expect(data.realized.cost).toBe(60)            // covered cost only
+    expect(data.realized.margin).toBe(40)          // coveredRevenue (100) - cost (60)
+    expect(data.realized.marginPct).toBeCloseTo(26.6667, 3) // 40 / 150
+    expect(data.realized.skuWithCostCount).toBe(1)
+    expect(data.realized.skuWithoutCostCount).toBe(1)
+  })
+
+  it('IDOR-protected: returns zero data for wrong companyId', async () => {
+    const data = await getShopMargin(shopId, 'wrong-company', 'week')
+    expect(data.realized.revenue).toBe(0)
+    expect(data.stock.valueAtPrice).toBe(0)
   })
 })
