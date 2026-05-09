@@ -17,11 +17,11 @@ const TransfersTable = ({ transfers, userRole }: ITransfersTableProps) => {
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>№ / Дата</TableHead>
           <TableHead>Маршрут</TableHead>
           <TableHead className="text-right">Позицій</TableHead>
+          <TableHead className="text-right">К-сть</TableHead>
           <TableHead>Статус</TableHead>
-          <TableHead>Створено</TableHead>
-          <TableHead>Завершено</TableHead>
           <TableHead />
         </TableRow>
       </TableHeader>

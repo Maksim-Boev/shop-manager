@@ -96,11 +96,22 @@ export {
 } from './lib/queries/shop-detail'
 
 // Queries — Staff
-export type { IStaffMember } from './lib/queries/staff'
-export { getStaffList } from './lib/queries/staff'
+export type {
+  IStaffMember,
+  IStaffMemberDetail,
+  ICurrentSalaryRate,
+  ISalaryPayoutRow,
+} from './lib/queries/staff'
+export { getStaffList, getStaffMemberDetail } from './lib/queries/staff'
 
 // Services — Staff
-export { setUserStatusImpl } from './lib/services/staff'
+export {
+  setUserStatusImpl,
+  setUserSalaryImpl,
+  setStoreAssignmentImpl,
+  createStaffMemberImpl,
+  deleteStaffMemberImpl,
+} from './lib/services/staff'
 
 // Queries — Warehouse
 export type {
@@ -132,3 +143,9 @@ export {
   completeTransferImpl,
   cancelTransferImpl,
 } from './lib/services/transfer'
+
+// Services — Scheduled Shifts
+export {
+  createScheduledShiftsImpl,
+} from './lib/services/scheduled-shifts'
+export type { ICreateScheduledShiftsInput } from './lib/services/scheduled-shifts'

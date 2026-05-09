@@ -203,7 +203,7 @@ const ShopCard = ({ shop }: IShopCardProps) => {
           <Button variant="outline" size="sm" asChild>
             <Link href={`/shops/${shop.id}?tab=stock`}>Склад</Link>
           </Button>
-          <Button size="sm" asChild className="bg-indigo-50 text-indigo-700 hover:bg-indigo-100 dark:bg-indigo-500/15 dark:text-indigo-300 dark:hover:bg-indigo-500/25 border-0 shadow-none">
+          <Button variant="soft-primary" size="sm" asChild>
             <Link href={`/shops/${shop.id}`}>Деталі</Link>
           </Button>
         </div>

@@ -158,14 +158,33 @@ describe('getAvailableStaffForShop', () => {
     expect(ids).toContain(available.id)
   })
 
-  it('excludes CASHIER and SUPER_ADMIN roles', async () => {
-    await createTestUser(companyId, { role: 'CASHIER' })
-    await createTestUser(companyId, { role: 'SUPER_ADMIN' })
+  it('excludes only SUPER_ADMIN; includes MANAGER, ADMIN, CASHIER, SALESPERSON', async () => {
+    const cashier = await createTestUser(companyId, { role: 'CASHIER' })
+    const salesperson = await createTestUser(companyId, { role: 'SALESPERSON' })
+    const superAdmin = await createTestUser(companyId, { role: 'SUPER_ADMIN' })
     const admin = await createTestUser(companyId, { role: 'ADMIN' })
+    const manager = await createTestUser(companyId, { role: 'MANAGER' })
 
     const users = await getAvailableStaffForShop(shopId, companyId)
-    expect(users.every(u => u.role === 'MANAGER' || u.role === 'ADMIN')).toBe(true)
-    expect(users.some(u => u.id === admin.id)).toBe(true)
+    const ids = users.map(u => u.id)
+    expect(ids).toContain(cashier.id)
+    expect(ids).toContain(salesperson.id)
+    expect(ids).toContain(admin.id)
+    expect(ids).toContain(manager.id)
+    expect(ids).not.toContain(superAdmin.id)
+    expect(users.every(u => u.role !== 'SUPER_ADMIN')).toBe(true)
+  })
+
+  it('повертає користувачів усіх ролей крім SUPER_ADMIN, що активні і не привʼязані', async () => {
+    const cashier = await createTestUser(companyId, { role: 'CASHIER' })
+    const manager = await createTestUser(companyId, { role: 'MANAGER' })
+    const salesperson = await createTestUser(companyId, { role: 'SALESPERSON' })
+    const attached = await createTestUser(companyId, { role: 'CASHIER' })
+    await prisma.managerStore.create({ data: { userId: attached.id, storeId: shopId } })
+
+    const result = await getAvailableStaffForShop(shopId, companyId)
+    const ids = result.map(r => r.id).sort()
+    expect(ids).toEqual([cashier.id, manager.id, salesperson.id].sort())
   })
 })
 
@@ -232,6 +251,35 @@ describe('getShopSchedule', () => {
 
     const rows = await getShopSchedule(shopId, 'other-company', monday)
     expect(rows).toEqual([])
+  })
+
+  it('повертає поле isShiftLeader', async () => {
+    const start = new Date(monday); start.setHours(9, 0, 0, 0)
+    const end   = new Date(monday); end.setHours(17, 0, 0, 0)
+    await prisma.scheduledShift.create({
+      data: {
+        companyId, storeId: shopId, userId,
+        startsAt: start, endsAt: end,
+        isShiftLeader: true,
+        createdByUserId: actorId,
+      },
+    })
+
+    const rows = await getShopSchedule(shopId, companyId, monday)
+    expect(rows).toHaveLength(1)
+    expect(rows[0].isShiftLeader).toBe(true)
+  })
+
+  it('isShiftLeader по дефолту false для змін без явної ознаки', async () => {
+    const start = new Date(monday); start.setHours(9, 0, 0, 0)
+    const end   = new Date(monday); end.setHours(17, 0, 0, 0)
+    await prisma.scheduledShift.create({
+      data: { companyId, storeId: shopId, userId, startsAt: start, endsAt: end, createdByUserId: actorId },
+    })
+
+    const rows = await getShopSchedule(shopId, companyId, monday)
+    expect(rows).toHaveLength(1)
+    expect(rows[0].isShiftLeader).toBe(false)
   })
 })
 

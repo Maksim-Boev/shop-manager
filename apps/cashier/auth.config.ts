@@ -13,7 +13,7 @@ declare module 'next-auth/jwt' {
   interface JWT extends JwtClaims {}
 }
 
-const BLOCKED_ROLE: UserRole = 'SUPER_ADMIN'
+const BLOCKED_ROLES: UserRole[] = ['SUPER_ADMIN', 'SALESPERSON']
 
 export const authConfig = {
   pages: { signIn: '/login' },
@@ -22,7 +22,7 @@ export const authConfig = {
       const { pathname } = nextUrl
       if (pathname.startsWith('/api/auth') || pathname === '/login') return true
       if (!auth?.user?.role) return false
-      if (auth.user.role === BLOCKED_ROLE) return false
+      if (BLOCKED_ROLES.includes(auth.user.role)) return false
       return true
     },
     session({ session, token }) {

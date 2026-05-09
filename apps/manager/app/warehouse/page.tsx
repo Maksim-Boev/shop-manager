@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { auth } from '@/auth'
+import { prisma } from '@pkg/db'
 import {
   getWarehouseStores,
   getWarehouseStock,
@@ -18,7 +19,10 @@ const WarehousePage = async ({ searchParams }: IWarehousePageProps) => {
   const companyId = session.user.companyId ?? ''
   const { warehouseId } = await searchParams
 
-  const warehouses = await getWarehouseStores(companyId)
+  const [warehouses, inTransitCount] = await Promise.all([
+    getWarehouseStores(companyId),
+    prisma.stockTransfer.count({ where: { companyId, state: 'IN_TRANSIT' } }),
+  ])
 
   if (warehouses.length === 0) {
     return (
@@ -27,6 +31,7 @@ const WarehousePage = async ({ searchParams }: IWarehousePageProps) => {
         activeWarehouse={null}
         stock={[]}
         pendingOrders={[]}
+        inTransitCount={0}
       />
     )
   }
@@ -47,6 +52,7 @@ const WarehousePage = async ({ searchParams }: IWarehousePageProps) => {
       activeWarehouse={active}
       stock={stock}
       pendingOrders={pendingOrders}
+      inTransitCount={inTransitCount}
     />
   )
 }

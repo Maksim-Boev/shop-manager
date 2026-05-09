@@ -1,7 +1,7 @@
 import type { IStaffMember } from '@pkg/db'
 import type { UserRole } from '@pkg/db/browser'
 
-export type TRoleFilter = 'ALL' | 'ADMIN' | 'MANAGER' | 'CASHIER'
+export type TRoleFilter = 'ALL' | 'ADMIN' | 'MANAGER' | 'CASHIER' | 'SALESPERSON'
 export type TStatusFilter = 'ALL' | 'ACTIVE' | 'BLOCKED'
 
 export interface IStoreOption {

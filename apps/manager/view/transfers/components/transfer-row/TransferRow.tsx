@@ -59,32 +59,39 @@ const TransferRow = ({ transfer, userRole }: ITransferRowProps) => {
     })
   }
 
+  const shortId = transfer.id.slice(-6).toUpperCase()
+
   return (
     <TableRow>
+      <TableCell>
+        <div className="font-mono text-xs text-slate-500 dark:text-muted-foreground uppercase">
+          #{shortId}
+        </div>
+        <div className="text-xs text-slate-500 dark:text-muted-foreground mt-0.5 tabular-nums">
+          {transfer.createdAt.toLocaleDateString('uk-UA')}
+        </div>
+      </TableCell>
       <TableCell>
         <div className="flex items-center gap-2 text-sm">
           <span className="font-medium text-slate-900 dark:text-foreground">
             {transfer.sourceStoreName}
           </span>
-          <ArrowRightIcon className="size-3.5 text-slate-400 dark:text-muted-foreground" />
+          <ArrowRightIcon className="size-3.5 text-slate-400 dark:text-muted-foreground shrink-0" />
           <span className="font-medium text-slate-900 dark:text-foreground">
             {transfer.destinationStoreName}
           </span>
         </div>
       </TableCell>
-      <TableCell className="text-right tabular-nums">{transfer.itemsCount}</TableCell>
+      <TableCell className="text-right tabular-nums text-slate-600 dark:text-muted-foreground">
+        {transfer.itemsCount}
+      </TableCell>
+      <TableCell className="text-right tabular-nums font-semibold text-slate-900 dark:text-foreground">
+        {transfer.totalQty} шт.
+      </TableCell>
       <TableCell>
         <Badge variant="outline" className={cn(STATE_BADGE[transfer.state])}>
           {STATE_LABEL[transfer.state]}
         </Badge>
-      </TableCell>
-      <TableCell className="text-sm text-slate-500 dark:text-muted-foreground">
-        {transfer.createdAt.toLocaleDateString('uk-UA')}
-      </TableCell>
-      <TableCell className="text-sm text-slate-500 dark:text-muted-foreground">
-        {transfer.completedAt
-          ? transfer.completedAt.toLocaleDateString('uk-UA')
-          : '—'}
       </TableCell>
       <TableCell className="text-right">
         {showMenu && (

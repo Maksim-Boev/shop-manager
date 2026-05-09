@@ -1,6 +1,3 @@
-import {
-  Table, TableHeader, TableBody, TableHead, TableRow,
-} from '@pkg/ui'
 import { StaffRow } from '../staff-row'
 import type { IStaffTableProps } from './types'
 
@@ -14,23 +11,11 @@ const StaffTable = ({ staff, actorRole, actorId }: IStaffTableProps) => {
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Користувач</TableHead>
-          <TableHead>Роль</TableHead>
-          <TableHead>Магазини</TableHead>
-          <TableHead className="text-center">Зміна</TableHead>
-          <TableHead>Статус</TableHead>
-          <TableHead />
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {staff.map(m => (
-          <StaffRow key={m.id} member={m} actorRole={actorRole} actorId={actorId} />
-        ))}
-      </TableBody>
-    </Table>
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      {staff.map(m => (
+        <StaffRow key={m.id} member={m} actorRole={actorRole} actorId={actorId} />
+      ))}
+    </div>
   )
 }
 

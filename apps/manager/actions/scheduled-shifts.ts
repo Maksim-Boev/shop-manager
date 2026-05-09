@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { auth } from '@/auth'
-import { prisma } from '@pkg/db'
+import { prisma, createScheduledShiftsImpl } from '@pkg/db'
 import type { UserRole } from '@pkg/db/browser'
 
 const ROLES_FULL: UserRole[] = ['SUPER_ADMIN', 'ADMIN']
@@ -20,6 +20,7 @@ const CreateSchema = z.object({
   startsAt: IsoSchema,
   endsAt: IsoSchema,
   notes: z.string().max(500).optional(),
+  isShiftLeader: z.boolean().optional(),
 })
 
 const UpdateSchema = z.object({
@@ -28,6 +29,7 @@ const UpdateSchema = z.object({
   startsAt: IsoSchema,
   endsAt: IsoSchema,
   notes: z.string().max(500).optional(),
+  isShiftLeader: z.boolean().optional(),
 })
 
 const requireScheduler = async (storeId: string) => {
@@ -58,6 +60,7 @@ const requireScheduler = async (storeId: string) => {
 
 const assertNoOverlap = async (params: {
   userId: string
+  companyId: string
   startsAt: Date
   endsAt: Date
   excludeId?: string
@@ -65,6 +68,7 @@ const assertNoOverlap = async (params: {
   const conflict = await prisma.scheduledShift.findFirst({
     where: {
       userId: params.userId,
+      companyId: params.companyId,
       ...(params.excludeId && { NOT: { id: params.excludeId } }),
       startsAt: { lt: params.endsAt },
       endsAt: { gt: params.startsAt },
@@ -82,6 +86,28 @@ const assertUserInCompany = async (userId: string, companyId: string) => {
   if (!u) throw new Error('Співробітника не знайдено')
 }
 
+const clearOverlappingLeaders = async (params: {
+  companyId: string
+  shopId: string
+  startsAt: Date
+  endsAt: Date
+  excludeId?: string
+  tx?: Parameters<Parameters<typeof prisma.$transaction>[0]>[0]
+}) => {
+  const client = params.tx ?? prisma
+  await client.scheduledShift.updateMany({
+    where: {
+      companyId: params.companyId,
+      storeId: params.shopId,
+      isShiftLeader: true,
+      startsAt: { lt: params.endsAt },
+      endsAt: { gt: params.startsAt },
+      ...(params.excludeId && { NOT: { id: params.excludeId } }),
+    },
+    data: { isShiftLeader: false },
+  })
+}
+
 export const createScheduledShift = async (input: unknown): Promise<{ id: string }> => {
   const data = CreateSchema.parse(input)
   const { companyId, userId: actorId } = await requireScheduler(data.shopId)
@@ -91,19 +117,25 @@ export const createScheduledShift = async (input: unknown): Promise<{ id: string
   if (endsAt <= startsAt) throw new Error('Кінець зміни має бути пізніше початку')
 
   await assertUserInCompany(data.userId, companyId)
-  await assertNoOverlap({ userId: data.userId, startsAt, endsAt })
+  await assertNoOverlap({ userId: data.userId, companyId, startsAt, endsAt })
 
-  const created = await prisma.scheduledShift.create({
-    data: {
-      companyId,
-      storeId: data.shopId,
-      userId: data.userId,
-      startsAt,
-      endsAt,
-      notes: data.notes ?? null,
-      createdByUserId: actorId,
-    },
-    select: { id: true },
+  const isShiftLeader = data.isShiftLeader ?? true
+
+  const created = await prisma.$transaction(async tx => {
+    if (isShiftLeader) {
+      await clearOverlappingLeaders({
+        companyId, shopId: data.shopId, startsAt, endsAt, tx,
+      })
+    }
+    return tx.scheduledShift.create({
+      data: {
+        companyId, storeId: data.shopId, userId: data.userId,
+        startsAt, endsAt, notes: data.notes ?? null,
+        isShiftLeader,
+        createdByUserId: actorId,
+      },
+      select: { id: true },
+    })
   })
 
   revalidatePath(`/shops/${data.shopId}`)
@@ -128,17 +160,30 @@ export const updateScheduledShift = async (input: unknown): Promise<void> => {
 
   await assertUserInCompany(data.userId, companyId)
   await assertNoOverlap({
-    userId: data.userId, startsAt, endsAt, excludeId: data.id,
+    userId: data.userId, companyId, startsAt, endsAt, excludeId: data.id,
   })
 
-  await prisma.scheduledShift.update({
-    where: { id: data.id },
-    data: {
-      userId: data.userId,
-      startsAt,
-      endsAt,
-      notes: data.notes ?? null,
-    },
+  await prisma.$transaction(async tx => {
+    if (data.isShiftLeader === true) {
+      await clearOverlappingLeaders({
+        companyId,
+        shopId: existing.storeId,
+        startsAt,
+        endsAt,
+        excludeId: data.id,
+        tx,
+      })
+    }
+    await tx.scheduledShift.update({
+      where: { id: data.id },
+      data: {
+        userId: data.userId,
+        startsAt,
+        endsAt,
+        notes: data.notes ?? null,
+        ...(data.isShiftLeader !== undefined && { isShiftLeader: data.isShiftLeader }),
+      },
+    })
   })
 
   revalidatePath(`/shops/${existing.storeId}`)
@@ -158,4 +203,39 @@ export const deleteScheduledShift = async (id: string): Promise<void> => {
 
   await prisma.scheduledShift.delete({ where: { id: parsed } })
   revalidatePath(`/shops/${existing.storeId}`)
+}
+
+const CreateBulkSchema = z.object({
+  shopId: z.string().min(1),
+  userIds: z.array(z.string().min(1)).min(1),
+  startsAt: IsoSchema,
+  endsAt: IsoSchema,
+  notes: z.string().max(500).optional(),
+  leaderUserId: z.string().min(1).optional(),
+})
+
+export const createScheduledShifts = async (input: unknown): Promise<{ ids: string[] }> => {
+  const data = CreateBulkSchema.parse(input)
+  const session = await auth()
+  if (!session?.user.companyId) throw new Error('Не авторизовано')
+  const companyId = session.user.companyId
+
+  const startsAt = new Date(data.startsAt)
+  const endsAt = new Date(data.endsAt)
+
+  for (const userId of data.userIds) {
+    await assertNoOverlap({ userId, companyId, startsAt, endsAt })
+  }
+
+  const result = await createScheduledShiftsImpl(session.user, {
+    shopId: data.shopId,
+    userIds: data.userIds,
+    startsAt,
+    endsAt,
+    notes: data.notes,
+    leaderUserId: data.leaderUserId,
+  })
+
+  revalidatePath(`/shops/${data.shopId}`)
+  return result
 }

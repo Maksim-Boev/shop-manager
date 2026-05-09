@@ -3,6 +3,8 @@ import type {
 } from '@pkg/db'
 import type { UserRole } from '@pkg/db/browser'
 
+export type TAssignableRole = 'MANAGER' | 'CASHIER' | 'SALESPERSON'
+
 export interface IStaffTabProps {
   members: IShopStaffMember[]
   availableUsers: IAvailableUser[]
@@ -13,9 +15,10 @@ export interface IStaffTabProps {
   userRole: UserRole
 }
 
-export interface IAssignManagerDialogProps {
+export interface IAssignStaffDialogProps {
   shopId: string
   availableUsers: IAvailableUser[]
   open: boolean
   onOpenChange: (v: boolean) => void
+  targetRole: TAssignableRole
 }

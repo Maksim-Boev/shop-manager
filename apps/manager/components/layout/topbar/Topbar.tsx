@@ -15,7 +15,7 @@ const TopBar = ({ defaultTheme }: ITopBarProps) => (
       <Breadcrumb />
     </div>
     <div className="flex items-center gap-2 shrink-0">
-      <Button variant="outline" size="sm" className="text-muted-foreground gap-2">
+      <Button variant="outline-muted" size="sm" className="gap-2">
         <SearchIcon className="size-3.5" />
         <span>Пошук…</span>
         <span className="ml-2 px-1.5 py-0.5 bg-background border border-border rounded text-[10px] font-mono">⌘K</span>

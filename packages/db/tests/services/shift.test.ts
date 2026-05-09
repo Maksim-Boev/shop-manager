@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, afterEach } from 'vitest'
 import { prisma } from '../../lib/prisma'
-import { createTestCompany, createTestStore, createTestUser } from '../helpers'
+import { createTestCompany, createTestStore, createTestUser, cleanupTestCompanies } from '../helpers'
 import { openShift, closeShift, generateShiftReport } from '../../lib/services/shift'
 import { ShiftAlreadyOpenError, ShiftNotOpenError, ShopError } from '../../lib/services/errors'
 
@@ -170,5 +170,29 @@ describe('generateShiftReport', () => {
     await expect(
       generateShiftReport(prisma, { shiftId: shift.id, type: 'X' })
     ).rejects.toThrow(ShiftNotOpenError)
+  })
+})
+
+describe('openShift — гейт SALESPERSON', () => {
+  afterEach(async () => {
+    await cleanupTestCompanies()
+  })
+
+  it('забороняє відкрити зміну для SALESPERSON', async () => {
+    const company = await createTestCompany()
+    const store = await createTestStore(company.id)
+    const sp = await createTestUser(company.id, { role: 'SALESPERSON' })
+
+    await expect(
+      openShift(prisma, {
+        companyId: company.id,
+        storeId: store.id,
+        cashierUserId: sp.id,
+        openingCash: '0',
+      }),
+    ).rejects.toThrow('Продавець не має доступу до каси')
+
+    const created = await prisma.shift.findFirst({ where: { storeId: store.id } })
+    expect(created).toBeNull()
   })
 })

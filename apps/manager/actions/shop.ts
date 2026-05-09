@@ -71,7 +71,7 @@ export const archiveShop = async (shopId: string): Promise<void> => {
   revalidatePath(`/shops/${data.shopId}`)
 }
 
-export const assignManager = async (shopId: string, userId: string): Promise<void> => {
+export const assignStaffToShop = async (shopId: string, userId: string): Promise<void> => {
   const session = await auth()
   if (
     !session ||
@@ -100,7 +100,7 @@ export const assignManager = async (shopId: string, userId: string): Promise<voi
   revalidatePath(`/shops/${data.shopId}`)
 }
 
-export const removeManager = async (shopId: string, userId: string): Promise<void> => {
+export const removeStaffFromShop = async (shopId: string, userId: string): Promise<void> => {
   const session = await auth()
   if (
     !session ||

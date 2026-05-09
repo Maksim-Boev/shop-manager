@@ -7,6 +7,7 @@ export interface ITransferRow {
   sourceStoreName: string
   destinationStoreName: string
   itemsCount: number
+  totalQty: number
   createdAt: Date
   completedAt: Date | null
 }
@@ -49,15 +50,26 @@ export const getTransfers = async (
 
   if (transfers.length === 0) return []
 
+  const transferIds = transfers.map(t => t.id)
   const storeIds = Array.from(new Set([
     ...transfers.map(t => t.sourceStoreId),
     ...transfers.map(t => t.destinationStoreId),
   ]))
-  const stores = await prisma.store.findMany({
-    where: { id: { in: storeIds }, companyId },
-    select: { id: true, name: true },
-  })
+
+  const [stores, qtySums] = await Promise.all([
+    prisma.store.findMany({
+      where: { id: { in: storeIds }, companyId },
+      select: { id: true, name: true },
+    }),
+    prisma.stockTransferItem.groupBy({
+      by: ['stockTransferId'],
+      where: { stockTransferId: { in: transferIds } },
+      _sum: { quantity: true },
+    }),
+  ])
+
   const nameMap = new Map(stores.map(s => [s.id, s.name]))
+  const qtyMap = new Map(qtySums.map(q => [q.stockTransferId, Number(q._sum.quantity ?? 0)]))
 
   return transfers.map(t => ({
     id: t.id,
@@ -65,6 +77,7 @@ export const getTransfers = async (
     sourceStoreName: nameMap.get(t.sourceStoreId) ?? t.sourceStoreId,
     destinationStoreName: nameMap.get(t.destinationStoreId) ?? t.destinationStoreId,
     itemsCount: t._count.items,
+    totalQty: qtyMap.get(t.id) ?? 0,
     createdAt: t.createdAt,
     completedAt: t.completedAt,
   }))

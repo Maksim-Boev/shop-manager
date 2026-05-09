@@ -36,7 +36,7 @@ export const createTestUser = async (
   companyId: string,
   overrides: Partial<{
     email: string
-    role: 'CASHIER' | 'ADMIN' | 'MANAGER' | 'SUPER_ADMIN'
+    role: 'CASHIER' | 'ADMIN' | 'MANAGER' | 'SUPER_ADMIN' | 'SALESPERSON'
     passwordHash: string
   }> = {},
 ) =>

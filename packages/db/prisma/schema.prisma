@@ -14,6 +14,7 @@ enum UserRole {
   ADMIN
   MANAGER
   CASHIER
+  SALESPERSON
 }
 
 enum UserStatus {
@@ -855,6 +856,7 @@ model ScheduledShift {
   startsAt        DateTime
   endsAt          DateTime
   notes           String?
+  isShiftLeader   Boolean  @default(false)
   createdByUserId String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

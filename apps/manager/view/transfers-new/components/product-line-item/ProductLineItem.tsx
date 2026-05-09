@@ -51,10 +51,9 @@ const ProductLineItem = ({
       </div>
       <div className="col-span-2 flex justify-end">
         <Button
-          variant="ghost"
+          variant="ghost-destructive"
           size="icon-sm"
           onClick={onRemove}
-          className="text-slate-400 hover:text-rose-600 dark:text-muted-foreground dark:hover:text-rose-300"
         >
           <TrashIcon className="size-4" />
         </Button>

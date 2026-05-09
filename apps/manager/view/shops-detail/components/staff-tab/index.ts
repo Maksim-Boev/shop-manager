@@ -1,2 +1,3 @@
 export { StaffTab } from './StaffTab'
-export type { IStaffTabProps } from './types'
+export { AssignStaffDialog } from './AssignStaffDialog'
+export type { IStaffTabProps, IAssignStaffDialogProps, TAssignableRole } from './types'

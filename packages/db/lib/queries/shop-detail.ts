@@ -109,6 +109,7 @@ export interface IScheduledShiftRow {
   startsAtIso: string
   endsAtIso: string
   notes: string | null
+  isShiftLeader: boolean
 }
 
 export interface IStoreUserOption {
@@ -313,7 +314,7 @@ export const getAvailableStaffForShop = async (
   return prisma.user.findMany({
     where: {
       companyId,
-      role: { in: ['MANAGER', 'ADMIN'] },
+      role: { in: ['MANAGER', 'ADMIN', 'CASHIER', 'SALESPERSON'] },
       status: 'ACTIVE',
       ...(excludeIds.length > 0 && { id: { notIn: excludeIds } }),
     },
@@ -405,6 +406,7 @@ export const getShopSchedule = async (
       startsAt: true,
       endsAt: true,
       notes: true,
+      isShiftLeader: true,
       user: {
         select: { firstName: true, lastName: true, role: true },
       },
@@ -420,6 +422,7 @@ export const getShopSchedule = async (
     startsAtIso: r.startsAt.toISOString(),
     endsAtIso: r.endsAt.toISOString(),
     notes: r.notes,
+    isShiftLeader: r.isShiftLeader,
   }))
 }
 

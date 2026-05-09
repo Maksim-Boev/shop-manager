@@ -15,6 +15,9 @@ export interface IWarehouseStockRow {
   unit: ProductUnit
   stock: number
   effectivePrice: number
+  shopTotal: number
+  totalQty: number
+  totalValue: number
 }
 
 export interface IPurchaseOrderRow {
@@ -65,15 +68,39 @@ export const getWarehouseStock = async (
     },
   })
 
-  const mapped: IWarehouseStockRow[] = rows.map(r => ({
-    productId: r.productId,
-    sku: r.product.sku,
-    name: r.product.name,
-    category: r.product.category.name,
-    unit: r.product.unit,
-    stock: Number(r.stock),
-    effectivePrice: Number(r.priceOverride ?? r.product.basePrice),
-  }))
+  if (rows.length === 0) return []
+
+  const productIds = rows.map(r => r.productId)
+
+  // Сумарный остаток по каждому продукту во всех магазинах (тип SHOP)
+  const shopStocks = await prisma.storeProduct.groupBy({
+    by: ['productId'],
+    where: {
+      productId: { in: productIds },
+      store: { companyId, type: 'SHOP', status: 'ACTIVE' },
+    },
+    _sum: { stock: true },
+  })
+  const shopMap = new Map(shopStocks.map(s => [s.productId, Number(s._sum.stock ?? 0)]))
+
+  const mapped: IWarehouseStockRow[] = rows.map(r => {
+    const whStock = Number(r.stock)
+    const shopTotal = shopMap.get(r.productId) ?? 0
+    const totalQty = whStock + shopTotal
+    const effectivePrice = Number(r.priceOverride ?? r.product.basePrice)
+    return {
+      productId: r.productId,
+      sku: r.product.sku,
+      name: r.product.name,
+      category: r.product.category.name,
+      unit: r.product.unit,
+      stock: whStock,
+      effectivePrice,
+      shopTotal,
+      totalQty,
+      totalValue: totalQty * effectivePrice,
+    }
+  })
 
   return mapped.sort((a, b) => {
     const ar = a.stock === 0 ? 0 : a.stock < 10 ? 1 : 2

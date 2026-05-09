@@ -148,9 +148,9 @@ const ShopHeader = ({ shop, userRole, activeTab, tabs, onTabChange }: IShopHeade
               Скасувати
             </Button>
             <Button
+              variant="destructive-solid"
               onClick={handleArchive}
               disabled={isPending}
-              className="bg-rose-600 text-white hover:bg-rose-700"
             >
               {isPending ? 'Архівується…' : 'Архівувати'}
             </Button>

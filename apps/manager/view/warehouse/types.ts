@@ -9,4 +9,5 @@ export interface IWarehouseViewProps {
   activeWarehouse: IWarehouseStore | null
   stock: IWarehouseStockRow[]
   pendingOrders: IPurchaseOrderRow[]
+  inTransitCount: number
 }

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
-  ChevronLeftIcon, ChevronRightIcon, PlusIcon,
+  ChevronLeftIcon, ChevronRightIcon, PlusIcon, CrownIcon,
 } from 'lucide-react'
 import { Button } from '@pkg/ui'
 import { cn } from '@pkg/ui/cn'
@@ -48,6 +48,22 @@ const fmtWeekTitle = (start: Date) => {
   const end = new Date(start.getTime() + 6 * 86_400_000)
   const fmt = (d: Date) => `${d.getDate()}.${pad(d.getMonth() + 1)}`
   return `${fmt(start)} – ${fmt(end)}`
+}
+
+const assignLanes = (sorted: IScheduledShiftRow[]): { row: IScheduledShiftRow; lane: number }[] => {
+  const laneEnds: number[] = []
+  return sorted.map(s => {
+    const startM = minutesFromMidnight(new Date(s.startsAtIso))
+    const endM = minutesFromMidnight(new Date(s.endsAtIso))
+    let lane = laneEnds.findIndex(e => e <= startM)
+    if (lane === -1) {
+      laneEnds.push(endM)
+      lane = laneEnds.length - 1
+    } else {
+      laneEnds[lane] = endM
+    }
+    return { row: s, lane }
+  })
 }
 
 const ScheduleGrid = ({
@@ -166,9 +182,16 @@ const ScheduleGrid = ({
               const dayShifts = shiftsByDay[key]
               const isToday = fmtDateIso(new Date()) === key
 
+              const sorted = [...dayShifts].sort((a, b) =>
+                new Date(a.startsAtIso).getTime() - new Date(b.startsAtIso).getTime()
+              )
+              const laned = assignLanes(sorted)
+              const laneCount = Math.max(1, ...laned.map(l => l.lane + 1))
+              const rowHeight = laneCount * 36
+
               return (
-                <div key={key} className="flex items-center group">
-                  <div className="w-28 shrink-0 flex items-baseline gap-1.5 pr-3">
+                <div key={key} className="flex items-stretch group">
+                  <div className="w-28 shrink-0 flex items-baseline gap-1.5 pr-3 pt-2">
                     <span
                       className={cn(
                         'text-xs font-bold uppercase',
@@ -185,17 +208,15 @@ const ScheduleGrid = ({
                   </div>
                   <div
                     className={cn(
-                      'relative flex-1 h-9 rounded-md',
-                      isToday
-                        ? 'bg-indigo-50/60 dark:bg-indigo-500/5'
-                        : 'bg-slate-50 dark:bg-muted/30',
+                      'relative flex-1 rounded-md',
+                      isToday ? 'bg-indigo-50/60 dark:bg-indigo-500/5' : 'bg-slate-50 dark:bg-muted/30',
                       canManage && 'cursor-pointer',
                     )}
+                    style={{ height: `${rowHeight}px` }}
                     onClick={e => {
                       if (e.target === e.currentTarget) openCreateFor(day)
                     }}
                   >
-                    {/* Hour gridlines */}
                     <div
                       className="absolute inset-0 grid pointer-events-none"
                       style={{ gridTemplateColumns: `repeat(${HOURS.length}, 1fr)` }}
@@ -211,8 +232,7 @@ const ScheduleGrid = ({
                       ))}
                     </div>
 
-                    {/* Shift bars */}
-                    {dayShifts.map(s => {
+                    {laned.map(({ row: s, lane }) => {
                       const startM = minutesFromMidnight(new Date(s.startsAtIso))
                       const endM = minutesFromMidnight(new Date(s.endsAtIso))
                       const left = ((startM - HOUR_START * 60) / totalMinutes) * 100
@@ -224,15 +244,20 @@ const ScheduleGrid = ({
                           key={s.id}
                           onClick={e => { e.stopPropagation(); openEdit(s) }}
                           className={cn(
-                            'absolute top-1 bottom-1 rounded text-[11px] font-semibold text-white px-2 flex items-center gap-1.5 truncate text-left transition-colors shadow-sm',
+                            'absolute rounded text-[11px] font-semibold text-white px-2 flex items-center gap-1.5 truncate text-left transition-colors shadow-sm',
                             accentFor(s.userId),
                           )}
                           style={{
+                            top: `${lane * 36 + 4}px`,
+                            height: `28px`,
                             left: `clamp(0%, ${left}%, 100%)`,
                             width: `min(${width}%, ${100 - Math.max(left, 0)}%)`,
                           }}
-                          title={`${s.firstName} ${s.lastName} · ${fmtRange(s.startsAtIso, s.endsAtIso)}${s.notes ? ` · ${s.notes}` : ''}`}
+                          title={`${s.firstName} ${s.lastName} · ${fmtRange(s.startsAtIso, s.endsAtIso)}${s.isShiftLeader ? ' · старший' : ''}${s.notes ? ` · ${s.notes}` : ''}`}
                         >
+                          {s.isShiftLeader && (
+                            <CrownIcon className="size-3 shrink-0 text-amber-200" />
+                          )}
                           <span className="w-5 h-5 rounded-full bg-white/25 text-[9px] flex items-center justify-center shrink-0">
                             {s.firstName[0]}{s.lastName[0]}
                           </span>

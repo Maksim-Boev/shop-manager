@@ -16,6 +16,14 @@ export const openShift = async (
     if (!store || store.status !== 'ACTIVE' || store.type !== 'SHOP') {
       throw new ShopError('store not available')
     }
+    const user = await tx.user.findFirst({
+      where: { id: params.cashierUserId, companyId: params.companyId },
+      select: { role: true },
+    })
+    if (!user) throw new ShopError('cashier not found')
+    if (user.role === 'SALESPERSON') {
+      throw new ShopError('Продавець не має доступу до каси')
+    }
     const existing = await tx.shift.findFirst({
       where: { companyId: params.companyId, cashierUserId: params.cashierUserId, status: 'OPEN' },
     })

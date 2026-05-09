@@ -4361,6 +4361,7 @@ export const ScheduledShiftScalarFieldEnum = {
   startsAt: 'startsAt',
   endsAt: 'endsAt',
   notes: 'notes',
+  isShiftLeader: 'isShiftLeader',
   createdByUserId: 'createdByUserId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

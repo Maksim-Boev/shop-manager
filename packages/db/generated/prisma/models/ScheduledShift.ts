@@ -32,6 +32,7 @@ export type ScheduledShiftMinAggregateOutputType = {
   startsAt: Date | null
   endsAt: Date | null
   notes: string | null
+  isShiftLeader: boolean | null
   createdByUserId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -45,6 +46,7 @@ export type ScheduledShiftMaxAggregateOutputType = {
   startsAt: Date | null
   endsAt: Date | null
   notes: string | null
+  isShiftLeader: boolean | null
   createdByUserId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -58,6 +60,7 @@ export type ScheduledShiftCountAggregateOutputType = {
   startsAt: number
   endsAt: number
   notes: number
+  isShiftLeader: number
   createdByUserId: number
   createdAt: number
   updatedAt: number
@@ -73,6 +76,7 @@ export type ScheduledShiftMinAggregateInputType = {
   startsAt?: true
   endsAt?: true
   notes?: true
+  isShiftLeader?: true
   createdByUserId?: true
   createdAt?: true
   updatedAt?: true
@@ -86,6 +90,7 @@ export type ScheduledShiftMaxAggregateInputType = {
   startsAt?: true
   endsAt?: true
   notes?: true
+  isShiftLeader?: true
   createdByUserId?: true
   createdAt?: true
   updatedAt?: true
@@ -99,6 +104,7 @@ export type ScheduledShiftCountAggregateInputType = {
   startsAt?: true
   endsAt?: true
   notes?: true
+  isShiftLeader?: true
   createdByUserId?: true
   createdAt?: true
   updatedAt?: true
@@ -185,6 +191,7 @@ export type ScheduledShiftGroupByOutputType = {
   startsAt: Date
   endsAt: Date
   notes: string | null
+  isShiftLeader: boolean
   createdByUserId: string
   createdAt: Date
   updatedAt: Date
@@ -219,6 +226,7 @@ export type ScheduledShiftWhereInput = {
   startsAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
   endsAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
   notes?: Prisma.StringNullableFilter<"ScheduledShift"> | string | null
+  isShiftLeader?: Prisma.BoolFilter<"ScheduledShift"> | boolean
   createdByUserId?: Prisma.StringFilter<"ScheduledShift"> | string
   createdAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
@@ -235,6 +243,7 @@ export type ScheduledShiftOrderByWithRelationInput = {
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  isShiftLeader?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -254,6 +263,7 @@ export type ScheduledShiftWhereUniqueInput = Prisma.AtLeast<{
   startsAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
   endsAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
   notes?: Prisma.StringNullableFilter<"ScheduledShift"> | string | null
+  isShiftLeader?: Prisma.BoolFilter<"ScheduledShift"> | boolean
   createdByUserId?: Prisma.StringFilter<"ScheduledShift"> | string
   createdAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
@@ -270,6 +280,7 @@ export type ScheduledShiftOrderByWithAggregationInput = {
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  isShiftLeader?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -289,6 +300,7 @@ export type ScheduledShiftScalarWhereWithAggregatesInput = {
   startsAt?: Prisma.DateTimeWithAggregatesFilter<"ScheduledShift"> | Date | string
   endsAt?: Prisma.DateTimeWithAggregatesFilter<"ScheduledShift"> | Date | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"ScheduledShift"> | string | null
+  isShiftLeader?: Prisma.BoolWithAggregatesFilter<"ScheduledShift"> | boolean
   createdByUserId?: Prisma.StringWithAggregatesFilter<"ScheduledShift"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ScheduledShift"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ScheduledShift"> | Date | string
@@ -300,6 +312,7 @@ export type ScheduledShiftCreateInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -316,6 +329,7 @@ export type ScheduledShiftUncheckedCreateInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -328,6 +342,7 @@ export type ScheduledShiftUpdateInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -344,6 +359,7 @@ export type ScheduledShiftUncheckedUpdateInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -358,6 +374,7 @@ export type ScheduledShiftCreateManyInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -369,6 +386,7 @@ export type ScheduledShiftUpdateManyMutationInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -382,6 +400,7 @@ export type ScheduledShiftUncheckedUpdateManyInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -410,6 +429,7 @@ export type ScheduledShiftCountOrderByAggregateInput = {
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  isShiftLeader?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -423,6 +443,7 @@ export type ScheduledShiftMaxOrderByAggregateInput = {
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  isShiftLeader?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -436,6 +457,7 @@ export type ScheduledShiftMinOrderByAggregateInput = {
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  isShiftLeader?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -547,6 +569,7 @@ export type ScheduledShiftCreateWithoutUserInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -561,6 +584,7 @@ export type ScheduledShiftUncheckedCreateWithoutUserInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -604,6 +628,7 @@ export type ScheduledShiftScalarWhereInput = {
   startsAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
   endsAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
   notes?: Prisma.StringNullableFilter<"ScheduledShift"> | string | null
+  isShiftLeader?: Prisma.BoolFilter<"ScheduledShift"> | boolean
   createdByUserId?: Prisma.StringFilter<"ScheduledShift"> | string
   createdAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ScheduledShift"> | Date | string
@@ -615,6 +640,7 @@ export type ScheduledShiftCreateWithoutStoreInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -629,6 +655,7 @@ export type ScheduledShiftUncheckedCreateWithoutStoreInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -667,6 +694,7 @@ export type ScheduledShiftCreateWithoutShiftsInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -682,6 +710,7 @@ export type ScheduledShiftUncheckedCreateWithoutShiftsInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -709,6 +738,7 @@ export type ScheduledShiftUpdateWithoutShiftsInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -724,6 +754,7 @@ export type ScheduledShiftUncheckedUpdateWithoutShiftsInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -736,6 +767,7 @@ export type ScheduledShiftCreateManyUserInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -747,6 +779,7 @@ export type ScheduledShiftUpdateWithoutUserInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -761,6 +794,7 @@ export type ScheduledShiftUncheckedUpdateWithoutUserInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -774,6 +808,7 @@ export type ScheduledShiftUncheckedUpdateManyWithoutUserInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -786,6 +821,7 @@ export type ScheduledShiftCreateManyStoreInput = {
   startsAt: Date | string
   endsAt: Date | string
   notes?: string | null
+  isShiftLeader?: boolean
   createdByUserId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -797,6 +833,7 @@ export type ScheduledShiftUpdateWithoutStoreInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -811,6 +848,7 @@ export type ScheduledShiftUncheckedUpdateWithoutStoreInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -824,6 +862,7 @@ export type ScheduledShiftUncheckedUpdateManyWithoutStoreInput = {
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isShiftLeader?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -868,6 +907,7 @@ export type ScheduledShiftSelect<ExtArgs extends runtime.Types.Extensions.Intern
   startsAt?: boolean
   endsAt?: boolean
   notes?: boolean
+  isShiftLeader?: boolean
   createdByUserId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -885,6 +925,7 @@ export type ScheduledShiftSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   startsAt?: boolean
   endsAt?: boolean
   notes?: boolean
+  isShiftLeader?: boolean
   createdByUserId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -900,6 +941,7 @@ export type ScheduledShiftSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   startsAt?: boolean
   endsAt?: boolean
   notes?: boolean
+  isShiftLeader?: boolean
   createdByUserId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -915,12 +957,13 @@ export type ScheduledShiftSelectScalar = {
   startsAt?: boolean
   endsAt?: boolean
   notes?: boolean
+  isShiftLeader?: boolean
   createdByUserId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ScheduledShiftOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "storeId" | "userId" | "startsAt" | "endsAt" | "notes" | "createdByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["scheduledShift"]>
+export type ScheduledShiftOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "storeId" | "userId" | "startsAt" | "endsAt" | "notes" | "isShiftLeader" | "createdByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["scheduledShift"]>
 export type ScheduledShiftInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -951,6 +994,7 @@ export type $ScheduledShiftPayload<ExtArgs extends runtime.Types.Extensions.Inte
     startsAt: Date
     endsAt: Date
     notes: string | null
+    isShiftLeader: boolean
     createdByUserId: string
     createdAt: Date
     updatedAt: Date
@@ -1387,6 +1431,7 @@ export interface ScheduledShiftFieldRefs {
   readonly startsAt: Prisma.FieldRef<"ScheduledShift", 'DateTime'>
   readonly endsAt: Prisma.FieldRef<"ScheduledShift", 'DateTime'>
   readonly notes: Prisma.FieldRef<"ScheduledShift", 'String'>
+  readonly isShiftLeader: Prisma.FieldRef<"ScheduledShift", 'Boolean'>
   readonly createdByUserId: Prisma.FieldRef<"ScheduledShift", 'String'>
   readonly createdAt: Prisma.FieldRef<"ScheduledShift", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ScheduledShift", 'DateTime'>

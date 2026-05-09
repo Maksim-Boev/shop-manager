@@ -13,6 +13,7 @@ const ROLE_OPTIONS: { label: string; value: TRoleFilter }[] = [
   { label: 'Адміни',       value: 'ADMIN' },
   { label: 'Менеджери',    value: 'MANAGER' },
   { label: 'Касири',       value: 'CASHIER' },
+  { label: 'Продавці',     value: 'SALESPERSON' },
 ]
 
 const STATUS_OPTIONS: { label: string; value: TStatusFilter }[] = [
@@ -70,6 +71,7 @@ const StaffFilter = ({
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="ALL">Усі магазини</SelectItem>
+        <SelectItem value="UNASSIGNED">Без призначення</SelectItem>
         {stores.map(s => (
           <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
         ))}
