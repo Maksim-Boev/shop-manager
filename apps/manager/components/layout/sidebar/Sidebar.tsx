@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import {
   LayoutDashboardIcon, StoreIcon, UsersIcon, PackageIcon,
-  TruckIcon, SettingsIcon, LogOutIcon,
+  TruckIcon, SettingsIcon, LogOutIcon, BookOpenIcon,
 } from 'lucide-react'
 import { cn } from '@pkg/ui/cn'
 import { Avatar, AvatarFallback, Button } from '@pkg/ui'
@@ -22,6 +22,7 @@ const NAV_MAIN = [
   { label: 'Дашборд',          icon: LayoutDashboardIcon, href: '/' },
   { label: 'Магазини',         icon: StoreIcon,            href: '/shops' },
   { label: 'Персонал',         icon: UsersIcon,            href: '/staff' },
+  { label: 'Каталог',          icon: BookOpenIcon,         href: '/products' },
 ]
 
 const NAV_STOCK = [

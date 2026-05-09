@@ -149,3 +149,18 @@ export {
   createScheduledShiftsImpl,
 } from './lib/services/scheduled-shifts'
 export type { ICreateScheduledShiftsInput } from './lib/services/scheduled-shifts'
+
+// Queries — Products
+export type {
+  IProductRow,
+  IProductDetail,
+  IProductStoreRow,
+  ICategoryWithSubs,
+  ITaxRate,
+} from './lib/queries/products'
+export {
+  getProducts,
+  getProductDetail,
+  getCategories,
+  getTaxRates,
+} from './lib/queries/products'
