@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Button } from '@pkg/ui'
+import { Button, Card, CardContent } from '@pkg/ui'
 import { getShopOpenStatus } from '@pkg/db/utils/shop-status'
 import { ShopsFilter } from './components/shops-filter'
 import { ShopsGrid } from './components/shops-grid'
@@ -51,14 +51,18 @@ const ShopsView = ({ shops, userRole }: IShopsViewProps) => {
         )}
       </div>
 
-      <ShopsFilter
-        search={search}
-        onSearch={setSearch}
-        statusFilter={statusFilter}
-        onStatusFilter={setStatusFilter}
-        viewMode={viewMode}
-        onViewMode={setViewMode}
-      />
+      <Card className="py-0">
+        <CardContent className="p-4">
+          <ShopsFilter
+            search={search}
+            onSearch={setSearch}
+            statusFilter={statusFilter}
+            onStatusFilter={setStatusFilter}
+            viewMode={viewMode}
+            onViewMode={setViewMode}
+          />
+        </CardContent>
+      </Card>
 
       {viewMode === 'grid'
         ? <ShopsGrid shops={filtered} />

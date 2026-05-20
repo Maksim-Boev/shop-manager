@@ -9,6 +9,7 @@
     "db:push": "prisma db push",
     "db:pull": "prisma db pull",
     "db:seed": "prisma db seed",
+    "db:seed:orders": "dotenv -e ../../.env -- tsx prisma/seed-orders-patch.ts",
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset",
     "test": "dotenv -e ../../.env -- vitest run",

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { PlusIcon } from 'lucide-react'
-import { Button } from '@pkg/ui'
+import { Button, Card, CardContent } from '@pkg/ui'
 import { ProductsFilter } from './components/products-filter'
 import { ProductsTable } from './components/products-table'
 import { AddProductDialog } from './components/add-product-dialog'
@@ -39,15 +39,19 @@ const ProductsView = ({ products, categories, taxRates }: IProductsViewProps) =>
         </Button>
       </div>
 
-      <ProductsFilter
-        categories={categories}
-        search={search}
-        categoryId={categoryId}
-        status={status}
-        onSearch={setSearch}
-        onCategory={setCategoryId}
-        onStatus={setStatus}
-      />
+      <Card className="py-0">
+        <CardContent className="p-4">
+          <ProductsFilter
+            categories={categories}
+            search={search}
+            categoryId={categoryId}
+            status={status}
+            onSearch={setSearch}
+            onCategory={setCategoryId}
+            onStatus={setStatus}
+          />
+        </CardContent>
+      </Card>
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
         <ProductsTable products={filtered} />

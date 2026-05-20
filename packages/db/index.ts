@@ -164,3 +164,17 @@ export {
   getCategories,
   getTaxRates,
 } from './lib/queries/products'
+
+// Queries — Orders
+export type {
+  IOrderRow,
+  IOrderDetail,
+  IOrderItemRow,
+  ICashierDayStats,
+} from './lib/queries/orders'
+export {
+  getOrders,
+  getOrderDetail,
+  getRelatedOrders,
+  getCashierDayStats,
+} from './lib/queries/orders'

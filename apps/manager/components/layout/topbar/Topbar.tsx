@@ -10,7 +10,7 @@ interface ITopBarProps {
 }
 
 const TopBar = ({ defaultTheme }: ITopBarProps) => (
-  <header className="bg-card border-b border-border sticky top-0 z-20 h-14 px-6 flex items-center justify-between gap-4 shrink-0">
+  <header className="bg-sidebar border-b border-sidebar-border sticky top-0 z-20 h-14 px-6 flex items-center justify-between gap-4 shrink-0">
     <div className="min-w-0 flex-1">
       <Breadcrumb />
     </div>
@@ -23,7 +23,7 @@ const TopBar = ({ defaultTheme }: ITopBarProps) => (
       <ThemeToggle defaultTheme={defaultTheme} />
       <Button variant="ghost" size="icon" className="relative">
         <BellIcon className="size-5" />
-        <span className="absolute top-1.5 right-1.5 size-2 bg-rose-500 rounded-full border-2 border-card" />
+        <span className="absolute top-1.5 right-1.5 size-2 bg-rose-500 rounded-full border-2 border-sidebar" />
       </Button>
     </div>
   </header>

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { UserPlusIcon } from 'lucide-react'
-import { Button } from '@pkg/ui'
+import { Button, Card, CardContent } from '@pkg/ui'
 import { StaffFilter } from './components/staff-filter'
 import { StaffTable } from './components/staff-table'
 import { AddStaffModal } from './components/add-staff-modal'
@@ -55,13 +55,17 @@ const StaffView = ({ staff, actorRole, actorId, stores }: IStaffViewProps) => {
           )}
         </div>
 
-        <StaffFilter
-          search={search}      onSearch={setSearch}
-          role={role}          onRole={setRole}
-          status={status}      onStatus={setStatus}
-          storeId={storeId}    onStore={setStoreId}
-          stores={stores}
-        />
+        <Card className="py-0">
+          <CardContent className="p-4">
+            <StaffFilter
+              search={search}      onSearch={setSearch}
+              role={role}          onRole={setRole}
+              status={status}      onStatus={setStatus}
+              storeId={storeId}    onStore={setStoreId}
+              stores={stores}
+            />
+          </CardContent>
+        </Card>
 
         <StaffTable staff={filtered} actorRole={actorRole} actorId={actorId} />
       </div>
