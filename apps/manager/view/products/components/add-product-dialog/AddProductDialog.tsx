@@ -8,6 +8,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@pkg/ui'
 import { createProduct } from '@/actions/products'
+import { QuickAddCategoryDialog } from './components/quick-add-category-dialog'
 import type { IAddProductDialogProps } from './types'
 
 const UNIT_OPTIONS = [
@@ -31,8 +32,9 @@ const AddProductDialog = ({ open, onOpenChange, categories, taxRates }: IAddProd
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
+  const [quickAddOpen, setQuickAddOpen] = useState(false)
 
-  const defaultTaxRate = taxRates.find(r => r.isDefault)?.id ?? taxRates[0]?.id ?? ''
+  const defaultTaxRate = taxRates.find((rate) => rate.isDefault)?.id ?? taxRates[0]?.id ?? ''
 
   const [form, setForm] = useState({
     name: '',
@@ -45,18 +47,33 @@ const AddProductDialog = ({ open, onOpenChange, categories, taxRates }: IAddProd
     subcategoryId: '',
   })
 
-  const set = (k: keyof typeof form) => (v: string) => setForm(prev => ({ ...prev, [k]: v }))
+  const set = (k: keyof typeof form) => (v: string) =>
+    setForm((prev) => ({ ...prev, [k]: v }))
 
   const subcategories =
-    categories.find(c => c.id === form.categoryId)?.subcategories ?? []
+    categories.find((category) => category.id === form.categoryId)?.subcategories ?? []
 
   const handleClose = (v: boolean) => {
     if (isPending) return
     if (!v) {
-      setForm({ name: '', sku: '', unit: 'PIECE', basePrice: '', costPrice: '', taxRateId: defaultTaxRate, categoryId: '', subcategoryId: '' })
+      setForm({
+        name: '',
+        sku: '',
+        unit: 'PIECE',
+        basePrice: '',
+        costPrice: '',
+        taxRateId: defaultTaxRate,
+        categoryId: '',
+        subcategoryId: '',
+      })
       setError(null)
     }
     onOpenChange(v)
+  }
+
+  const handleCategoryCreated = (categoryId: string) => {
+    set('categoryId')(categoryId)
+    router.refresh()
   }
 
   const handleSubmit = () => {
@@ -86,117 +103,155 @@ const AddProductDialog = ({ open, onOpenChange, categories, taxRates }: IAddProd
   }
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-lg">
-        <DialogHeader>
-          <DialogTitle>Новий товар</DialogTitle>
-          <DialogDescription>Заповніть основні дані товару. Ціни й залишки можна уточнити пізніше.</DialogDescription>
-        </DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={handleClose}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Новий товар</DialogTitle>
+            <DialogDescription>
+              Заповніть основні дані товару. Ціни й залишки можна уточнити пізніше.
+            </DialogDescription>
+          </DialogHeader>
 
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="Назва *">
-            <Input
-              value={form.name}
-              onChange={e => set('name')(e.target.value)}
-              placeholder="Наприклад: Молоко 2,5%"
-              disabled={isPending}
-              className="col-span-2"
-            />
-          </Field>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Назва *">
+              <Input
+                value={form.name}
+                onChange={(e) => set('name')(e.target.value)}
+                placeholder="Наприклад: Молоко 2,5%"
+                disabled={isPending}
+                className="col-span-2"
+              />
+            </Field>
 
-          <Field label="SKU *">
-            <Input
-              value={form.sku}
-              onChange={e => set('sku')(e.target.value)}
-              placeholder="MILK-001"
-              disabled={isPending}
-            />
-          </Field>
+            <Field label="SKU *">
+              <Input
+                value={form.sku}
+                onChange={(e) => set('sku')(e.target.value)}
+                placeholder="MILK-001"
+                disabled={isPending}
+              />
+            </Field>
 
-          <Field label="Одиниця виміру *">
-            <Select value={form.unit} onValueChange={set('unit')} disabled={isPending}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>
-                {UNIT_OPTIONS.map(o => (
-                  <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </Field>
-
-          <Field label="Категорія *">
-            <Select value={form.categoryId} onValueChange={v => { set('categoryId')(v); set('subcategoryId')('') }} disabled={isPending}>
-              <SelectTrigger><SelectValue placeholder="Оберіть категорію" /></SelectTrigger>
-              <SelectContent>
-                {categories.map(c => (
-                  <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </Field>
-
-          {subcategories.length > 0 && (
-            <Field label="Підкатегорія">
-              <Select value={form.subcategoryId} onValueChange={set('subcategoryId')} disabled={isPending}>
-                <SelectTrigger><SelectValue placeholder="Не вказано" /></SelectTrigger>
+            <Field label="Одиниця виміру *">
+              <Select value={form.unit} onValueChange={set('unit')} disabled={isPending}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Не вказано</SelectItem>
-                  {subcategories.map(s => (
-                    <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                  {UNIT_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </Field>
-          )}
 
-          <Field label="Ставка ПДВ *">
-            <Select value={form.taxRateId} onValueChange={set('taxRateId')} disabled={isPending}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>
-                {taxRates.map(r => (
-                  <SelectItem key={r.id} value={r.id}>{r.name} ({r.rate}%)</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </Field>
+            <Field label="Категорія *">
+              <Select
+                value={form.categoryId}
+                onValueChange={(v) => { set('categoryId')(v); set('subcategoryId')('') }}
+                disabled={isPending}
+              >
+                <SelectTrigger><SelectValue placeholder="Оберіть категорію" /></SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                  <div className="border-t border-border mt-1 pt-1 px-1">
+                    <button
+                      onMouseDown={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        setQuickAddOpen(true)
+                      }}
+                      className="w-full text-left text-sm text-primary px-2 py-1.5 rounded hover:bg-muted transition-colors"
+                    >
+                      + Додати категорію
+                    </button>
+                  </div>
+                </SelectContent>
+              </Select>
+            </Field>
 
-          <Field label="Ціна продажу (грн.) *">
-            <Input
-              type="number"
-              min="0"
-              step="0.01"
-              value={form.basePrice}
-              onChange={e => set('basePrice')(e.target.value)}
-              placeholder="0.00"
-              disabled={isPending}
-            />
-          </Field>
+            {form.categoryId && (
+              <Field label="Підкатегорія">
+                <Select
+                  value={form.subcategoryId || '__none__'}
+                  onValueChange={(v) => set('subcategoryId')(v === '__none__' ? '' : v)}
+                  disabled={isPending || subcategories.length === 0}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Не вказано" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">Не вказано</SelectItem>
+                    {subcategories.map((subcategory) => (
+                      <SelectItem key={subcategory.id} value={subcategory.id}>
+                        {subcategory.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            )}
 
-          <Field label="Закупна ціна (грн.)">
-            <Input
-              type="number"
-              min="0"
-              step="0.01"
-              value={form.costPrice}
-              onChange={e => set('costPrice')(e.target.value)}
-              placeholder="0.00"
-              disabled={isPending}
-            />
-          </Field>
-        </div>
+            <Field label="Ставка ПДВ *">
+              <Select value={form.taxRateId} onValueChange={set('taxRateId')} disabled={isPending}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {taxRates.map((rate) => (
+                    <SelectItem key={rate.id} value={rate.id}>
+                      {rate.name} ({rate.rate}%)
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
 
-        {error && <p className="text-sm text-rose-600 dark:text-rose-400">{error}</p>}
+            <Field label="Ціна продажу (грн.) *">
+              <Input
+                type="number"
+                min="0"
+                step="0.01"
+                value={form.basePrice}
+                onChange={(e) => set('basePrice')(e.target.value)}
+                placeholder="0.00"
+                disabled={isPending}
+              />
+            </Field>
 
-        <div className="flex justify-end gap-2 pt-2">
-          <Button variant="ghost" onClick={() => handleClose(false)} disabled={isPending}>
-            Скасувати
-          </Button>
-          <Button onClick={handleSubmit} disabled={isPending}>
-            {isPending ? 'Створення…' : 'Створити товар'}
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+            <Field label="Закупна ціна (грн.)">
+              <Input
+                type="number"
+                min="0"
+                step="0.01"
+                value={form.costPrice}
+                onChange={(e) => set('costPrice')(e.target.value)}
+                placeholder="0.00"
+                disabled={isPending}
+              />
+            </Field>
+          </div>
+
+          {error && <p className="text-sm text-rose-600 dark:text-rose-400">{error}</p>}
+
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="ghost" onClick={() => handleClose(false)} disabled={isPending}>
+              Скасувати
+            </Button>
+            <Button onClick={handleSubmit} disabled={isPending}>
+              {isPending ? 'Створення…' : 'Створити товар'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <QuickAddCategoryDialog
+        open={quickAddOpen}
+        onOpenChange={setQuickAddOpen}
+        onCreated={handleCategoryCreated}
+      />
+    </>
   )
 }
 

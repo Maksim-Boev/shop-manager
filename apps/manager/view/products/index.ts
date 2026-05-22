@@ -1,2 +1,2 @@
 export { ProductsView } from './ProductsView'
-export type { IProductsViewProps } from './types'
+export type { IProductsViewProps, TProductTab } from './types'

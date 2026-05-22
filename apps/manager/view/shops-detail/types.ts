@@ -1,5 +1,5 @@
 import type {
-  IShopOverview, IStoreProductRow, IShopStaffMember, IAvailableUser, IShopFinance,
+  IShopOverview, IStoreProductRow, IProductRow, IShopStaffMember, IAvailableUser, IShopFinance,
   IShopMarginData,
   IScheduledShiftRow, IStoreUserOption, IStoreScheduleException, IStoreHoursConfig,
   TWeeklySchedule,
@@ -22,7 +22,7 @@ export interface IShopBasic {
 
 export type TTabData =
   | { tab: 'overview'; data: IShopOverview }
-  | { tab: 'stock'; data: IStoreProductRow[] }
+  | { tab: 'stock'; data: IStoreProductRow[]; allProducts: IProductRow[] }
   | {
       tab: 'staff'
       data: IShopStaffMember[]

@@ -32,7 +32,7 @@ const ShopDetailView = ({ shop, activeTab, tabData, userRole }: IShopDetailViewP
         <OverviewTab data={tabData.data} onGoToStock={() => goToTab('stock')} />
       )}
       {tabData.tab === 'stock' && (
-        <StockTab items={tabData.data} />
+        <StockTab items={tabData.data} storeId={shop.id} allProducts={tabData.allProducts} />
       )}
       {tabData.tab === 'staff' && (
         <StaffTab

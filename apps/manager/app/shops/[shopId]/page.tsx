@@ -4,6 +4,7 @@ import {
   prisma, getShopOverview, getShopStock, getShopStaff,
   getAvailableStaffForShop, getShopFinance, getShopMargin,
   getShopSchedule, getStoreUsersForScheduling, getStoreHoursConfig,
+  getProducts,
 } from '@pkg/db'
 import type { TWeeklySchedule } from '@pkg/db'
 import { ShopDetailView } from '@/view/shops-detail'
@@ -71,8 +72,11 @@ const ShopDetailPage = async ({ params, searchParams }: IProps) => {
     const data = await getShopOverview(shopId, companyId)
     tabData = { tab: 'overview', data }
   } else if (activeTab === 'stock') {
-    const data = await getShopStock(shopId, companyId)
-    tabData = { tab: 'stock', data }
+    const [data, allProducts] = await Promise.all([
+      getShopStock(shopId, companyId),
+      getProducts(companyId),
+    ])
+    tabData = { tab: 'stock', data, allProducts }
   } else if (activeTab === 'staff') {
     const weekStart = rawWeekStart && ISO_DATE_RE.test(rawWeekStart)
       ? new Date(`${rawWeekStart}T00:00:00`)

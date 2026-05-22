@@ -7,9 +7,9 @@ import type { IStockFilterProps } from './types'
 
 const StockFilter = ({
   search, category, onlyLow, categories,
-  onSearch, onCategory, onOnlyLow,
+  onSearch, onCategory, onOnlyLow, actions,
 }: IStockFilterProps) => (
-  <div className="flex flex-col sm:flex-row gap-3 p-4 border-b border-slate-100 dark:border-border">
+  <div className="flex flex-col sm:flex-row items-center gap-3 p-4 border-b border-slate-100 dark:border-border">
     <div className="relative flex-1">
       <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-slate-400 dark:text-muted-foreground pointer-events-none" />
       <Input
@@ -41,6 +41,7 @@ const StockFilter = ({
       <AlertTriangleIcon className="size-3.5" />
       Низькі залишки
     </button>
+    {actions}
   </div>
 )
 

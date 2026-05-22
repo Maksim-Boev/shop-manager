@@ -150,6 +150,10 @@ export {
 } from './lib/services/scheduled-shifts'
 export type { ICreateScheduledShiftsInput } from './lib/services/scheduled-shifts'
 
+// Services — Manual Adjustment
+export { createManualAdjustmentImpl } from './lib/services/manual-adjustment'
+export type { ICreateManualAdjustmentInput } from './lib/services/manual-adjustment'
+
 // Queries — Products
 export type {
   IProductRow,

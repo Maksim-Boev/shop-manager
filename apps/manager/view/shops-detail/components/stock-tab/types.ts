@@ -1,7 +1,9 @@
-import type { IStoreProductRow } from '@pkg/db'
+import type { IStoreProductRow, IProductRow } from '@pkg/db'
 
 export interface IStockTabProps {
+  storeId: string
   items: IStoreProductRow[]
+  allProducts: IProductRow[]
 }
 
 export interface IStockFilterProps {
@@ -12,4 +14,5 @@ export interface IStockFilterProps {
   onSearch: (v: string) => void
   onCategory: (v: string) => void
   onOnlyLow: (v: boolean) => void
+  actions?: React.ReactNode
 }

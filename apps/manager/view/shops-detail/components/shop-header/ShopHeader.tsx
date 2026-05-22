@@ -8,8 +8,8 @@ import {
 import {
   Button, Dialog, DialogContent, DialogHeader,
   DialogTitle, DialogDescription, DialogFooter,
+  Tabs, TabsList, TabsTrigger,
 } from '@pkg/ui'
-import { cn } from '@pkg/ui/cn'
 import { getShopOpenStatus } from '@pkg/db/utils/shop-status'
 import { archiveShop } from '@/actions/shop'
 import { useBreadcrumb } from '@/components/layout/breadcrumb'
@@ -112,22 +112,15 @@ const ShopHeader = ({ shop, userRole, activeTab, tabs, onTabChange }: IShopHeade
       </div>
 
       {/* Tab nav */}
-      <div className="flex gap-0 border-b border-slate-200 dark:border-border">
-        {tabs.map(tab => (
-          <button
-            key={tab}
-            onClick={() => onTabChange(tab)}
-            className={cn(
-              'px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px',
-              activeTab === tab
-                ? 'border-indigo-600 text-indigo-700 dark:border-indigo-400 dark:text-indigo-300'
-                : 'border-transparent text-slate-600 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground hover:border-slate-300 dark:hover:border-border',
-            )}
-          >
-            {TAB_LABELS[tab]}
-          </button>
-        ))}
-      </div>
+      <Tabs value={activeTab} onValueChange={(v) => onTabChange(v as TTabKey)}>
+        <TabsList variant="line">
+          {tabs.map(tab => (
+            <TabsTrigger key={tab} value={tab}>
+              {TAB_LABELS[tab]}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
 
       {/* Archive Dialog */}
       <Dialog open={archiveOpen} onOpenChange={setArchiveOpen}>

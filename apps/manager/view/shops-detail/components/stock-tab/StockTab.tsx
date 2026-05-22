@@ -6,6 +6,7 @@ import { cn } from '@pkg/ui/cn'
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, Button } from '@pkg/ui'
 import { StockFilter } from './StockFilter'
 import { EditProductModal } from '../edit-product-modal'
+import { AdjustStockDialog } from './components/adjust-stock-dialog'
 import type { IEditProductModalProduct } from '../edit-product-modal'
 import type { IStockTabProps } from './types'
 
@@ -14,14 +15,20 @@ const UNIT_LABELS: Record<string, string> = {
   MILLILITER: 'мл', METER: 'м', PACK: 'уп.',
 }
 
-const StockTab = ({ items }: IStockTabProps) => {
+const StockTab = ({ items, storeId, allProducts }: IStockTabProps) => {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('')
   const [onlyLow, setOnlyLow] = useState(false)
   const [editProduct, setEditProduct] = useState<IEditProductModalProduct | null>(null)
+  const [adjustOpen, setAdjustOpen] = useState(false)
 
   const categories = useMemo(
-    () => [...new Set(items.map(i => i.category))].sort(),
+    () => [...new Set(items.map((item) => item.category))].sort(),
+    [items],
+  )
+
+  const currentStock = useMemo(
+    () => new Map(items.map((item) => [item.productId, item.stock])),
     [items],
   )
 
@@ -43,6 +50,11 @@ const StockTab = ({ items }: IStockTabProps) => {
       <StockFilter
         search={search} category={category} onlyLow={onlyLow} categories={categories}
         onSearch={setSearch} onCategory={setCategory} onOnlyLow={setOnlyLow}
+        actions={
+          <Button variant="outline" size="sm" className="shrink-0 whitespace-nowrap" onClick={() => setAdjustOpen(true)}>
+            Коригування залишків
+          </Button>
+        }
       />
 
       {/* Summary bar */}
@@ -173,6 +185,13 @@ const StockTab = ({ items }: IStockTabProps) => {
         open={editProduct !== null}
         onOpenChange={v => { if (!v) setEditProduct(null) }}
         product={editProduct}
+      />
+      <AdjustStockDialog
+        open={adjustOpen}
+        onOpenChange={setAdjustOpen}
+        storeId={storeId}
+        allProducts={allProducts}
+        currentStock={currentStock}
       />
     </div>
   )
